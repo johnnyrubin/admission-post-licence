@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package admission.post.licence;
+package AdmissionPostLicence;
 
 /**
  *
@@ -16,13 +16,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConnexionMinistere {
+public class ConnexionUniversite {
     private String DBPath;
     private Connection connection = null;
     private Statement statement = null;
  
-    public ConnexionMinistere(String dBPath) {
-        DBPath = "ministere-"+dBPath;
+    public ConnexionUniversite(String dBPath) {
+        DBPath = "universite-"+dBPath;
     }
  
     public void connect() {
