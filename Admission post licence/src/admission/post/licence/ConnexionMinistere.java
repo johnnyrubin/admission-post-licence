@@ -16,13 +16,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Connexion {
+public class ConnexionMinistere {
     private String DBPath;
     private Connection connection = null;
     private Statement statement = null;
  
-    public Connexion(String dBPath) {
-        DBPath = dBPath;
+    public ConnexionMinistere(String dBPath) {
+        DBPath = "ministere-"+dBPath;
     }
  
     public void connect() {
