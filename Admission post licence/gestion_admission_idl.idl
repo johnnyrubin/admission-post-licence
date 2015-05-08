@@ -1,0 +1,137 @@
+/**
+* Contrat IDL d'un système permettant de gérer l'admission post-licence
+*/
+module AdmissionPostLicence
+{
+    //Enumération utiles pour les différents choix
+    enum etatCandidature { nonValide, valide, cloture };
+    enum decisionCandidat { ouiDefinitif, ouiMais, nonMais, nonDefinitif };
+    enum decisionMaster { admis, listeAttente, refuser };
+
+    // Structure contenant les résultats d'un semestre
+    struct resultat {
+   	 string code;
+   	 float moyenne;
+   	 short position;
+    };
+    // Cette séquence correspond aux résultats des six semestres d'une licence
+    typedef sequence<resultat, 6> resultats;
+
+    //Structure d’identification d’un étudiant
+    struct identite {
+   	 string ine;
+   	 string nom;
+   	 string prenom;
+   	 string universite;
+   	 string licence;
+    };
+    
+    //Structure des résultats de licence d’un étudiant
+    struct resultatsEtudiant {
+   	 identite etudiant;
+   	 resultats resultatsSemestres;
+    };
+
+   
+
+    // Contient les données basiques d'une candidature
+    struct candidature {
+   	 identite etudiant;
+   	 string master;
+	 string universite;
+   	 short ordre;
+    };
+    typedef sequence<candidature> candidatures;
+
+    // En plus des informations basiques d'une candidature, cette structure contient aussi
+    // les données liées à l'état de la candidature et aux décisions du master et de
+    // l'étudiant
+    struct resultatCandidature {
+   	 candidature c;
+   	 etatCandidature etat;
+   	 decisionCandidat decisionC;
+   	 decisionMaster decisionM
+    };
+    typedef sequence<resultatCandidature > resultatsCandidatures;
+    
+    // Accréditation permettant de savoir si tel master est disponible dans telle université
+    struct accreditation {
+   	 string universite;
+   	 string master;
+    };
+    typedef sequence<accreditation> accreditations;
+
+    // Exceptions
+    exception EtudiantInconnu { string raison, long id; };
+    exception MasterInconnu { string raison, long id; };
+    exception CandidatureInconnu {string raison, long id;};
+
+    
+
+    // Point d’accès aux informations fournies aux étudiants
+    interface GestionEtudiant
+    {
+   	 // Soumission d’une candidature à un master
+   	 void soumettreCandidature(in candidature c) raises MasterInconnu;
+   	 
+   	 // Retourne les résultats de l’étudiant dont l’identité est fournie
+   	 resultatsEtudiant recupererResultats(in identite etudiant) raises EtudiantInconnu;
+
+   	 // Retourne l’état des candidatures de l’étudiant et leur statut
+   	 resultatsCandidatures consulterEtatVoeux(in identite etudiant) raises EtudiantInconnu;
+
+   	 // Permet à l’étudiant d’accepter ou refuser une proposition
+   	 void modifierDecision(in candidature c, in decisionCandidat dc);
+
+	//Permet à l’étudiant de se connecter 
+	identite seConnecter(in string ine, in mdp) raises EtudiantInconnu;
+    };
+
+    // Point d’accès aux informations fournies aux responsables de formation et aux
+    // autres entités
+    interface Master
+    {	 
+   	 // Retourne les candidatures au master ainsi que leurs états
+   	 resultatsCandidatures consulterEtatCandidatures();
+
+   	 // Modifie la décision d’une formation sur une candidature
+   	 void modifierDecision(in candidature c, in decisionMaster dm);
+
+   	 // Vérifie que la licence soit compatible avec le master
+   	 boolean verifierPrerequis(in string licence) raises MasterInconnu;
+    };
+
+// Code métier des Rectorats
+    interface Rectorat
+    {
+   	 // Enregistre une candidature auprès du rectorat, vérifie que l’étudiant puisse
+   	 // candidater au master grâce à GestionMaster
+   	 void creerCandidature(in candidature c);
+
+   	 // Retourne la liste des candidatures à un master
+   	 candidatures recupererCandidatures(in string master) raises MasterInconnu;
+
+   	 // Retourne la liste des candidatures d’un étudiant
+   	 candidatures recupererCandidatures(in identite etudiant) raises EtudiantInconnu;
+
+   	 // Permet d’avoir le détail de l’état des candidatures fournies en paramètre
+   	 resultatsCandidatures consulterEtatCandidatures(in candidatures c) raises CandidatureInconnu;
+
+   	 // Permet de modifier l’état d'une candidature
+   	 void modifierCandidature(in resultatCandidature candidature) raises CandidatureInconnu; 
+    };
+
+    interface Ministere
+    {
+	 // Fourni la liste des accréditations (sert de référentiel aux étudiants)
+   	 accreditations recupererAccreditations();
+
+	//Transfere une candidature d’un rectorat à un autre
+	void transfererCandidature(in candidature c);
+
+	//Transfere la décision d’un candidat vers un autre rectorat
+	void transfererDecision(in resultatCandidature r) raises CandidatureInconnu; 
+    };
+};
+
+

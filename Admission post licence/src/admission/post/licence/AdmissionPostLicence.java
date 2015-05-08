@@ -16,7 +16,9 @@ public class AdmissionPostLicence {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Connexion connexion = new Connexion("database.db");
+        connexion.connect();
+        connexion.close();
     }
     
 }
