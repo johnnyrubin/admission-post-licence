@@ -36,7 +36,7 @@ module AdmissionPostLicence
     struct candidature {
         identite etudiant;
         string master;
-     string universite;
+		string universite;
         short ordre;
     };
     typedef sequence<candidature> candidatures;

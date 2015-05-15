@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Universite;
 
 import Universite.GestionEtudiant.GestionEtudiantImpl;
@@ -17,12 +12,15 @@ import org.omg.PortableServer.POAHelper;
  */
 public class ServerUniversite {
     
+    /** Contient l'orb accessible par les autres classes */
+    public static org.omg.CORBA.ORB orb;
+    
     public static void main(String[] args) {
         
         try {
             
             // Intialisation de l'ORB
-            org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args, null);
+            orb = org.omg.CORBA.ORB.init(args, null);
             
             // Récupération du POA
             POA rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));

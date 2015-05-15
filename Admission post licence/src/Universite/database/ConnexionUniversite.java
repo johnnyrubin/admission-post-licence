@@ -10,9 +10,10 @@ import java.sql.Statement;
  * @author johnny
  */
 public class ConnexionUniversite {
+    
     private String DBPath;
     private Connection connection = null;
-    private Statement statement = null;
+    public Statement statement = null;
  
     public ConnexionUniversite(String dBPath) {
         DBPath = "universite-"+dBPath;
@@ -35,8 +36,8 @@ public class ConnexionUniversite {
  
     public void close() {
         try {
-            connection.close();
             statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
