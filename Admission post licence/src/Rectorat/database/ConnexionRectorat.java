@@ -12,7 +12,7 @@ import java.sql.Statement;
 public class ConnexionRectorat {
     private String DBPath;
     private Connection connection = null;
-    private Statement statement = null;
+    public Statement statement = null;
  
     public ConnexionRectorat(String dBPath) {
         DBPath = "rectorat-"+dBPath;
