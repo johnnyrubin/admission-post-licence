@@ -12,7 +12,7 @@ import AdmissionPostLicence.identite;
 import AdmissionPostLicence.resultatCandidature;
 import AdmissionPostLicence.resultatsEtudiant;
 import Universite.ServerUniversite;
-import Universite.database.Etudiant;
+import Universite.pojo.Etudiant;
 import Universite.database.EtudiantDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,7 +116,6 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         Rectorat r = getRectoratCorba();
         
         if(r != null) {
-            
             // Création de l'obet resultatCandidature
             resultatCandidature res = new resultatCandidature(c, null, dc, null);
             
@@ -149,6 +148,11 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         return identite;
     }
     
+    /**
+     * Permet de récupérer l'objet CORBA du rectorat de l'université de cette gestion étudiant
+     * 
+     * @return {@link Rectorat}
+     */
     private Rectorat getRectoratCorba() {
         // Initialisation de la variable de retour
         Rectorat r = null;
@@ -162,7 +166,6 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
             org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
             r = RectoratHelper.narrow(remoteRef);
             
-            return r;
         } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
             Logger.getLogger(GestionEtudiantImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

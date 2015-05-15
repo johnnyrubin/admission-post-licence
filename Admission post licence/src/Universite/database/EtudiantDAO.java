@@ -1,12 +1,15 @@
 package Universite.database;
 
+import Universite.pojo.Etudiant;
+import Universite.pojo.ResultatSemestre;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Classe d'accès aux données des étdiants enregistrée en base
+ * Classe d'accès aux données des étdiants enregistrés en base
  * 
  * @author Teddy
  */
@@ -22,12 +25,12 @@ public class EtudiantDAO {
         // Initialisation de la variable de retour
         Etudiant etudiant = null;
         
+        // Connexion à la base de données
+        ConnexionUniversite conn = new ConnexionUniversite("default.db");
+        conn.connect();
+        
         try {
             if(aIne != null) {
-                // Connexion à la base de données
-                ConnexionUniversite conn = new ConnexionUniversite("default.db");
-                conn.connect();
-
                 // Exécution de la requête
                 String sql = "SELECT * FROM ETUDIANT WHERE INE = '" + aIne + "';";
                 ResultSet rs = conn.statement.executeQuery(sql);
@@ -39,13 +42,18 @@ public class EtudiantDAO {
                     etudiant.setNom(rs.getString("NOM"));
                     etudiant.setPrenom(rs.getString("PRENOM"));
                     etudiant.setMdp(rs.getString("MDP"));
+                    
+                    // Récupération des résultats scolaires de l'étudiant
+                    List<ResultatSemestre> resultats = ResultatSemestreDAO.getFromEtudiant(etudiant);
+                    
+                    etudiant.setResultats(resultats);
                 }
-                
-                // Fermeture de la connexion à la BD
-                conn.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(EtudiantDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // Fermeture de la connexion
+            conn.close();
         }
         
         return etudiant;

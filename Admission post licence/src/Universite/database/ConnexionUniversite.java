@@ -11,14 +11,21 @@ import java.sql.Statement;
  */
 public class ConnexionUniversite {
     
-    private String DBPath;
+    private final String DBPath;
     private Connection connection = null;
     public Statement statement = null;
  
+    /**
+     * 
+     * @param dBPath 
+     */
     public ConnexionUniversite(String dBPath) {
         DBPath = "universite-"+dBPath;
     }
  
+    /**
+     * Lance la connexion à la base de données SQLite
+     */
     public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -34,6 +41,9 @@ public class ConnexionUniversite {
         }
     }
  
+    /**
+     * Ferme la connexion à la base de données SQLite
+     */
     public void close() {
         try {
             statement.close();

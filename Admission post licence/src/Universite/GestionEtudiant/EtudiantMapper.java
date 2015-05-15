@@ -3,13 +3,14 @@ package Universite.GestionEtudiant;
 import AdmissionPostLicence.identite;
 import AdmissionPostLicence.resultat;
 import AdmissionPostLicence.resultatsEtudiant;
-import Universite.database.Etudiant;
-import Universite.database.ResultatSemestre;
+import Universite.pojo.Etudiant;
+import Universite.pojo.ResultatSemestre;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Mapper permettant de transformer un classe POJO en classe CORBA
+ * 
  * @author Teddy
  */
 public class EtudiantMapper {
@@ -18,7 +19,7 @@ public class EtudiantMapper {
      * Convertit les infos d'un étudiant contenu dans la bd vers son type identite utilisé par corba
      * 
      * @param etudiant
-     * @return identite
+     * @return {@link identite}
      */
     public static identite etudiantToIdentiteCorba(Etudiant etudiant) {
         identite identite = null;
@@ -30,8 +31,9 @@ public class EtudiantMapper {
     
     /**
      * Convertit les infos d'un étudiant contenu dans la bd vers le type resultatsEtudiant utilisé par corba
+     * 
      * @param etudiant
-     * @return 
+     * @return {@link resultatsEtudiant}
      */
     public static resultatsEtudiant etudiantToResultatsEtudiantCorba(Etudiant etudiant) {
         

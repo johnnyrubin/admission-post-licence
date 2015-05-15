@@ -1,4 +1,4 @@
-package Universite.database;
+package Universite.pojo;
 
 /**
  * Objet utilisé pour stocker les résultats scolaires d'un étudiant présent en base

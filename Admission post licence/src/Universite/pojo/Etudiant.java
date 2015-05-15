@@ -1,4 +1,4 @@
-package Universite.database;
+package Universite.pojo;
 
 import java.util.List;
 

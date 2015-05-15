@@ -7,7 +7,8 @@ import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 
 /**
- *
+ * Classe principale d'un serveur universitaire
+ * 
  * @author Teddy
  */
 public class ServerUniversite {
@@ -27,6 +28,7 @@ public class ServerUniversite {
             
             // Création du servant pour la gestion des étudiants
             GestionEtudiantImpl gestEtu = new GestionEtudiantImpl();
+            gestEtu.setRectorat("Toulouse");
             
             // Activer le servant au sein du POA et récupérer son ID
             // byte[] gestEtuId = rootPOA.activate_object(gestEtu);
