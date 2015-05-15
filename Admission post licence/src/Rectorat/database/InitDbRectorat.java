@@ -29,6 +29,7 @@ public class InitDbRectorat {
         conn.connect();
         try {
             initTableRectorat();
+            initTableCandidatures();
         } catch (SQLException ex) {
             Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,12 +52,37 @@ public class InitDbRectorat {
 
         sql = "CREATE TABLE RECTORAT " +
                 "(ID TEXT PRIMARY KEY," +
-                "LIBELLE TEXT NOT NULL)";
+                "NOM TEXT NOT NULL)";
 
         // Création de la table RECTORAT
         conn.statement.executeUpdate(sql);
         
-        // Insertion des étudiants dans la table
+        // Insertion des rectorats dans la table
+        // TODO voir avec Vincent pour les données
+    }
+    
+    /**
+     * Création de la table CANDIDATURES
+     * 
+     * @throws SQLException 
+     */
+    private static void initTableCandidatures() throws SQLException{
+    // Suppression de la table CANDIDATURES
+        String sql = "DROP TABLE IF EXISTS CANDIDATURES;";
+
+        conn.statement.executeUpdate(sql);
+
+        sql = "CREATE TABLE CANDIDATURES " +
+                "(INE TEXT PRIMARY KEY," +
+                "IDMASTER TEXT NOT NULL,"+
+                "UNIVERSITE TEXT NOT NULL,"+
+                "ORDRE NUMBER NOT NULL,"
+                + ")";
+
+        // Création de la table CANDIDATURES
+        conn.statement.executeUpdate(sql);
+        
+        // Insertion des candidatures dans la table
         // TODO voir avec Vincent pour les données
     }
     

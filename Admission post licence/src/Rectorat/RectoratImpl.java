@@ -10,6 +10,8 @@ import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
 import AdmissionPostLicence.resultatCandidature;
 import Universite.ServerUniversite;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -23,20 +25,72 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  */
 public class RectoratImpl extends RectoratPOA{
 
+    //La liste des candidatures du rectorat
+    private candidature[] lesCandidatures;
+
+    /** Nom du Rectorat */
+    private String nom;
+    
+    /**
+     * Retourne le nom du Rectorat
+     * 
+     * @return le nom
+     */
+    public String getNom() {
+        return nom;
+    }
+    
+    /**
+     * Définit le nom du Rectorat
+     * 
+     * @param aNom 
+     */
+    public void setNom(String aNom) {
+        nom = aNom;
+    }
+
+    
     @Override
     public void creerCandidature(candidature c) {
-        //Avant tout on vérifie les pré-requis
-        
+        // Récupération du rectorat
+        Master m = getMasterCorba(c.master);
+        try {
+            if(m != null) {
+                //Vérification des pré requis
+                if(m.verifierPrerequis(c.etudiant.licence)){
+                    //Enregistrer candidature
+                    lesCandidatures=addElement(lesCandidatures, c);
+                }  
+            }
+        } catch (MasterInconnu ex) {
+            Logger.getLogger(RectoratImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public candidature[] recupererCandidaturesMaster(String master) throws MasterInconnu {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        candidature[] candidatures={};
+
+        for(int i=0;i<lesCandidatures.length;i++){
+           //Si les deux string master sont identique, alors on garde cette candidature 
+           if(lesCandidatures[i].master.equals(master)){
+               candidatures=addElement(candidatures, lesCandidatures[i]);
+           }
+        }
+        return candidatures;
     }
 
     @Override
     public candidature[] recupererCandidaturesEtudiant(identite etudiant) throws EtudiantInconnu {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        candidature[] candidatures={};
+
+        for(int i=0;i<lesCandidatures.length;i++){
+           //Si les deux string master sont identique, alors on garde cette candidature 
+           if(lesCandidatures[i].etudiant.ine.equals(etudiant.ine)){
+               candidatures=addElement(candidatures, lesCandidatures[i]);
+           }
+        }
+        return candidatures;
     }
 
     @Override
@@ -68,6 +122,18 @@ public class RectoratImpl extends RectoratPOA{
         }
         
         return r;
+    }
+    
+    private candidature[] addElement(candidature[] oldArray,candidature newValue){
+        //define the new array
+        candidature[] newArray = new candidature[oldArray.length + 1];
+        //copy values into new array
+        for(int i=0;i < oldArray.length;i++)
+            newArray[i] = oldArray[i];
+        //add new value to the new array
+        newArray[newArray.length-1] = newValue;
+        
+        return newArray;
     }
     
 }
