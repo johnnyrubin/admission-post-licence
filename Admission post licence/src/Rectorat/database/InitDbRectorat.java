@@ -51,9 +51,7 @@ public class InitDbRectorat {
 
         sql = "CREATE TABLE RECTORAT " +
                 "(ID TEXT PRIMARY KEY," +
-                "LIBELLE TEXT NOT NULL," +
-                "PRENOM TEXT NOT NULL," +
-                "MDP TEXT NOT NULL)";
+                "LIBELLE TEXT NOT NULL)";
 
         // Création de la table RECTORAT
         conn.statement.executeUpdate(sql);
