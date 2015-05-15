@@ -101,7 +101,7 @@ module AdmissionPostLicence
     interface Rectorat
     {
         // Enregistre une candidature auprès du rectorat, vérifie que l’étudiant puisse
-        // candidater au master grâce à GestionMaster
+        // candidater au master grâce à Master
         void creerCandidature(in candidature c);
 
         // Retourne la liste des candidatures à un master

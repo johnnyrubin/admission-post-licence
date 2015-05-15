@@ -11,10 +11,17 @@ import AdmissionPostLicence.resultatCandidature;
  * @author Teddy
  */
 public class MinistereImpl extends MinisterePOA{
-
+    private accreditation[] mesAccredidations;
+    
+    public MinistereImpl(){
+        accreditation[] arrayTemp= {new accreditation("Paul Sabatier","MIAGE"),new accreditation("Paul Sabatier","Fonda"),
+            new accreditation("UT1","MIAGE"),new accreditation("UT1","Droits")};
+        mesAccredidations=arrayTemp;
+    }
+    
     @Override
     public accreditation[] recupererAccreditations() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return mesAccredidations;
     }
 
     @Override

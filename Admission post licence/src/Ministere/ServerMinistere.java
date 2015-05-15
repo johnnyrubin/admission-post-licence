@@ -35,19 +35,19 @@ public class ServerMinistere {
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
             
             // Création du servant pour le ministere
-            // (du coup il peut y en avoir plusieurs ici)
-            MinistereImpl unMinistere = new MinistereImpl();
+            MinistereImpl Toulouse = new MinistereImpl();
+            
             
             // Activer le servant au sein du POA et récupérer son ID
-            // byte[] unMasterId = rootPOA.activate_object(unMaster);
+            // byte[] ToulouseId = rootPOA.activate_object(Toulouse);
             
-            nameToRegister[0] = new org.omg.CosNaming.NameComponent("unMinistere", "");
+            nameToRegister[0] = new org.omg.CosNaming.NameComponent("Toulouse", "");
             
             // Enregistrement de l'objet CORBA dans le service de noms
-            nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(unMinistere));
-            System.out.println("==> Nom \"UnMaster\" est enregistré dans l'espace de noms");
+            nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(Toulouse));
+            System.out.println("==> Nom \"Toulouse\" est enregistré dans l'espace de noms");
             
-            String IORServant = orb.object_to_string(rootPOA.servant_to_reference(unMinistere));
+            String IORServant = orb.object_to_string(rootPOA.servant_to_reference(Toulouse));
             System.out.println("L'objet possède la référence suivante : ");
             System.out.println(IORServant);
             
