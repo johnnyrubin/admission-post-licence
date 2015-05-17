@@ -6,9 +6,19 @@
 
 package Rectorat.database;
 
+import AdmissionPostLicence.EtudiantInconnu;
+import AdmissionPostLicence.Rectorat;
+import AdmissionPostLicence.RectoratHelper;
+import AdmissionPostLicence.candidature;
+import AdmissionPostLicence.identite;
+import Rectorat.ServerRectorat;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.omg.CosNaming.NamingContext;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.InvalidName;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *
@@ -25,7 +35,7 @@ public class InitDbRectorat {
     public static void main(String[] args) {
         
         // Connexion à la base de données
-        conn = new ConnexionRectorat("default.db");
+        conn = new ConnexionRectorat("toulouse.db");
         conn.connect();
         try {
             initTableRectorat();
@@ -73,10 +83,11 @@ public class InitDbRectorat {
         conn.statement.executeUpdate(sql);
 
         sql = "CREATE TABLE CANDIDATURES " +
-                "(INE TEXT PRIMARY KEY," +
-                "IDMASTER TEXT NOT NULL,"+
+                "(INE TEXT," +
+                "IDMASTER TEXT,"+
                 "UNIVERSITE TEXT NOT NULL,"+
-                "ORDRE NUMBER NOT NULL,"
+                "ORDRE NUMBER NOT NULL,"+
+                "PRIMARY KEY(INE,IDMASTER)"
                 + ")";
 
         // Création de la table CANDIDATURES
@@ -85,5 +96,7 @@ public class InitDbRectorat {
         // Insertion des candidatures dans la table
         // TODO voir avec Vincent pour les données
     }
+    
+    
     
 }

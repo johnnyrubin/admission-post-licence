@@ -9,9 +9,7 @@ import AdmissionPostLicence.RectoratPOA;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
 import AdmissionPostLicence.resultatCandidature;
-import Universite.ServerUniversite;
-import java.util.Hashtable;
-import java.util.Iterator;
+import Rectorat.database.CandidatureDb;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -49,6 +47,9 @@ public class RectoratImpl extends RectoratPOA{
         nom = aNom;
     }
 
+    public RectoratImpl(String nom){
+        this.nom=nom;
+    }
     
     @Override
     public void creerCandidature(candidature c) {
@@ -60,6 +61,7 @@ public class RectoratImpl extends RectoratPOA{
                 if(m.verifierPrerequis(c.etudiant.licence)){
                     //Enregistrer candidature
                     lesCandidatures=addElement(lesCandidatures, c);
+                    CandidatureDb.ajoutCandidature(c, this.nom);
                 }  
             }
         } catch (MasterInconnu ex) {
@@ -108,7 +110,7 @@ public class RectoratImpl extends RectoratPOA{
         Master r = null;
         
         try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(ServerUniversite.orb.resolve_initial_references("NameService"));
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(ServerRectorat.orb.resolve_initial_references("NameService"));
             org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
             
             // On récupère le rectorat
