@@ -73,7 +73,7 @@ public class RectoratImpl extends RectoratPOA{
                 //Vérification des pré requis
                 if(m.verifierPrerequis(c.etudiant.licence)){
                     //Enregistrer candidature
-                    lesCandidatures=addElement(lesCandidatures, c);
+                    lesCandidatures=addCandidature(lesCandidatures, c);
                     CandidatureDb.ajoutCandidature(c, this.nom);
                 }  
             }
@@ -89,7 +89,7 @@ public class RectoratImpl extends RectoratPOA{
         for(int i=0;i<lesCandidatures.length;i++){
            //Si les deux string master sont identique, alors on garde cette candidature 
            if(lesCandidatures[i].master.equals(master)){
-               candidatures=addElement(candidatures, lesCandidatures[i]);
+               candidatures=addCandidature(candidatures, lesCandidatures[i]);
            }
         }
         return candidatures;
@@ -102,7 +102,7 @@ public class RectoratImpl extends RectoratPOA{
         for(int i=0;i<lesCandidatures.length;i++){
            //Si les deux string master sont identique, alors on garde cette candidature 
            if(lesCandidatures[i].etudiant.ine.equals(etudiant.ine)){
-               candidatures=addElement(candidatures, lesCandidatures[i]);
+               candidatures=addCandidature(candidatures, lesCandidatures[i]);
            }
         }
         return candidatures;
@@ -110,15 +110,33 @@ public class RectoratImpl extends RectoratPOA{
 
     @Override
     public resultatCandidature[] consulterEtatCandidatures(candidature[] c) throws CandidatureInconnu {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        resultatCandidature[] rcs=null;
+        resultatCandidature rc;
         /*Boucler sur chaque candidature et dans la boucle aller chercher le resultat dans les résultats locaux
         puis insérer dans la varible résultatCandidature a renvoyer*/
-        
+        for(int i=0;i<c.length;i++){
+            rc=searchCandidature(c[i]);
+            addResultatCandidature(rcs, rc);
+        }
+        return rcs;
     }
 
     @Override
     public void modifierCandidature(resultatCandidature candidature) throws CandidatureInconnu {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean trouve=false;
+        for(int i=0;i<lesResultatsCandidatures.length&&!trouve;i++){
+            //Si je rentre dans le if c'est que j'ai trouvé le resultatCandidature
+            if(lesResultatsCandidatures[i].c.etudiant.ine.equals(candidature.c.etudiant.ine) && 
+                    lesResultatsCandidatures[i].c.master.equals(candidature.c.master)){
+                //Je le modifie alors
+                lesResultatsCandidatures[i]=candidature;
+                trouve=true;
+            }
+        }
+        //Si on a pas trouvé la candidature alors on l'ajoute
+        if(!trouve){
+            addResultatCandidature(lesResultatsCandidatures,candidature);
+        }
     }
     
     private Master getMasterCorba(String master) {
@@ -142,9 +160,45 @@ public class RectoratImpl extends RectoratPOA{
         return r;
     }
     
-    private candidature[] addElement(candidature[] oldArray,candidature newValue){
+    private resultatCandidature searchCandidature(candidature c){
+        resultatCandidature rc = null;
+        for(int i=0;i<lesResultatsCandidatures.length;i++){
+            //Si je rentre dans le if c'est que j'ai trouvé le resultatCandidature
+            if(lesResultatsCandidatures[i].c.etudiant.ine.equals(c.etudiant.ine) && 
+                    lesResultatsCandidatures[i].c.master.equals(c.master)){
+                rc=lesResultatsCandidatures[i];
+            }
+        }
+        return rc;
+    }
+    
+    /**
+     * Ajoute la nouvelle valeur dans le tableau
+     * @param oldArray
+     * @param newValue
+     * @return 
+     */
+    private candidature[] addCandidature(candidature[] oldArray,candidature newValue){
         //define the new array
         candidature[] newArray = new candidature[oldArray.length + 1];
+        //copy values into new array
+        for(int i=0;i < oldArray.length;i++)
+            newArray[i] = oldArray[i];
+        //add new value to the new array
+        newArray[newArray.length-1] = newValue;
+        
+        return newArray;
+    }
+    
+    /**
+     * Ajoute la nouvelle valeur dans le tableau
+     * @param oldArray
+     * @param newValue
+     * @return 
+     */
+    private resultatCandidature[] addResultatCandidature(resultatCandidature[] oldArray,resultatCandidature newValue){
+        //define the new array
+        resultatCandidature[] newArray = new resultatCandidature[oldArray.length + 1];
         //copy values into new array
         for(int i=0;i < oldArray.length;i++)
             newArray[i] = oldArray[i];
