@@ -25,6 +25,9 @@ public class RectoratImpl extends RectoratPOA{
 
     //La liste des candidatures du rectorat
     private candidature[] lesCandidatures;
+    
+    //La liste des resultats des candidatures
+    private resultatCandidature[] lesResultatsCandidatures;
 
     /** Nom du Rectorat */
     private String nom;
@@ -50,6 +53,16 @@ public class RectoratImpl extends RectoratPOA{
     public RectoratImpl(String nom){
         this.nom=nom;
     }
+
+    public candidature[] getLesCandidatures() {
+        return lesCandidatures;
+    }
+
+    public void setLesCandidatures(candidature[] lesCandidatures) {
+        this.lesCandidatures = lesCandidatures;
+    }
+    
+    
     
     @Override
     public void creerCandidature(candidature c) {
@@ -98,6 +111,9 @@ public class RectoratImpl extends RectoratPOA{
     @Override
     public resultatCandidature[] consulterEtatCandidatures(candidature[] c) throws CandidatureInconnu {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        /*Boucler sur chaque candidature et dans la boucle aller chercher le resultat dans les résultats locaux
+        puis insérer dans la varible résultatCandidature a renvoyer*/
+        
     }
 
     @Override

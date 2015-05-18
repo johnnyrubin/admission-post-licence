@@ -7,6 +7,7 @@ package Rectorat;
 
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
+import Rectorat.database.InitDbRectorat;
 import org.omg.CosNaming.NamingContext;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
@@ -31,6 +32,9 @@ public class ServerRectorat {
             
             // Création du servant pour la gestion des étudiants
             RectoratImpl rectorat = new RectoratImpl("Rectorat");
+            InitDbRectorat.main(args);
+            //Import des données de la base
+            //TODO
             
             // Activer le servant au sein du POA et récupérer son ID
             // byte[] gestEtuId = rootPOA.activate_object(gestEtu);

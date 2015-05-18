@@ -12,6 +12,7 @@ import AdmissionPostLicence.RectoratHelper;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
 import Rectorat.ServerRectorat;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,11 +36,13 @@ public class InitDbRectorat {
     public static void main(String[] args) {
         
         // Connexion à la base de données
-        conn = new ConnexionRectorat("toulouse.db");
+        conn = new ConnexionRectorat("Rectorat.db");
         conn.connect();
         try {
             initTableRectorat();
             initTableCandidatures();
+            initTableResultatsCandidatures();
+            displayInfo();
         } catch (SQLException ex) {
             Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,6 +72,8 @@ public class InitDbRectorat {
         
         // Insertion des rectorats dans la table
         // TODO voir avec Vincent pour les données
+        sql = "Insert into RECTORAT values ( 1, 'Rectorat' )";
+        conn.statement.executeUpdate(sql);
     }
     
     /**
@@ -95,6 +100,56 @@ public class InitDbRectorat {
         
         // Insertion des candidatures dans la table
         // TODO voir avec Vincent pour les données
+        CandidatureDb.ajoutCandidature(new candidature(new identite("0001", "rubin", "johnny", "paul sab", "fonda"), "UnMaster", "paul sab", (short)1),"Rectorat" );
+    }
+    
+    /**
+     * Création de la table RESULTATSCANDIDATURES
+     * @throws SQLException 
+     */
+    private static void initTableResultatsCandidatures() throws SQLException{
+        // Suppression de la table RESULTATSCANDIDATURES
+        String sql = "DROP TABLE IF EXISTS RESULTATSCANDIDATURES;";
+
+        conn.statement.executeUpdate(sql);
+
+        sql = "CREATE TABLE RESULTATSCANDIDATURES " +
+                "(INE TEXT," +
+                "IDMASTER TEXT,"+
+                "ETAT TEXT NOT NULL,"+
+                "DECISIONCANDIDAT TEXT NOT NULL,"+
+                "DECISIONMASTER TEXT NOT NULL,"+
+                "PRIMARY KEY(INE,IDMASTER)"
+                + ")";
+
+        // Création de la table RESULTATSCANDIDATURES
+        conn.statement.executeUpdate(sql);
+        
+        // Insertion des resultats candidatures dans la table
+        // TODO voir avec Vincent pour les données
+    }
+    
+    private static void displayInfo(){
+        String sql = "select * from candidatures";
+        try {
+            ResultSet rs = conn.statement.executeQuery(sql);
+            while(rs.next()){
+                String INE = rs.getString("INE");
+                String IDMASTER = rs.getString("IDMASTER");
+                String UNIVERSITE = rs.getString("UNIVERSITE");
+                int ordre = rs.getInt("ORDRE");
+                System.out.println("Candidatures : " + INE + " " + IDMASTER + " " +  UNIVERSITE +  " " + ordre);
+            }
+            sql = "select * from rectorat";
+            rs = conn.statement.executeQuery(sql);
+            while(rs.next()){
+                String ID = rs.getString("ID");
+                String NOM = rs.getString("NOM");
+                System.out.println("Rectorat : " + ID + " " + NOM);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

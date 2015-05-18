@@ -6,6 +6,7 @@
 package Rectorat.database;
 
 import AdmissionPostLicence.candidature;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,11 +35,50 @@ public class CandidatureDb {
             String sql = "Insert into CANDIDATURES values" +
                     "('"+c.etudiant.ine+"','"+c.master+"','"+c.universite+"',"+c.ordre+")";
             
-            // Création de la table RECTORAT
+            // Création de la candidature
             lineAffected=conn.statement.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDb.class.getName()).log(Level.SEVERE, null, ex);
         }
+        finally{
+            // Fermeture de la connexion
+            conn.close();  
+        }
         return (lineAffected!=0);
+    }
+    
+    public static candidature[] importCandidatures(String nomRectorat){
+        candidature[] candidatures=new candidature[0];
+        // Connexion à la base de données
+        conn = new ConnexionRectorat(nomRectorat+".db");
+        conn.connect();
+        String sql = "select count(*) from candidatures";
+        int compteur=0;
+        try {
+            ResultSet rs = conn.statement.executeQuery(sql);
+            rs.next();
+            //récupération du premier resultat, soit le count
+            int nb = (int)rs.getObject(0);
+            //Initialisation du tableau avec le nombre de candidatures dans la table
+            candidatures=new candidature[nb];
+            //maintenant on récupère à proprement dit les datas
+            sql = "select * from candidatures";
+            rs = conn.statement.executeQuery(sql);
+            while(rs.next()){
+                String INE = rs.getString("INE");
+                String IDMASTER = rs.getString("IDMASTER");
+                String UNIVERSITE = rs.getString("UNIVERSITE");
+                short ordre = (short)rs.getInt("ORDRE");
+                //TODO Ajouter la récupération de l'objet entite lié à cet INE (Teddy)
+                //candidatures[compteur]=new candidature(INE,IDMASTER,UNIVERSITE,ordre);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            // Fermeture de la connexion
+            conn.close();  
+        }
+        return candidatures;
     }
 }
