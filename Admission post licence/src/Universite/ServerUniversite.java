@@ -29,6 +29,9 @@ public class ServerUniversite {
             // Création du servant pour la gestion des étudiants
             GestionEtudiantImpl gestEtu = new GestionEtudiantImpl();
             gestEtu.setRectorat("Toulouse");
+            /**Import des données de la base
+             * TODO
+             */
             
             // Activer le servant au sein du POA et récupérer son ID
             // byte[] gestEtuId = rootPOA.activate_object(gestEtu);
@@ -54,6 +57,7 @@ public class ServerUniversite {
             // Création du servant pour le master
             // (du coup il peut y en avoir plusieurs ici)
             MasterImpl unMaster = new MasterImpl();
+            
             
             // Activer le servant au sein du POA et récupérer son ID
             // byte[] unMasterId = rootPOA.activate_object(unMaster);

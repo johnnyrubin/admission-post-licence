@@ -6,6 +6,7 @@
 package Rectorat.database;
 
 import AdmissionPostLicence.candidature;
+import Universite.GestionEtudiant.GestionEtudiantImpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -69,8 +70,8 @@ public class CandidatureDb {
                 String IDMASTER = rs.getString("IDMASTER");
                 String UNIVERSITE = rs.getString("UNIVERSITE");
                 short ordre = (short)rs.getInt("ORDRE");
-                //TODO Ajouter la récupération de l'objet entite lié à cet INE (Teddy)
-                //candidatures[compteur]=new candidature(INE,IDMASTER,UNIVERSITE,ordre);
+                //TODO Ajouter la récupération de l'objet identite lié à cet INE (Teddy)
+                candidatures[compteur]=new candidature(GestionEtudiantImpl.getEtudiant(INE),IDMASTER,UNIVERSITE,ordre);
             }
         } catch (SQLException ex) {
             Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);

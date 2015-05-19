@@ -14,6 +14,7 @@ import AdmissionPostLicence.resultatsEtudiant;
 import Universite.ServerUniversite;
 import Universite.pojo.Etudiant;
 import Universite.database.EtudiantDAO;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -27,6 +28,42 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  * @author Teddy
  */
 public class GestionEtudiantImpl extends GestionEtudiantPOA {
+    
+    /** Liste de ses étudiants ayant pour clé l'ine de l'étudiant **/
+    private static Hashtable<String,identite> lesEtudiants;
+
+    /**
+     * Retourne la liste des étudiants
+     * @return la liste des étudiants
+     */
+    public static Hashtable<String, identite> getLesEtudiants() {
+        return lesEtudiants;
+    }
+
+    /**
+     * Définit la liste des étudiants
+     * @param lesEtudiants 
+     */
+    public static void setLesEtudiants(Hashtable<String, identite> lesEtudiants) {
+        GestionEtudiantImpl.lesEtudiants = lesEtudiants;
+    }
+    
+    /**
+     * Ajoute un étudiant à la liste
+     * @param i 
+     */
+    public static void addEtudiant(identite i){
+       GestionEtudiantImpl.lesEtudiants.put(i.ine, i);
+    }
+    
+    /**
+     * Retourne l'objet identité lié à cet INE
+     * @param ine
+     * @return objet identite de l'étudiant 
+     */
+    public static identite getEtudiant(String ine){
+        return GestionEtudiantImpl.lesEtudiants.get(ine);
+    }
     
     /** Le nom du rectorat auquel appartient l'université de cette gestion étudiant */
     private String rectorat;
