@@ -70,7 +70,7 @@ public class CandidatureDb {
                 String IDMASTER = rs.getString("IDMASTER");
                 String UNIVERSITE = rs.getString("UNIVERSITE");
                 short ordre = (short)rs.getInt("ORDRE");
-                //TODO Ajouter la récupération de l'objet identite lié à cet INE (Teddy)
+                //on ajoute au tableau des candidature, la candidature récupérée
                 candidatures[compteur]=new candidature(GestionEtudiantImpl.getEtudiant(INE),IDMASTER,UNIVERSITE,ordre);
             }
         } catch (SQLException ex) {

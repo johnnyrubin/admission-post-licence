@@ -2,36 +2,87 @@ package Ministere;
 
 import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.MinisterePOA;
+import AdmissionPostLicence.Rectorat;
+import AdmissionPostLicence.RectoratHelper;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.resultatCandidature;
+import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.omg.CosNaming.NamingContext;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.InvalidName;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *
  * @author Teddy
  */
 public class MinistereImpl extends MinisterePOA{
-    private accreditation[] mesAccredidations;
-    
-    public MinistereImpl(){
-        accreditation[] arrayTemp= {new accreditation("Paul Sabatier","MIAGE"),new accreditation("Paul Sabatier","Fonda"),
-            new accreditation("UT1","MIAGE"),new accreditation("UT1","Droits")};
-        mesAccredidations=arrayTemp;
+    //Liste des accreditations
+    private accreditation[] mesAccreditations;
+    //Liste qui permet de savoir à quel rectorat appartient une université, la clé est l'université
+    //et la valeur le rectorat
+    private Hashtable<String,String> lesLiaisons;
+
+    public void setLesLiaisons(Hashtable<String, String> lesLiaisons) {
+        this.lesLiaisons = lesLiaisons;
+    }
+
+    public void setMesAccreditations(accreditation[] mesAccredidations) {
+        this.mesAccreditations = mesAccredidations;
     }
     
     @Override
     public accreditation[] recupererAccreditations() {
-        return mesAccredidations;
+        return mesAccreditations;
     }
 
     @Override
     public void transfererCandidature(candidature c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //L'orientation de transfert se fait à partir des variables universite et master qui se trouvent
+        //dans la candidature
+        //on récupère donc le rectorat
+        Rectorat r = getRectoratCorba(lesLiaisons.get(c.universite));
+        r.creerCandidature(c);
     }
 
     @Override
     public void transfererDecision(resultatCandidature r) throws CandidatureInconnu {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Rectorat rectorat = getRectoratCorba(lesLiaisons.get(r.c.universite));
+        rectorat.modifierCandidature(r);
+
+    }
+    
+    /**
+     * Permet de récupérer l'objet CORBA du rectorat
+     * 
+     * @return {@link Rectorat}
+     */
+    private Rectorat getRectoratCorba(String nomRectorat) {
+        // Initialisation de la variable de retour
+        Rectorat r = null;
+        try {
+            
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(ServerMinistere.orb.resolve_initial_references("NameService"));
+            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
+            
+            // On récupère le rectorat
+            nameToFind[0] = new org.omg.CosNaming.NameComponent(nomRectorat, "");
+            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
+            r = RectoratHelper.narrow(remoteRef);
+            
+        } catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
+            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotFound ex) {
+            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CannotProceed ex) {
+            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidName ex) {
+            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return r;
     }
     
 }

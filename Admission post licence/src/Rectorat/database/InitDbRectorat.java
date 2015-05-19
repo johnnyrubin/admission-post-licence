@@ -6,20 +6,12 @@
 
 package Rectorat.database;
 
-import AdmissionPostLicence.EtudiantInconnu;
-import AdmissionPostLicence.Rectorat;
-import AdmissionPostLicence.RectoratHelper;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
-import Rectorat.ServerRectorat;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.InvalidName;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *

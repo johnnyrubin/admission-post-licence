@@ -12,7 +12,7 @@ import java.sql.Statement;
 public class ConnexionMinistere {
     private String DBPath;
     private Connection connection = null;
-    private Statement statement = null;
+    public Statement statement = null;
  
     public ConnexionMinistere(String dBPath) {
         DBPath = "ministere-"+dBPath;
