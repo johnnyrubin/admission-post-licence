@@ -66,6 +66,9 @@ public class InitDb {
         
         // Insertion des étudiants dans la table
         // TODO voir avec Vincent pour les données
+        
+        sql = "INSERT INTO ETUDIANT VALUES ('123456E', 'dupond', 'jean', 'toto');";
+        conn.statement.executeUpdate(sql);
     }
     
     /**

@@ -167,6 +167,9 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
 
     @Override
     public identite seConnecter(String ine, String mdp) throws EtudiantInconnu {
+        
+        System.out.println("GestionEtudiantImpl.seConnecter");
+        
         // Initialisation de la variable de retour
         identite identite = null;
         
@@ -190,7 +193,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
      * 
      * @return {@link Rectorat}
      */
-    private Rectorat getRectoratCorba() {
+    private Rectorat getRectoratCorba() {        
         // Initialisation de la variable de retour
         Rectorat r = null;
         

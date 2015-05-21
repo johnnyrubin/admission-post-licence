@@ -29,15 +29,12 @@ public class ServerUniversite {
             // Création du servant pour la gestion des étudiants
             GestionEtudiantImpl gestEtu = new GestionEtudiantImpl();
             gestEtu.setRectorat("Toulouse");
-            /**Import des données de la base
-             * TODO
-             */
-            
-            // Activer le servant au sein du POA et récupérer son ID
-            // byte[] gestEtuId = rootPOA.activate_object(gestEtu);
             
             // Activer le POA manager
             rootPOA.the_POAManager().activate();
+            
+            // Activer le servant au sein du POA et récupérer son ID
+            rootPOA.activate_object(gestEtu);
             
             // Récupération du naming service
             NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
@@ -58,9 +55,8 @@ public class ServerUniversite {
             // (du coup il peut y en avoir plusieurs ici)
             MasterImpl unMaster = new MasterImpl();
             
-            
             // Activer le servant au sein du POA et récupérer son ID
-            // byte[] unMasterId = rootPOA.activate_object(unMaster);
+            rootPOA.activate_object(unMaster);
             
             nameToRegister[0] = new org.omg.CosNaming.NameComponent("UnMaster", "");
             
