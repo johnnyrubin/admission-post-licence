@@ -171,7 +171,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         System.out.println("GestionEtudiantImpl.seConnecter");
         
         // Initialisation de la variable de retour
-        identite identite = null;
+        identite id = null;
         
         // Récupération de l'étudiant dans la base de données de l'université
         Etudiant e = EtudiantDAO.getFromIne(ine);
@@ -179,13 +179,13 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         if(e != null) {
             // On compare les mots de passe
             if(e.getMdp().equals(mdp)) {
-                identite = EtudiantMapper.etudiantToIdentiteCorba(e);
+                id = EtudiantMapper.etudiantToIdentiteCorba(e);
             }
         } else {
             throw new EtudiantInconnu();
         }
-        
-        return identite;
+        System.out.println(id.nom);
+        return id;
     }
     
     /**

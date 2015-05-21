@@ -75,6 +75,7 @@ public class RectoratImpl extends RectoratPOA{
                     //Enregistrer candidature
                     lesCandidatures=addCandidature(lesCandidatures, c);
                     CandidatureDb.ajoutCandidature(c, this.nom);
+                    //TODO créer resultatCandidature a blanc pour pouvoir mettre en place l'exception
                 }  
             }
         } catch (MasterInconnu ex) {

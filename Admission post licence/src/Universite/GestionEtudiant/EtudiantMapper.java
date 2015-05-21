@@ -24,7 +24,7 @@ public class EtudiantMapper {
     public static identite etudiantToIdentiteCorba(Etudiant etudiant) {
         identite identite = null;
         if(etudiant != null) {
-            identite = new identite(etudiant.getIne(), etudiant.getNom(), etudiant.getPrenom(), null, null);
+            identite = new identite(etudiant.getIne(), etudiant.getNom(), etudiant.getPrenom(), "", "");
         }
         return identite;
     }

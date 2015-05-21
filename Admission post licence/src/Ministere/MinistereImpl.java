@@ -52,7 +52,6 @@ public class MinistereImpl extends MinisterePOA{
     public void transfererDecision(resultatCandidature r) throws CandidatureInconnu {
         Rectorat rectorat = getRectoratCorba(lesLiaisons.get(r.c.universite));
         rectorat.modifierCandidature(r);
-
     }
     
     /**
