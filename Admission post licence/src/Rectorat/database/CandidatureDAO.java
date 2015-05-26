@@ -6,6 +6,7 @@
 package Rectorat.database;
 
 import AdmissionPostLicence.candidature;
+import Rectorat.pojo.Candidature;
 import Universite.GestionEtudiant.GestionEtudiantImpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author johnny
  */
-public class CandidatureDb {
+public class CandidatureDAO {
     
     /** Connexion à la base de données Rectorat */
     private static ConnexionRectorat conn;
@@ -27,19 +28,19 @@ public class CandidatureDb {
      * @param nomRectorat
      * @return 
      */
-    public static boolean ajoutCandidature(candidature c,String nomRectorat){
+    public static boolean ajoutCandidature(Candidature c,String nomRectorat){
         int lineAffected=0;
         try {
             // Connexion à la base de données
             conn = new ConnexionRectorat(nomRectorat+".db");
             conn.connect();
             String sql = "Insert into CANDIDATURES values" +
-                    "('"+c.etudiant.ine+"','"+c.master+"','"+c.universite+"',"+c.ordre+")";
+                    "('"+c.getEtu().getIne()+"','"+c.getMaster().getNom()+"','"+c.getUniversite()+"',"+c.getOrdre()+")";
             
             // Création de la candidature
             lineAffected=conn.statement.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(CandidatureDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
             // Fermeture de la connexion

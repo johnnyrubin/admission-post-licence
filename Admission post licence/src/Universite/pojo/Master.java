@@ -17,6 +17,15 @@ public class Master {
     
     /** Liste des licences requises pour candidater au master */
     private List<Licence> prerequis;
+
+    public Master(){
+        
+    }
+    
+    public Master(Integer id, String nom) {
+        this.id = id;
+        this.nom = nom;
+    }
     
     /**
      * Retourne l'identifiant du master

@@ -30,7 +30,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         String[] test = {};
         orb = org.omg.CORBA.ORB.init(test,null);
-        orb.string_to_object("corbaloc:iiop:1.2@192.168.0.28:2001/NameService");
+        orb.string_to_object("corbaloc:iiop:1.2@192.168.0.12:2001/NameService");
     }
 
     /**

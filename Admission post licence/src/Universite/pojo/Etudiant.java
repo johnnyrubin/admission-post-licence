@@ -21,8 +21,26 @@ public class Etudiant {
     /** Mot de passe de l'étudiant */
     private String mdp;
     
+    /** Université à laquelle il appartient */
+    private String universite;
+    
+    /** Licence dont il est originaire */
+    private String licence;
+    
     /** Les résultats scolaires de l'étudiant aux différents semestres */
     private List<ResultatSemestre> resultats;
+
+    public Etudiant() {
+
+    }
+    
+    public Etudiant(String ine, String nom, String prenom, String universite,String licence) {
+        this.ine = ine;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.universite = universite;
+        this.licence = licence;
+    }
     
     /**
      * Retourne le numéro INE de l'étudiant
@@ -113,5 +131,39 @@ public class Etudiant {
     public void setMdp(String aMdp) {
         mdp = aMdp;
     }
+
+    /**
+     * Récupère l'université actuelle de l'étudiant
+     * @return String
+     */
+    public String getUniversite() {
+        return universite;
+    }
+
+    /**
+     * Définit l'université de l'étudiant
+     * @param universite 
+     */
+    public void setUniversite(String universite) {
+        this.universite = universite;
+    }
+
+    /**
+     * Récupère la licence de l'étudiant
+     * @return String
+     */
+    public String getLicence() {
+        return licence;
+    }
+
+    /**
+     * Définit la licence de l'étudiant
+     * @param licence 
+     */
+    public void setLicence(String licence) {
+        this.licence = licence;
+    }
+    
+    
     
 }

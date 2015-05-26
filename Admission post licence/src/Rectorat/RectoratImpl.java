@@ -9,7 +9,10 @@ import AdmissionPostLicence.RectoratPOA;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
 import AdmissionPostLicence.resultatCandidature;
-import Rectorat.database.CandidatureDb;
+import Rectorat.database.CandidatureDAO;
+import Rectorat.pojo.Candidature;
+import Rectorat.pojo.ResultatCandidature;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -23,11 +26,11 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  */
 public class RectoratImpl extends RectoratPOA{
 
-    //La liste des candidatures du rectorat
-    private candidature[] lesCandidatures;
+    //La liste des candidatures du rectorat ayant pour clé l'INE de l'étudiant
+    private HashMap<String,Candidature> lesCandidatures;
     
     //La liste des resultats des candidatures
-    private resultatCandidature[] lesResultatsCandidatures;
+    private HashMap<String,ResultatCandidature> lesResultatsCandidatures;
 
     /** Nom du Rectorat */
     private String nom;
@@ -54,27 +57,22 @@ public class RectoratImpl extends RectoratPOA{
         this.nom=nom;
     }
 
-    public candidature[] getLesCandidatures() {
+    public HashMap<String,Candidature> getLesCandidatures() {
         return lesCandidatures;
     }
-
-    public void setLesCandidatures(candidature[] lesCandidatures) {
-        this.lesCandidatures = lesCandidatures;
-    }
-    
-    
     
     @Override
     public void creerCandidature(candidature c) {
+        Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
         // Récupération du rectorat
-        Master m = getMasterCorba(c.master);
+        Master m = getMasterCorba(candidature.getMaster().getNom());
         try {
             if(m != null) {
                 //Vérification des pré requis
-                if(m.verifierPrerequis(c.etudiant.licence)){
+                if(m.verifierPrerequis(candidature.getEtu().getLicence())){
                     //Enregistrer candidature
-                    lesCandidatures=addCandidature(lesCandidatures, c);
-                    CandidatureDb.ajoutCandidature(c, this.nom);
+                    lesCandidatures.put(candidature.getEtu().getIne(), candidature);
+                    CandidatureDAO.ajoutCandidature(candidature, this.nom);
                     //TODO créer resultatCandidature a blanc pour pouvoir mettre en place l'exception
                 }  
             }

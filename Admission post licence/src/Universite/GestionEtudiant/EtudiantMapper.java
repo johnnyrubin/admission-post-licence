@@ -30,6 +30,20 @@ public class EtudiantMapper {
     }
     
     /**
+     * Convertit les infos de type identite Corba vers l'objet Etudiant
+     * 
+     * @param identite
+     * @return {@link Etudiant}
+     */
+    public static Etudiant identiteToEtudiantCorba(identite identite) {
+        Etudiant etudiant = null;
+        if(identite != null) {
+            etudiant = new Etudiant(identite.ine, identite.nom, identite.prenom, identite.universite, identite.licence);
+        }
+        return etudiant;
+    }
+    
+    /**
      * Convertit les infos d'un étudiant contenu dans la bd vers le type resultatsEtudiant utilisé par corba
      * 
      * @param etudiant

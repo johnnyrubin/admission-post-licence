@@ -5,48 +5,92 @@
  */
 package Rectorat.pojo;
 
+import Universite.pojo.Etudiant;
+import Universite.pojo.Master;
+
 /**
  *
  * @author johnny
  */
 public class Candidature {
-    //INE de l'étudiant pour la candidature
-    private String INE;
-    //Id du master visé par la candidature
-    private String IdMaster;
+    //étudiant pour la candidature
+    private Etudiant etu;
+    //master visé par la candidature
+    private Master master;
     //université visée par la candidature
     private String Universite;
     //ordre de la candidature pour l'étudiant
     private int ordre;
 
-    public String getINE() {
-        return INE;
+    public Candidature(Etudiant etu, Master master, String Universite, int ordre) {
+        this.etu = etu;
+        this.master = master;
+        this.Universite = Universite;
+        this.ordre = ordre;
+    }
+    
+    
+    /**
+     * Récupère l'étudiant de la candidature
+     * @return String
+     */
+    public Etudiant getEtu() {
+        return etu;
     }
 
-    public void setINE(String INE) {
-        this.INE = INE;
+    /**
+     * Définit l'étudiant de la candidature
+     * @param etu 
+     */
+    public void setINE(Etudiant etu) {
+        this.etu = etu;
     }
 
-    public String getIdMaster() {
-        return IdMaster;
+    /**
+     * Récupère le master visé par la candidature
+     * 
+     * @return Master 
+     */
+    public Master getMaster() {
+        return master;
     }
 
-    public void setIdMaster(String IdMaster) {
-        this.IdMaster = IdMaster;
+    /**
+     * Définit le master visé par la candidature
+     * @param master 
+     */
+    public void setIdMaster(Master master) {
+        this.master = master;
     }
 
+    /**
+     * Récupère l'université visée par la candidature
+     * @return  String
+     */
     public String getUniversite() {
         return Universite;
     }
 
+    /**
+     * Définit l'université pour la candidature
+     * @param Universite 
+     */
     public void setUniversite(String Universite) {
         this.Universite = Universite;
     }
 
+    /**
+     * Récupère l'ordre de la candidature pour l'étudiant
+     * @return int
+     */
     public int getOrdre() {
         return ordre;
     }
 
+    /**
+     * Définit l'ordre de la candidature
+     * @param ordre 
+     */
     public void setOrdre(int ordre) {
         this.ordre = ordre;
     }
