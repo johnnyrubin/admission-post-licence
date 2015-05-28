@@ -29,7 +29,7 @@ public class CandidatureMapper {
     public static candidature candidatureToCandidatureCorba(Candidature c) {
         candidature ca = null;
         if(c != null) {
-            ca = new candidature(EtudiantMapper.etudiantToIdentiteCorba(c.getEtu()), c.getMaster().getNom(), c.getUniversite(), (short)c.getOrdre());
+            ca = new candidature(EtudiantMapper.etudiantToIdentiteCorba(c.getEtu()), c.getMaster(), c.getUniversite(), (short)c.getOrdre());
         }
         return ca;
     }
@@ -56,12 +56,28 @@ public class CandidatureMapper {
      * @param rc
      * @return {@link resultatCandidature}
      */
-    public static resultatCandidature candidatureToCandidatureCorba(ResultatCandidature rc) {
+    public static resultatCandidature resultatCandidatureToResultatCandidatureCorba(ResultatCandidature rc) {
         resultatCandidature rca = null;
         if(rc != null) {
             rca = new resultatCandidature(CandidatureMapper.candidatureToCandidatureCorba(rc.getCandidature()),
                     etatCandidature.from_int(rc.getEtatCandidature()), decisionCandidat.from_int(rc.getDecisionCandidat()),
                     decisionMaster.from_int(rc.getDecisionMaster()));
+        }       
+        return rca;
+    }
+    
+    /**
+     * Convertit les infos de type resultatcandidature utilisé par corba vers l'objet ResultatCandidature
+     * 
+     * @param rc
+     * @return {@link ResultatCandidature}
+     */
+    public static ResultatCandidature resultatCandidatureCorbaToResultatCandidature(resultatCandidature rc) {
+        ResultatCandidature rca = null;
+        if(rc != null) {
+            rca = new ResultatCandidature(CandidatureMapper.candidatureCorbaToCandidature(rc.c),
+                    rc.etat.value(), rc.decisionC.value(),
+                    rc.decisionM.value());
         }       
         return rca;
     }

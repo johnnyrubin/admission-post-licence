@@ -8,6 +8,7 @@ package IHM.Etudiant;
 import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.GestionEtudiantHelper;
+import AdmissionPostLicence.identite;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -48,6 +49,7 @@ public class Login extends javax.swing.JFrame {
         jTextFieldINE = new javax.swing.JTextField();
         jPasswordField = new javax.swing.JPasswordField();
         jButtonConnect = new javax.swing.JButton();
+        jLabelError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,8 +84,13 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(85, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonConnect)
-                .addGap(134, 134, 134))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonConnect)
+                        .addGap(134, 134, 134))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +107,9 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addComponent(jButtonConnect)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelError, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -116,7 +125,14 @@ public class Login extends javax.swing.JFrame {
             nameToFind[0] = new org.omg.CosNaming.NameComponent("GestionEtudiant", "");
             org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
             g = GestionEtudiantHelper.narrow(remoteRef);
-            System.out.println(g.seConnecter("123456E","toto").nom);
+            identite i = g.seConnecter("123456E","toto");
+            if(i!=null){
+                //les identifiants sont ok
+                jLabelError.setText("");
+            }
+            else{
+                jLabelError.setText("Identifiants ou mot de passe incorrect");
+            }
         } catch (InvalidName ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotFound ex) {
@@ -172,6 +188,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelError;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JTextField jTextFieldINE;
     // End of variables declaration//GEN-END:variables

@@ -12,7 +12,7 @@ import AdmissionPostLicence.resultatCandidature;
 import Rectorat.database.CandidatureDAO;
 import Rectorat.pojo.Candidature;
 import Rectorat.pojo.ResultatCandidature;
-import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -26,11 +26,11 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  */
 public class RectoratImpl extends RectoratPOA{
 
-    //La liste des candidatures du rectorat ayant pour clé l'INE de l'étudiant
-    private HashMap<String,Candidature> lesCandidatures;
+    //La liste des candidatures du rectorat
+    private List<Candidature> lesCandidatures;
     
     //La liste des resultats des candidatures
-    private HashMap<String,ResultatCandidature> lesResultatsCandidatures;
+    private List<ResultatCandidature> lesResultatsCandidatures;
 
     /** Nom du Rectorat */
     private String nom;
@@ -57,7 +57,7 @@ public class RectoratImpl extends RectoratPOA{
         this.nom=nom;
     }
 
-    public HashMap<String,Candidature> getLesCandidatures() {
+    public List<Candidature> getLesCandidatures() {
         return lesCandidatures;
     }
     
@@ -65,13 +65,13 @@ public class RectoratImpl extends RectoratPOA{
     public void creerCandidature(candidature c) {
         Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
         // Récupération du rectorat
-        Master m = getMasterCorba(candidature.getMaster().getNom());
+        Master m = getMasterCorba(candidature.getMaster());
         try {
             if(m != null) {
                 //Vérification des pré requis
                 if(m.verifierPrerequis(candidature.getEtu().getLicence())){
                     //Enregistrer candidature
-                    lesCandidatures.put(candidature.getEtu().getIne(), candidature);
+                    lesCandidatures.add(candidature);
                     CandidatureDAO.ajoutCandidature(candidature, this.nom);
                     //TODO créer resultatCandidature a blanc pour pouvoir mettre en place l'exception
                 }  
@@ -85,10 +85,11 @@ public class RectoratImpl extends RectoratPOA{
     public candidature[] recupererCandidaturesMaster(String master) throws MasterInconnu {
         candidature[] candidatures={};
 
-        for(int i=0;i<lesCandidatures.length;i++){
+        for(int i=0;i<lesCandidatures.size();i++){
            //Si les deux string master sont identique, alors on garde cette candidature 
-           if(lesCandidatures[i].master.equals(master)){
-               candidatures=addCandidature(candidatures, lesCandidatures[i]);
+           if(lesCandidatures.get(i).getMaster().equals(master)){
+               candidatures=addCandidature(candidatures, 
+                       CandidatureMapper.candidatureToCandidatureCorba(lesCandidatures.get(i)));
            }
         }
         return candidatures;
@@ -97,11 +98,11 @@ public class RectoratImpl extends RectoratPOA{
     @Override
     public candidature[] recupererCandidaturesEtudiant(identite etudiant) throws EtudiantInconnu {
         candidature[] candidatures={};
-
-        for(int i=0;i<lesCandidatures.length;i++){
+        for(int i=0;i<lesCandidatures.size();i++){
            //Si les deux string master sont identique, alors on garde cette candidature 
-           if(lesCandidatures[i].etudiant.ine.equals(etudiant.ine)){
-               candidatures=addCandidature(candidatures, lesCandidatures[i]);
+           if(lesCandidatures.get(i).getEtu().getIne().equals(etudiant.ine)){
+               candidatures=addCandidature(candidatures, 
+                       CandidatureMapper.candidatureToCandidatureCorba(lesCandidatures.get(i)));
            }
         }
         return candidatures;
@@ -123,18 +124,18 @@ public class RectoratImpl extends RectoratPOA{
     @Override
     public void modifierCandidature(resultatCandidature candidature) throws CandidatureInconnu {
         boolean trouve=false;
-        for(int i=0;i<lesResultatsCandidatures.length&&!trouve;i++){
+        for(int i=0;i<lesResultatsCandidatures.size()&&!trouve;i++){
             //Si je rentre dans le if c'est que j'ai trouvé le resultatCandidature
-            if(lesResultatsCandidatures[i].c.etudiant.ine.equals(candidature.c.etudiant.ine) && 
-                    lesResultatsCandidatures[i].c.master.equals(candidature.c.master)){
+            if(lesResultatsCandidatures.get(i).getCandidature().getEtu().getIne().equals(candidature.c.etudiant.ine) && 
+                    lesResultatsCandidatures.get(i).getCandidature().getMaster().equals(candidature.c.master)){
                 //Je le modifie alors
-                lesResultatsCandidatures[i]=candidature;
+                lesResultatsCandidatures.set(i, CandidatureMapper.resultatCandidatureCorbaToResultatCandidature(candidature));
                 trouve=true;
             }
         }
         //Si on a pas trouvé la candidature alors on l'ajoute
         if(!trouve){
-            addResultatCandidature(lesResultatsCandidatures,candidature);
+            lesResultatsCandidatures.add(CandidatureMapper.resultatCandidatureCorbaToResultatCandidature(candidature));
         }
     }
     
@@ -161,11 +162,11 @@ public class RectoratImpl extends RectoratPOA{
     
     private resultatCandidature searchCandidature(candidature c){
         resultatCandidature rc = null;
-        for(int i=0;i<lesResultatsCandidatures.length;i++){
+        for(int i=0;i<lesResultatsCandidatures.size();i++){
             //Si je rentre dans le if c'est que j'ai trouvé le resultatCandidature
-            if(lesResultatsCandidatures[i].c.etudiant.ine.equals(c.etudiant.ine) && 
-                    lesResultatsCandidatures[i].c.master.equals(c.master)){
-                rc=lesResultatsCandidatures[i];
+            if(lesResultatsCandidatures.get(i).getCandidature().getEtu().getIne().equals(c.etudiant.ine) && 
+               lesResultatsCandidatures.get(i).getCandidature().getMaster().equals(c.master)){
+                rc=CandidatureMapper.resultatCandidatureToResultatCandidatureCorba(lesResultatsCandidatures.get(i));
             }
         }
         return rc;

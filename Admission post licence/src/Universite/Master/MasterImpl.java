@@ -12,6 +12,7 @@ import Universite.ServerUniversite;
 import Universite.database.MasterDAO;
 import Universite.pojo.Master;
 import Universite.pojo.Licence;
+import Util.GetObjectCorba;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -74,7 +75,7 @@ public class MasterImpl extends MasterPOA {
         resultatCandidature[] resultats = null;
         
         // Récupération du rectorat
-        Rectorat r = getRectoratCorba();
+        Rectorat r = GetObjectCorba.getRectoratCorba("Rectorat",ServerUniversite.orb);
         
         try {
             if(r != null) {
@@ -96,7 +97,7 @@ public class MasterImpl extends MasterPOA {
     @Override
     public void modifierDecision(candidature c, decisionMaster dm) {
         // Récupération du rectorat
-        Rectorat r = getRectoratCorba();
+        Rectorat r = GetObjectCorba.getRectoratCorba("Rectorat",ServerUniversite.orb);
         
         if(r != null) {
             // Création de l'obet resultatCandidature
@@ -134,7 +135,7 @@ public class MasterImpl extends MasterPOA {
      * Permet de récupérer l'objet CORBA du rectorat de l'université de ce master
      * 
      * @return {@link Rectorat}
-     */
+     *
     private Rectorat getRectoratCorba() {
         // Initialisation de la variable de retour
         Rectorat r = null;
@@ -153,5 +154,7 @@ public class MasterImpl extends MasterPOA {
         }
         
         return r;
-    }
+    }*/
+    
+    
 }

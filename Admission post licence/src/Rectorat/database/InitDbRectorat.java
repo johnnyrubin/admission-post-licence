@@ -95,7 +95,7 @@ public class InitDbRectorat {
         
         // Insertion des candidatures dans la table
         // TODO voir avec Vincent pour les données
-        CandidatureDAO.ajoutCandidature(new Candidature(new Etudiant("0001", "rubin", "johnny", "paul sab", "fonda"), new Master(1,"UnMaster"), "paul sab", (short)1),"Rectorat" );
+        CandidatureDAO.ajoutCandidature(new Candidature(new Etudiant("0001", "rubin", "johnny", "paul sab", "fonda"), "UnMaster", "paul sab", (short)1),"Rectorat" );
     }
     
     /**

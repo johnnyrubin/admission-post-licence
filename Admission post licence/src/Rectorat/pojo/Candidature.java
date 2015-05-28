@@ -16,13 +16,13 @@ public class Candidature {
     //étudiant pour la candidature
     private Etudiant etu;
     //master visé par la candidature
-    private Master master;
+    private String master;
     //université visée par la candidature
     private String Universite;
     //ordre de la candidature pour l'étudiant
     private int ordre;
 
-    public Candidature(Etudiant etu, Master master, String Universite, int ordre) {
+    public Candidature(Etudiant etu, String master, String Universite, int ordre) {
         this.etu = etu;
         this.master = master;
         this.Universite = Universite;
@@ -49,9 +49,9 @@ public class Candidature {
     /**
      * Récupère le master visé par la candidature
      * 
-     * @return Master 
+     * @return String 
      */
-    public Master getMaster() {
+    public String getMaster() {
         return master;
     }
 
@@ -59,7 +59,7 @@ public class Candidature {
      * Définit le master visé par la candidature
      * @param master 
      */
-    public void setIdMaster(Master master) {
+    public void setIdMaster(String master) {
         this.master = master;
     }
 

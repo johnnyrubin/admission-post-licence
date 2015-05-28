@@ -19,6 +19,15 @@ public class ResultatCandidature {
     //Décision du master { admis, listeAttente, refuser } , soit 0, 1 ou 2
     private int decisionMaster;
 
+    public ResultatCandidature(Candidature candidature, int etatCandidature, int decisionCandidat, int decisionMaster) {
+        this.candidature = candidature;
+        this.etatCandidature = etatCandidature;
+        this.decisionCandidat = decisionCandidat;
+        this.decisionMaster = decisionMaster;
+    }
+
+    
+    
     /**
      * Récupère la candidature
      * @return Candidature

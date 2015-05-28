@@ -14,7 +14,7 @@ import AdmissionPostLicence.resultatsEtudiant;
 import Universite.ServerUniversite;
 import Universite.pojo.Etudiant;
 import Universite.database.EtudiantDAO;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -30,13 +30,13 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 public class GestionEtudiantImpl extends GestionEtudiantPOA {
     
     /** Liste de ses étudiants ayant pour clé l'ine de l'étudiant **/
-    private static Hashtable<String,identite> lesEtudiants;
+    private HashMap<String,Etudiant> lesEtudiants;
 
     /**
      * Retourne la liste des étudiants
      * @return la liste des étudiants
      */
-    public static Hashtable<String, identite> getLesEtudiants() {
+    public HashMap<String, Etudiant> getLesEtudiants() {
         return lesEtudiants;
     }
 
@@ -44,16 +44,16 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
      * Définit la liste des étudiants
      * @param lesEtudiants 
      */
-    public static void setLesEtudiants(Hashtable<String, identite> lesEtudiants) {
-        GestionEtudiantImpl.lesEtudiants = lesEtudiants;
+    public void setLesEtudiants(HashMap<String, Etudiant> lesEtudiants) {
+        this.lesEtudiants = lesEtudiants;
     }
     
     /**
      * Ajoute un étudiant à la liste
-     * @param i 
+     * @param e
      */
-    public static void addEtudiant(identite i){
-       GestionEtudiantImpl.lesEtudiants.put(i.ine, i);
+    public void addEtudiant(Etudiant e){
+       this.lesEtudiants.put(e.getIne(), e);
     }
     
     /**
@@ -61,8 +61,8 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
      * @param ine
      * @return objet identite de l'étudiant 
      */
-    public static identite getEtudiant(String ine){
-        return GestionEtudiantImpl.lesEtudiants.get(ine);
+    public Etudiant getEtudiant(String ine){
+        return this.lesEtudiants.get(ine);
     }
     
     /** Le nom du rectorat auquel appartient l'université de cette gestion étudiant */
@@ -184,7 +184,6 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         } else {
             throw new EtudiantInconnu();
         }
-        System.out.println(id.nom);
         return id;
     }
     

@@ -6,8 +6,11 @@
 package Rectorat.database;
 
 import AdmissionPostLicence.candidature;
+import Rectorat.ServerRectorat;
 import Rectorat.pojo.Candidature;
+import Universite.GestionEtudiant.EtudiantMapper;
 import Universite.GestionEtudiant.GestionEtudiantImpl;
+import Util.GetObjectCorba;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -35,7 +38,7 @@ public class CandidatureDAO {
             conn = new ConnexionRectorat(nomRectorat+".db");
             conn.connect();
             String sql = "Insert into CANDIDATURES values" +
-                    "('"+c.getEtu().getIne()+"','"+c.getMaster().getNom()+"','"+c.getUniversite()+"',"+c.getOrdre()+")";
+                    "('"+c.getEtu().getIne()+"','"+c.getMaster()+"','"+c.getUniversite()+"',"+c.getOrdre()+")";
             
             // Création de la candidature
             lineAffected=conn.statement.executeUpdate(sql);
@@ -72,7 +75,8 @@ public class CandidatureDAO {
                 String UNIVERSITE = rs.getString("UNIVERSITE");
                 short ordre = (short)rs.getInt("ORDRE");
                 //on ajoute au tableau des candidature, la candidature récupérée
-                candidatures[compteur]=new candidature(GestionEtudiantImpl.getEtudiant(INE),IDMASTER,UNIVERSITE,ordre);
+                candidatures[compteur]=new candidature(EtudiantMapper.etudiantToIdentiteCorba(GetObjectCorba.getEtudiant("UniversitePaulSab", INE, ServerRectorat.orb)),
+                        IDMASTER,UNIVERSITE,ordre);
             }
         } catch (SQLException ex) {
             Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);

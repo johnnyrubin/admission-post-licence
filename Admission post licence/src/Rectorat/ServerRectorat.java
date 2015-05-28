@@ -8,6 +8,8 @@ package Rectorat;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
 import Rectorat.database.InitDbRectorat;
+import Universite.ServerUniversite;
+import Util.GetObjectCorba;
 import org.omg.CosNaming.NamingContext;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
@@ -21,7 +23,6 @@ public class ServerRectorat {
     public static org.omg.CORBA.ORB orb;
     
     public static void main(String[] args) {
-        
         try {
             
             // Intialisation de l'ORB

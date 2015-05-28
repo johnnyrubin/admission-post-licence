@@ -17,7 +17,8 @@ public class ServerUniversite {
     public static org.omg.CORBA.ORB orb;
     
     public static void main(String[] args) {
-        
+        //TODO remplacer le nom en dur par args[0] ou args[1] je sais plus lequel contient la donnée
+        String nameUniversite="UniversitePaulSab";
         try {
             
             // Intialisation de l'ORB
@@ -41,7 +42,7 @@ public class ServerUniversite {
             
             // Construction du nom à enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
-            nameToRegister[0] = new org.omg.CosNaming.NameComponent("GestionEtudiant", "");
+            nameToRegister[0] = new org.omg.CosNaming.NameComponent("GestionEtudiant-"+nameUniversite, "");
             
             // Enregistrement de l'objet CORBA dans le service de noms
             nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(gestEtu));
@@ -58,7 +59,7 @@ public class ServerUniversite {
             // Activer le servant au sein du POA et récupérer son ID
             rootPOA.activate_object(unMaster);
             
-            nameToRegister[0] = new org.omg.CosNaming.NameComponent("UnMaster", "");
+            nameToRegister[0] = new org.omg.CosNaming.NameComponent("UnMaster-"+nameUniversite, "");
             
             // Enregistrement de l'objet CORBA dans le service de noms
             nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(unMaster));
