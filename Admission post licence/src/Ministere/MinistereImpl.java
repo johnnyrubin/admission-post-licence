@@ -7,6 +7,7 @@ import AdmissionPostLicence.RectoratHelper;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.resultatCandidature;
+import Util.GetObjectCorba;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,13 +45,13 @@ public class MinistereImpl extends MinisterePOA{
         //L'orientation de transfert se fait à partir des variables universite et master qui se trouvent
         //dans la candidature
         //on récupère donc le rectorat
-        Rectorat r = getRectoratCorba(lesLiaisons.get(c.universite));
+        Rectorat r = GetObjectCorba.getRectoratCorba(lesLiaisons.get(c.universite),ServerMinistere.orb);
         r.creerCandidature(c);
     }
 
     @Override
     public void transfererDecision(resultatCandidature r) throws CandidatureInconnu {
-        Rectorat rectorat = getRectoratCorba(lesLiaisons.get(r.c.universite));
+        Rectorat rectorat = GetObjectCorba.getRectoratCorba(lesLiaisons.get(r.c.universite),ServerMinistere.orb);
         rectorat.modifierCandidature(r);
     }
     
@@ -59,7 +60,7 @@ public class MinistereImpl extends MinisterePOA{
      * 
      * @return {@link Rectorat}
      */
-    private Rectorat getRectoratCorba(String nomRectorat) {
+    /*private Rectorat getRectoratCorba(String nomRectorat) {
         // Initialisation de la variable de retour
         Rectorat r = null;
         try {
@@ -82,6 +83,6 @@ public class MinistereImpl extends MinisterePOA{
             Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return r;
-    }
+    }*/
     
 }

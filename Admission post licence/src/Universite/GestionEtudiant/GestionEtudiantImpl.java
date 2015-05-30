@@ -14,6 +14,7 @@ import AdmissionPostLicence.resultatsEtudiant;
 import Universite.ServerUniversite;
 import Universite.pojo.Etudiant;
 import Universite.database.EtudiantDAO;
+import Util.GetObjectCorba;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,8 +90,9 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     @Override
     public void soumettreCandidature(candidature c) throws MasterInconnu {
         // Récupération du rectorat
-        Rectorat r = getRectoratCorba();
-
+        //Rectorat r = getRectoratCorba();
+        //TODO changer Toulouse en dur par le rectorat à récuperer
+        Rectorat r = GetObjectCorba.getRectoratCorba("Toulouse",ServerUniversite.orb);
         // Création de la candidature
         if(r != null) {
             r.creerCandidature(c);
@@ -125,7 +127,9 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         
         if(e != null) {
             // Récupération du rectorat
-            Rectorat r = getRectoratCorba();
+            //Rectorat r = getRectoratCorba();
+            //TODO changer Toulouse en dur par le rectorat à récuperer
+            Rectorat r = GetObjectCorba.getRectoratCorba("Toulouse",ServerUniversite.orb);
             
             if(r != null) {
                 // Récupation des candidatures de l'étudiant
@@ -150,8 +154,9 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     @Override
     public void modifierDecision(candidature c, decisionCandidat dc) {
         // Récupération du rectorat
-        Rectorat r = getRectoratCorba();
-        
+        //Rectorat r = getRectoratCorba();
+        //TODO changer Toulouse en dur par le rectorat à récuperer
+        Rectorat r = GetObjectCorba.getRectoratCorba("Toulouse",ServerUniversite.orb);
         if(r != null) {
             // Création de l'obet resultatCandidature
             resultatCandidature res = new resultatCandidature(c, null, dc, null);
@@ -192,7 +197,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
      * 
      * @return {@link Rectorat}
      */
-    private Rectorat getRectoratCorba() {        
+    /*private Rectorat getRectoratCorba() {        
         // Initialisation de la variable de retour
         Rectorat r = null;
         
@@ -210,6 +215,6 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         }
         
         return r;
-    }
+    }*/
     
 }

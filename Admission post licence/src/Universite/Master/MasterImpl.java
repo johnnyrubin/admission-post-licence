@@ -75,7 +75,7 @@ public class MasterImpl extends MasterPOA {
         resultatCandidature[] resultats = null;
         
         // Récupération du rectorat
-        Rectorat r = GetObjectCorba.getRectoratCorba("Rectorat",ServerUniversite.orb);
+        Rectorat r = GetObjectCorba.getRectoratCorba("Toulouse",ServerUniversite.orb);
         
         try {
             if(r != null) {
@@ -97,7 +97,7 @@ public class MasterImpl extends MasterPOA {
     @Override
     public void modifierDecision(candidature c, decisionMaster dm) {
         // Récupération du rectorat
-        Rectorat r = GetObjectCorba.getRectoratCorba("Rectorat",ServerUniversite.orb);
+        Rectorat r = GetObjectCorba.getRectoratCorba("Toulouse",ServerUniversite.orb);
         
         if(r != null) {
             // Création de l'obet resultatCandidature

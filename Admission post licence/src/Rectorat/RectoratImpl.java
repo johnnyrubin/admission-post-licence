@@ -12,6 +12,7 @@ import AdmissionPostLicence.resultatCandidature;
 import Rectorat.database.CandidatureDAO;
 import Rectorat.pojo.Candidature;
 import Rectorat.pojo.ResultatCandidature;
+import Util.GetObjectCorba;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +66,7 @@ public class RectoratImpl extends RectoratPOA{
     public void creerCandidature(candidature c) {
         Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
         // Récupération du rectorat
-        Master m = getMasterCorba(candidature.getMaster());
+        Master m = GetObjectCorba.getMasterCorba(candidature.getMaster(),candidature.getUniversite(),ServerRectorat.orb);
         try {
             if(m != null) {
                 //Vérification des pré requis
@@ -139,7 +140,7 @@ public class RectoratImpl extends RectoratPOA{
         }
     }
     
-    private Master getMasterCorba(String master) {
+    /*private Master getMasterCorba(String master) {
         // Initialisation de la variable de retour
         Master r = null;
         
@@ -158,7 +159,7 @@ public class RectoratImpl extends RectoratPOA{
         }
         
         return r;
-    }
+    }*/
     
     private resultatCandidature searchCandidature(candidature c){
         resultatCandidature rc = null;
