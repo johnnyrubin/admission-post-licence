@@ -3,18 +3,11 @@ package Ministere;
 import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.MinisterePOA;
 import AdmissionPostLicence.Rectorat;
-import AdmissionPostLicence.RectoratHelper;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.resultatCandidature;
 import Util.GetObjectCorba;
-import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.InvalidName;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
+import java.util.HashMap;
 
 /**
  *
@@ -25,9 +18,9 @@ public class MinistereImpl extends MinisterePOA{
     private accreditation[] mesAccreditations;
     //Liste qui permet de savoir à quel rectorat appartient une université, la clé est l'université
     //et la valeur le rectorat
-    private Hashtable<String,String> lesLiaisons;
+    private HashMap<String,String> lesLiaisons;
 
-    public void setLesLiaisons(Hashtable<String, String> lesLiaisons) {
+    public void setLesLiaisons(HashMap<String, String> lesLiaisons) {
         this.lesLiaisons = lesLiaisons;
     }
 

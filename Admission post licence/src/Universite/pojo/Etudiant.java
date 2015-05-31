@@ -34,12 +34,38 @@ public class Etudiant {
 
     }
     
+    /**
+     * Constructeur sans le mot de passe
+     * @param ine
+     * @param nom
+     * @param prenom
+     * @param universite
+     * @param licence 
+     */
     public Etudiant(String ine, String nom, String prenom, String universite,String licence) {
         this.ine = ine;
         this.nom = nom;
         this.prenom = prenom;
         this.universite = universite;
         this.licence = licence;
+    }
+    
+    /**
+     * Surcharge du constructeur avec le mot de passe
+     * @param ine
+     * @param nom
+     * @param prenom
+     * @param universite
+     * @param licence
+     * @param pwd 
+     */
+    public Etudiant(String ine, String nom, String prenom, String universite,String licence,String pwd) {
+        this.ine = ine;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.universite = universite;
+        this.licence = licence;
+        this.mdp = pwd;
     }
     
     /**

@@ -3,7 +3,6 @@ package Rectorat;
 import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.Master;
-import AdmissionPostLicence.MasterHelper;
 import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.RectoratPOA;
 import AdmissionPostLicence.candidature;
@@ -16,10 +15,6 @@ import Util.GetObjectCorba;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CORBA.ORBPackage.InvalidName;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *
@@ -86,12 +81,11 @@ public class RectoratImpl extends RectoratPOA{
     public candidature[] recupererCandidaturesMaster(String master) throws MasterInconnu {
         candidature[] candidatures={};
 
-        for(int i=0;i<lesCandidatures.size();i++){
-           //Si les deux string master sont identique, alors on garde cette candidature 
-           if(lesCandidatures.get(i).getMaster().equals(master)){
-               candidatures=addCandidature(candidatures, 
-                       CandidatureMapper.candidatureToCandidatureCorba(lesCandidatures.get(i)));
-           }
+        for (Candidature lesCandidature : lesCandidatures) {
+            //Si les deux string master sont identique, alors on garde cette candidature
+            if (lesCandidature.getMaster().equals(master)) {
+                candidatures = addCandidature(candidatures, CandidatureMapper.candidatureToCandidatureCorba(lesCandidature));
+            }
         }
         return candidatures;
     }
@@ -99,12 +93,11 @@ public class RectoratImpl extends RectoratPOA{
     @Override
     public candidature[] recupererCandidaturesEtudiant(identite etudiant) throws EtudiantInconnu {
         candidature[] candidatures={};
-        for(int i=0;i<lesCandidatures.size();i++){
-           //Si les deux string master sont identique, alors on garde cette candidature 
-           if(lesCandidatures.get(i).getEtu().getIne().equals(etudiant.ine)){
-               candidatures=addCandidature(candidatures, 
-                       CandidatureMapper.candidatureToCandidatureCorba(lesCandidatures.get(i)));
-           }
+        for (Candidature lesCandidature : lesCandidatures) {
+            //Si les deux string master sont identique, alors on garde cette candidature
+            if (lesCandidature.getEtu().getIne().equals(etudiant.ine)) {
+                candidatures = addCandidature(candidatures, CandidatureMapper.candidatureToCandidatureCorba(lesCandidature));
+            }
         }
         return candidatures;
     }
@@ -115,8 +108,8 @@ public class RectoratImpl extends RectoratPOA{
         resultatCandidature rc;
         /*Boucler sur chaque candidature et dans la boucle aller chercher le resultat dans les résultats locaux
         puis insérer dans la varible résultatCandidature a renvoyer*/
-        for(int i=0;i<c.length;i++){
-            rc=searchCandidature(c[i]);
+        for (candidature c1 : c) {
+            rc = searchCandidature(c1);
             addResultatCandidature(rcs, rc);
         }
         return rcs;
@@ -183,8 +176,7 @@ public class RectoratImpl extends RectoratPOA{
         //define the new array
         candidature[] newArray = new candidature[oldArray.length + 1];
         //copy values into new array
-        for(int i=0;i < oldArray.length;i++)
-            newArray[i] = oldArray[i];
+        System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
         //add new value to the new array
         newArray[newArray.length-1] = newValue;
         
@@ -201,8 +193,7 @@ public class RectoratImpl extends RectoratPOA{
         //define the new array
         resultatCandidature[] newArray = new resultatCandidature[oldArray.length + 1];
         //copy values into new array
-        for(int i=0;i < oldArray.length;i++)
-            newArray[i] = oldArray[i];
+        System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
         //add new value to the new array
         newArray[newArray.length-1] = newValue;
         
