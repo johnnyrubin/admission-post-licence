@@ -4,7 +4,6 @@ import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.MasterPOA;
 import AdmissionPostLicence.Rectorat;
-import AdmissionPostLicence.RectoratHelper;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.decisionMaster;
 import AdmissionPostLicence.resultatCandidature;
@@ -15,10 +14,6 @@ import Universite.pojo.Licence;
 import Util.GetObjectCorba;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CORBA.ORBPackage.InvalidName;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  * Classe d'implémentation permettant la gestion d'un master

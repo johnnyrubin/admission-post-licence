@@ -5,7 +5,6 @@ import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiantPOA;
 import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.Rectorat;
-import AdmissionPostLicence.RectoratHelper;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.decisionCandidat;
 import AdmissionPostLicence.identite;
@@ -18,10 +17,6 @@ import Util.GetObjectCorba;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CORBA.ORBPackage.InvalidName;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  * Classe d'implémentation permettant de gérer les étudiants d'une université

@@ -5,14 +5,16 @@
  */
 package Rectorat;
 
-import AdmissionPostLicence.candidature;
-import AdmissionPostLicence.identite;
 import Rectorat.database.InitDbRectorat;
-import Universite.ServerUniversite;
-import Util.GetObjectCorba;
+import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
+import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
+import org.omg.PortableServer.POAPackage.ServantNotActive;
+import org.omg.PortableServer.POAPackage.WrongPolicy;
 
 /**
  *
@@ -60,8 +62,7 @@ public class ServerRectorat {
             
             // Lancement de l'ORB et mise en attente de la requête
             orb.run();
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(InvalidName | AdapterInactive | ServantNotActive | WrongPolicy | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
         }
         
     }

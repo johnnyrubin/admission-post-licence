@@ -7,6 +7,8 @@
 package Ministere;
 
 import AdmissionPostLicence.accreditation;
+import Ministere.pojo.Accreditation;
+import java.util.List;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -46,21 +48,23 @@ public class ServerMinistere {
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
 
             // Création du servant pour le ministere
-            MinistereImpl Toulouse = new MinistereImpl();
-            accreditation[] mesAccreditations={new accreditation("Paul Sabatier","MIAGE"),new accreditation("Paul Sabatier","Fonda"),
-            new accreditation("UT1","MIAGE"),new accreditation("UT1","Droits")};
-            Toulouse.setMesAccreditations(mesAccreditations);
+            MinistereImpl ministere = new MinistereImpl();
+            List<Accreditation> mesAccreditations=null;
+            mesAccreditations.add(new Accreditation("Paul Sabatier","MIAGE"));
+            mesAccreditations.add(new Accreditation("Paul Sabatier","Fonda"));
+            mesAccreditations.add(new Accreditation("UT1","Droits"));
+            ministere.setMesAccreditations(mesAccreditations);
 
             // Activer le servant au sein du POA et récupérer son ID
             // byte[] ToulouseId = rootPOA.activate_object(Toulouse);
 
-            nameToRegister[0] = new org.omg.CosNaming.NameComponent("Toulouse", "");
+            nameToRegister[0] = new org.omg.CosNaming.NameComponent("Ministere", "");
 
             // Enregistrement de l'objet CORBA dans le service de noms
-            nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(Toulouse));
-            System.out.println("==> Nom \"Toulouse\" est enregistré dans l'espace de noms");
+            nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(ministere));
+            System.out.println("==> Nom \"Ministere\" est enregistré dans l'espace de noms");
 
-            String IORServant = orb.object_to_string(rootPOA.servant_to_reference(Toulouse));
+            String IORServant = orb.object_to_string(rootPOA.servant_to_reference(ministere));
             System.out.println("L'objet possède la référence suivante : ");
             System.out.println(IORServant);
 

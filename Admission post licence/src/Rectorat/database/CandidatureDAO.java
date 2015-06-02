@@ -9,7 +9,6 @@ import AdmissionPostLicence.candidature;
 import Rectorat.ServerRectorat;
 import Rectorat.pojo.Candidature;
 import Universite.GestionEtudiant.EtudiantMapper;
-import Universite.GestionEtudiant.GestionEtudiantImpl;
 import Util.GetObjectCorba;
 import java.sql.ResultSet;
 import java.sql.SQLException;

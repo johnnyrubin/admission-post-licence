@@ -6,11 +6,8 @@
 
 package Rectorat.database;
 
-import AdmissionPostLicence.candidature;
-import AdmissionPostLicence.identite;
 import Rectorat.pojo.Candidature;
 import Universite.pojo.Etudiant;
-import Universite.pojo.Master;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;

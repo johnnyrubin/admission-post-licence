@@ -6,8 +6,10 @@ import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.resultatCandidature;
+import Ministere.pojo.Accreditation;
 import Util.GetObjectCorba;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -15,7 +17,7 @@ import java.util.HashMap;
  */
 public class MinistereImpl extends MinisterePOA{
     //Liste des accreditations
-    private accreditation[] mesAccreditations;
+    private List<Accreditation> mesAccreditations;
     //Liste qui permet de savoir à quel rectorat appartient une université, la clé est l'université
     //et la valeur le rectorat
     private HashMap<String,String> lesLiaisons;
@@ -24,13 +26,13 @@ public class MinistereImpl extends MinisterePOA{
         this.lesLiaisons = lesLiaisons;
     }
 
-    public void setMesAccreditations(accreditation[] mesAccredidations) {
+    public void setMesAccreditations(List<Accreditation> mesAccredidations) {
         this.mesAccreditations = mesAccredidations;
     }
     
     @Override
     public accreditation[] recupererAccreditations() {
-        return mesAccreditations;
+        return AccreditationMapper.accreditationsCorbaToListAccredidation(mesAccreditations);
     }
 
     @Override

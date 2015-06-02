@@ -18,7 +18,7 @@ public class ServerUniversite {
     
     public static void main(String[] args) {
         //TODO remplacer le nom en dur par args[0] ou args[1] je sais plus lequel contient la donnée
-        String nameUniversite="UniversitePaulSab";
+        String nameUniversite="Paul Sabatier";
         try {
             
             // Intialisation de l'ORB

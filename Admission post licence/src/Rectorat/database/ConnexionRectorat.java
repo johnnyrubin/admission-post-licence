@@ -10,7 +10,7 @@ import java.sql.Statement;
  * @author johnny
  */
 public class ConnexionRectorat {
-    private String DBPath;
+    private final String DBPath;
     private Connection connection = null;
     public Statement statement = null;
  
@@ -24,11 +24,7 @@ public class ConnexionRectorat {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
             statement = connection.createStatement();
             System.out.println("Connexion a " + DBPath + " avec succès");
-        } catch (ClassNotFoundException notFoundException) {
-            notFoundException.printStackTrace();
-            System.out.println("Erreur de connexion");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+        } catch (ClassNotFoundException | SQLException notFoundException) {
             System.out.println("Erreur de connexion");
         }
     }
@@ -38,7 +34,6 @@ public class ConnexionRectorat {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

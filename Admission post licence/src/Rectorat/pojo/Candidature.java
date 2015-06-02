@@ -6,7 +6,6 @@
 package Rectorat.pojo;
 
 import Universite.pojo.Etudiant;
-import Universite.pojo.Master;
 
 /**
  *
