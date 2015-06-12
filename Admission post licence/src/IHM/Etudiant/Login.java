@@ -8,9 +8,17 @@ package IHM.Etudiant;
 import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.GestionEtudiantHelper;
+import AdmissionPostLicence.Ministere;
+import AdmissionPostLicence.MinistereHelper;
+import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.identite;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -24,6 +32,7 @@ public class Login extends javax.swing.JFrame {
     
     org.omg.CORBA.ORB orb;
     GestionEtudiant g;
+    Ministere m;
     
     /**
      * Creates new form Login
@@ -31,8 +40,35 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         String[] test = {};
-        orb = org.omg.CORBA.ORB.init(test,null);
-        orb.string_to_object("corbaloc:iiop:1.2@192.168.0.12:2001/NameService");
+        try {
+            orb = org.omg.CORBA.ORB.init(test,null);
+            orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService");
+
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
+            //NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
+            // On récupère le ministere
+            nameToFind[0] = new org.omg.CosNaming.NameComponent("Ministere", "");
+            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
+            m = MinistereHelper.narrow(remoteRef);
+            
+            /*List<Rectorat> lesRectorats = Arrays.asList(m.getListeRectorat());
+            jComboBoxRectorats.setModel(new DefaultComboBoxModel(lesRectorats.toArray()));*/
+            
+        } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /*jComboBoxRectorats.addActionListener (new ActionListener () {
+        public void actionPerformed(ActionEvent e) {
+        }
+        });*/ 
+        
+        /*jComboBoxRectorats.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });*/
+        
     }
 
     /**
@@ -53,7 +89,9 @@ public class Login extends javax.swing.JFrame {
         jLabelError = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBoxUniversity = new javax.swing.JComboBox();
+        jComboBoxRectorats = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBoxUniversite = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,6 +109,8 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jLabelError.setForeground(new java.awt.Color(255, 0, 0));
+
         jButton1.setText("S'inscrire");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,12 +118,21 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Votre université :");
+        jLabel4.setText("Choisir un rectorat :");
 
-        jComboBoxUniversity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Paul Sabatier", "Capitole", "Mirail", " " }));
-        jComboBoxUniversity.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxRectorats.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "empty" }));
+        jComboBoxRectorats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxUniversityActionPerformed(evt);
+                jComboBoxRectoratsActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Choisir une université :");
+
+        jComboBoxUniversite.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "empty" }));
+        jComboBoxUniversite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxUniversiteActionPerformed(evt);
             }
         });
 
@@ -105,21 +154,29 @@ public class Login extends javax.swing.JFrame {
                         .addGap(132, 132, 132))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBoxUniversity, 0, 147, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addComponent(jComboBoxRectorats, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jTextFieldINE, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(29, 29, 29)
+                                    .addComponent(jLabel1))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(62, 62, 62)
+                                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextFieldINE)
-                            .addComponent(jPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))))
-                .addContainerGap(120, Short.MAX_VALUE))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxUniversite, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,8 +194,12 @@ public class Login extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBoxUniversity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addComponent(jComboBoxRectorats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxUniversite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jButtonConnect)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -151,13 +212,13 @@ public class Login extends javax.swing.JFrame {
 
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
         //if(!jTextFieldINE.getText().equals("")&&!jTextFieldINE.getText().equals("")){
-            try {
+            /*try {
                 //NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
                 NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@130.120.247.254:2001/NameService"));
                 org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
 
                 // On récupère la gestion etudiant
-                nameToFind[0] = new org.omg.CosNaming.NameComponent("GestionEtudiant-"+jComboBoxUniversity.getSelectedItem(), "");
+                nameToFind[0] = new org.omg.CosNaming.NameComponent("GestionEtudiant-"+jComboBoxRectorats.getSelectedItem(), "");
                 org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
                 g = GestionEtudiantHelper.narrow(remoteRef);
                 identite i = g.seConnecter("123456E","toto");
@@ -173,7 +234,7 @@ public class Login extends javax.swing.JFrame {
                 }
             } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | EtudiantInconnu ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
         //}
     }//GEN-LAST:event_jButtonConnectActionPerformed
 
@@ -183,9 +244,13 @@ public class Login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jComboBoxUniversityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxUniversityActionPerformed
+    private void jComboBoxRectoratsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRectoratsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxUniversityActionPerformed
+    }//GEN-LAST:event_jComboBoxRectoratsActionPerformed
+
+    private void jComboBoxUniversiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxUniversiteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxUniversiteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,11 +292,13 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonConnect;
-    private javax.swing.JComboBox jComboBoxUniversity;
+    private javax.swing.JComboBox jComboBoxRectorats;
+    private javax.swing.JComboBox jComboBoxUniversite;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelError;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JTextField jTextFieldINE;
