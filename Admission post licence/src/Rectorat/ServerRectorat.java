@@ -5,7 +5,10 @@
  */
 package Rectorat;
 
+import AdmissionPostLicence.Ministere;
+import AdmissionPostLicence.Rectorat;
 import Rectorat.database.InitDbRectorat;
+import Util.GetObjectCorba;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -34,7 +37,12 @@ public class ServerRectorat {
             POA rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             
             // Création du servant pour la gestion des étudiants
-            RectoratImpl rectorat = new RectoratImpl("Rectorat");
+            RectoratImpl rectorat = new RectoratImpl("RectoratToulouse");
+            
+            orb.string_to_object("corbaloc:iiop:1.2@192.168.0.28:2001/NameService");
+
+            Ministere m = GetObjectCorba.getMinistereCorba(orb);
+            //m.enregistrerRectorat((Rectorat) rectorat);
             InitDbRectorat.main(args);
             //Import des données de la base
             //TODO
@@ -43,7 +51,7 @@ public class ServerRectorat {
             // byte[] gestEtuId = rootPOA.activate_object(gestEtu);
             
             // Activer le POA manager
-            rootPOA.the_POAManager().activate();
+            /*rootPOA.the_POAManager().activate();
             
             // Récupération du naming service
             NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
@@ -58,11 +66,11 @@ public class ServerRectorat {
             
             String IORServant = orb.object_to_string(rootPOA.servant_to_reference(rectorat));
             System.out.println("L'objet possède la référence suivante : ");
-            System.out.println(IORServant);
+            System.out.println(IORServant);*/
             
             // Lancement de l'ORB et mise en attente de la requête
             orb.run();
-        } catch(InvalidName | AdapterInactive | ServantNotActive | WrongPolicy | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
+        } catch(InvalidName e) {
         }
         
     }

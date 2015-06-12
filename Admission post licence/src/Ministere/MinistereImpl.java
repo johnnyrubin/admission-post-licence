@@ -68,7 +68,6 @@ public class MinistereImpl extends MinisterePOA{
     public Rectorat[] getListeRectorat() {
         
         System.out.println("Appel méthode MinistereImpl.getListeRectorat : Début");
-        //lesRectorats.add((Rectorat) new RectoratImpl("MDP"));
         
         Rectorat[] r = new Rectorat[0];
 //        int i = 0;lesRectorats.size()

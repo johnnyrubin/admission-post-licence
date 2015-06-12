@@ -53,7 +53,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             InitListeDeroulante(jComboBoxAccreditations5, lesAccreditations);
             
             //Récuperation des candidatures actuelles de l'étudiant
-            g.
+            //g.
             
         } catch (NotFound | CannotProceed | InvalidName | org.omg.CORBA.ORBPackage.InvalidName ex) {
             Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
