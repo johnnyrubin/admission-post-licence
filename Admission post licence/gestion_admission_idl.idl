@@ -50,6 +50,9 @@ module AdmissionPostLicence
         string master;
     };
     typedef sequence<accreditation> accreditations;
+	
+	// Contient la liste des noms des universités
+	typedef sequence<string> universites;
 
     // Exceptions
     exception EtudiantInconnu { string raison; long id; };
@@ -124,12 +127,14 @@ module AdmissionPostLicence
         // Fonction qui permet d'enregistrer une gestion etudiante auprès du rectorat
         void enregistrerGE(in GestionEtudiant ge);
 
-        // Liste qui contient tous les masters du rectorat
-        masters getListeMaster();
+        // Liste qui contient tous les masters d'une université
+        masters getListeMaster(in string u);
 
         // Fonction qui permet d'enregistrer un master auprès du rectorat
         void enregistrerMaster(in Master m);
-
+		
+		// Liste des universités qui ont enregistrées des formations auprès du rectorat
+		universites getListeUniversite(); 
     };
 	
 	typedef sequence<Rectorat> rectorats;

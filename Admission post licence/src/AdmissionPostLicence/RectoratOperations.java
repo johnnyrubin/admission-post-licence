@@ -49,11 +49,16 @@ public interface RectoratOperations
     /**
      * Operation getListeMaster
      */
-    public AdmissionPostLicence.Master[] getListeMaster();
+    public AdmissionPostLicence.Master[] getListeMaster(String u);
 
     /**
      * Operation enregistrerMaster
      */
     public void enregistrerMaster(AdmissionPostLicence.Master m);
+
+    /**
+     * Operation getListeUniversite
+     */
+    public String[] getListeUniversite();
 
 }

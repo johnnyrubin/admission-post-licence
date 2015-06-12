@@ -43,6 +43,8 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
                     new Operation_getListeGestEtu());
             operationMap.put("getListeMaster",
                     new Operation_getListeMaster());
+            operationMap.put("getListeUniversite",
+                    new Operation_getListeUniversite());
             operationMap.put("modifierCandidature",
                     new Operation_modifierCandidature());
             operationMap.put("recupererCandidaturesEtudiant",
@@ -184,8 +186,9 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = _is.read_string();
 
-        AdmissionPostLicence.Master[] _arg_result = getListeMaster();
+        AdmissionPostLicence.Master[] _arg_result = getListeMaster(arg0_in);
 
         _output = handler.createReply();
         AdmissionPostLicence.mastersHelper.write(_output,_arg_result);
@@ -202,6 +205,19 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
         enregistrerMaster(arg0_in);
 
         _output = handler.createReply();
+
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_getListeUniversite(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        String[] _arg_result = getListeUniversite();
+
+        _output = handler.createReply();
+        AdmissionPostLicence.universitesHelper.write(_output,_arg_result);
 
         return _output;
     }
@@ -301,6 +317,16 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
             return target._invoke_enregistrerMaster(_is, handler);
+        }
+    }
+
+    private static final class Operation_getListeUniversite extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final RectoratPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_getListeUniversite(_is, handler);
         }
     }
 

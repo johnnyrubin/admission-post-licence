@@ -7,6 +7,8 @@ package Util;
 
 import AdmissionPostLicence.Master;
 import AdmissionPostLicence.MasterHelper;
+import AdmissionPostLicence.Ministere;
+import AdmissionPostLicence.MinistereHelper;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.RectoratHelper;
 import java.util.logging.Level;
@@ -28,7 +30,7 @@ public class GetObjectCorba {
      * @param orb
      * @return {@link Rectorat}
      */
-    public static Rectorat getRectoratCorba(String name,org.omg.CORBA.ORB orb) {
+    public static Rectorat getRectoratCorba(String name, org.omg.CORBA.ORB orb) {
         // Initialisation de la variable de retour
         Rectorat r = null;
         try {
@@ -59,7 +61,7 @@ public class GetObjectCorba {
      * @param orb
      * @return {@link Master}
      */
-    public static Master getMasterCorba(String master,String universite ,org.omg.CORBA.ORB orb) {
+    public static Master getMasterCorba(String master,String universite, org.omg.CORBA.ORB orb) {
         // Initialisation de la variable de retour
         Master r = null;
         
@@ -77,5 +79,31 @@ public class GetObjectCorba {
         }
         
         return r;
+    }
+    
+    /**
+     * Permet de récupérer l'objet CORBA du ministère
+     * 
+     * @param orb
+     * @return {@link Ministere}
+     */
+    public static Ministere getMinistereCorba(org.omg.CORBA.ORB orb) {
+        // Initialisation de la variable de retour
+        Ministere m = null;
+        
+        try {
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
+            
+            // On récupère le ministère
+            nameToFind[0] = new org.omg.CosNaming.NameComponent("Ministere", "");
+            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
+            m = MinistereHelper.narrow(remoteRef);
+            
+        } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+            Logger.getLogger(GetObjectCorba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return m;
     }
 }

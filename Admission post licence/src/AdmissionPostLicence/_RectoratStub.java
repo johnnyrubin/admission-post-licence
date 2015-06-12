@@ -382,7 +382,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation getListeMaster
      */
-    public AdmissionPostLicence.Master[] getListeMaster()
+    public AdmissionPostLicence.Master[] getListeMaster(String u)
     {
         while(true)
         {
@@ -392,6 +392,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("getListeMaster",true);
+                    _output.write_string(u);
                     _input = this._invoke(_output);
                     AdmissionPostLicence.Master[] _arg_ret = AdmissionPostLicence.mastersHelper.read(_input);
                     return _arg_ret;
@@ -418,7 +419,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.RectoratOperations _self = (AdmissionPostLicence.RectoratOperations) _so.servant;
                 try
                 {
-                    return _self.getListeMaster();
+                    return _self.getListeMaster( u);
                 }
                 finally
                 {
@@ -469,6 +470,55 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     _self.enregistrerMaster( m);
                     return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation getListeUniversite
+     */
+    public String[] getListeUniversite()
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("getListeUniversite",true);
+                    _input = this._invoke(_output);
+                    String[] _arg_ret = AdmissionPostLicence.universitesHelper.read(_input);
+                    return _arg_ret;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("getListeUniversite",_opsClass);
+                if (_so == null)
+                   continue;
+                AdmissionPostLicence.RectoratOperations _self = (AdmissionPostLicence.RectoratOperations) _so.servant;
+                try
+                {
+                    return _self.getListeUniversite();
                 }
                 finally
                 {

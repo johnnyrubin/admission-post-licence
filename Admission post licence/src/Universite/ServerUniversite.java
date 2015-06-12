@@ -14,7 +14,11 @@ import org.omg.PortableServer.POAHelper;
 public class ServerUniversite {
     
     /** Contient l'orb accessible par les autres classes */
-    public static org.omg.CORBA.ORB orb;
+    private static org.omg.CORBA.ORB orb;
+    
+    public static org.omg.CORBA.ORB getOrb() {
+        return orb;
+    }
     
     public static void main(String[] args) {
         //TODO remplacer le nom en dur par args[0] ou args[1] je sais plus lequel contient la donnée

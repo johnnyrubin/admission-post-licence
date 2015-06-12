@@ -32,14 +32,19 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     public GestionEtudiantImpl(String aNom, String aRectorat) {
         nom = aNom;
         rectorat = aRectorat;
+        
+        // Enregistrement auprès du rectorat
+        addOnRectorat();
     }
 
     @Override
     public void soumettreCandidature(candidature c) throws MasterInconnu {
+        
+        System.out.println("Appel de la méthode GestionEtudiantImpl.soumettreCandidature");
+        
         // Récupération du rectorat
-        //Rectorat r = getRectoratCorba();
-        //TODO changer Toulouse en dur par le rectorat à récuperer
-        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.orb);
+        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
+        
         // Création de la candidature
         if(r != null) {
             r.creerCandidature(c);
@@ -48,6 +53,9 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
 
     @Override
     public resultatsEtudiant recupererResultats(identite etudiant) throws EtudiantInconnu {
+        
+        System.out.println("Appel de la méthode GestionEtudiantImpl.recupererResultats");
+        
         // Initialisation de la variable de retour
         resultatsEtudiant resultats = null;        
 
@@ -66,14 +74,15 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
 
     @Override
     public void modifierDecision(candidature c, decisionCandidat dc) {
+        
+        System.out.println("Appel de la méthode GestionEtudiantImpl.modifierDecision");
+        
         // Récupération du rectorat
-        //Rectorat r = getRectoratCorba();
-        //TODO changer Toulouse en dur par le rectorat à récuperer
-        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.orb);
+        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
+        
         if(r != null) {
             // Création de l'obet resultatCandidature
-            candidature res = new candidature();
-            // TODO = new candidature(c, null, dc, null);
+            candidature res = new candidature(c.etudiant, c.master, c.universite, c.ordre, c.etat, dc, c.decisionM);
             
             try {
                 // On transmet la décision de l'étudiant au rectorat
@@ -87,7 +96,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     @Override
     public identite seConnecter(String ine, String mdp) throws EtudiantInconnu {
         
-        System.out.println("GestionEtudiantImpl.seConnecter");
+        System.out.println("Appel de la méthode GestionEtudiantImpl.seConnecter");
         
         // Initialisation de la variable de retour
         identite id = null;
@@ -108,6 +117,9 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
 
     @Override
     public candidature[] consulterEtatVoeux(identite etudiant) throws EtudiantInconnu {
+        
+        System.out.println("Appel de la méthode GestionEtudiantImpl.consulterEtatVoeux");
+        
         // Initialisation de la variable de retour
         candidature[] resultats = null;
         
@@ -116,9 +128,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         
         if(e != null) {
             // Récupération du rectorat
-            //Rectorat r = getRectoratCorba();
-            //TODO changer Toulouse en dur par le rectorat à récuperer
-            Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.orb);
+            Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
             
             if(r != null) {
                 // Récupation des candidatures de l'étudiant
@@ -134,6 +144,16 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     @Override
     public String nom() {
         return nom;
+    }
+    
+    /**
+     * Permet d'enregistrer la gestion étudiant auprès du rectorat
+     */
+    private void addOnRectorat() {
+        // Récupération du rectorat
+        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
+        
+        r.enregistrerGE((AdmissionPostLicence.GestionEtudiant) this);
     }
     
 }

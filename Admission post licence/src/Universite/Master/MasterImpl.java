@@ -30,17 +30,22 @@ public class MasterImpl extends MasterPOA {
     public MasterImpl(String aNom, String aRectorat) {
         nom = aNom;
         rectorat = aRectorat;
+        
+        // Enregistrement auprès du rectorat
+        addOnRectorat();
     }
 
     @Override
     public void modifierDecision(candidature c, decisionMaster dm) {
+        
+        System.out.println("Appel de la méthode MasterImpl.modifierDecision");
+        
         // Récupération du rectorat
-        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.orb);
+        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
         
         if(r != null) {
             // Création de l'obet resultatCandidature
-            candidature res = new candidature();
-            // TODO new resultatCandidature(c, null, null, dm);
+            candidature res = new candidature(c.etudiant, c.master, c.universite, c.ordre, c.etat, c.decisionC, dm);
             
             try {
                 // On transmet la décision du responsable au rectorat
@@ -54,6 +59,9 @@ public class MasterImpl extends MasterPOA {
 
     @Override
     public boolean verifierPrerequis(String licence) throws MasterInconnu {
+        
+        System.out.println("Appel de la méthode MasterImpl.verifierPrerequis");
+        
         // On récupère les infos de notre master
         Master master = MasterDAO.getFromNom(nom());
         
@@ -72,11 +80,14 @@ public class MasterImpl extends MasterPOA {
 
     @Override
     public candidature[] consulterEtatCandidatures() {
+        
+        System.out.println("Appel de la méthode MasterImpl.consulterEtatCandidatures");
+        
         // Initialisation de la variable de retour
         candidature[] resultats = null;
         
         // Récupération du rectorat
-        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.orb);
+        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
         
         try {
             if(r != null) {
@@ -95,5 +106,13 @@ public class MasterImpl extends MasterPOA {
         return nom;
     }
     
-    
+    /**
+     * Permet d'enregistrer le master auprès du rectorat
+     */
+    private void addOnRectorat() {
+        // Récupération du rectorat
+        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
+        
+        r.enregistrerMaster((AdmissionPostLicence.Master) this);
+    }
 }

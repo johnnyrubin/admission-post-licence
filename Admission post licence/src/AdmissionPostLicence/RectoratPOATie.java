@@ -124,9 +124,9 @@ public class RectoratPOATie extends RectoratPOA
     /**
      * Operation getListeMaster
      */
-    public AdmissionPostLicence.Master[] getListeMaster()
+    public AdmissionPostLicence.Master[] getListeMaster(String u)
     {
-        return _tie.getListeMaster();
+        return _tie.getListeMaster( u);
     }
 
     /**
@@ -135,6 +135,14 @@ public class RectoratPOATie extends RectoratPOA
     public void enregistrerMaster(AdmissionPostLicence.Master m)
     {
         _tie.enregistrerMaster( m);
+    }
+
+    /**
+     * Operation getListeUniversite
+     */
+    public String[] getListeUniversite()
+    {
+        return _tie.getListeUniversite();
     }
 
 }

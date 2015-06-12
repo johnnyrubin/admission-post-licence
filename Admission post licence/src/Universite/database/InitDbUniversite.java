@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * 
  * @author Teddy
  */
-public class InitDb {
+public class InitDbUniversite {
     
     /** Connexion à la base de données universitaire */
     private static ConnexionUniversite conn;
@@ -37,7 +37,7 @@ public class InitDb {
             initTablePrerequis();
             
         } catch (SQLException ex) {
-            Logger.getLogger(InitDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InitDbUniversite.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             // Fermeture de la connexion
             conn.close();
