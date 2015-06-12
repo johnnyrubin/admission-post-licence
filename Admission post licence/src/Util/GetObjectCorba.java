@@ -92,7 +92,7 @@ public class GetObjectCorba {
         Ministere m = null;
         
         try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService"));
             org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
             
             // On récupère le ministère
@@ -100,7 +100,7 @@ public class GetObjectCorba {
             org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
             m = MinistereHelper.narrow(remoteRef);
             
-        } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+        } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
             Logger.getLogger(GetObjectCorba.class.getName()).log(Level.SEVERE, null, ex);
         }
         

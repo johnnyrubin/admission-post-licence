@@ -5,11 +5,22 @@
  */
 package IHM.ResponsableFormation;
 
+import AdmissionPostLicence.Ministere;
+import AdmissionPostLicence.Rectorat;
+import Util.GetObjectCorba;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+
 /**
  *
  * @author Teddy
  */
 public class Login extends javax.swing.JFrame {
+    
+    org.omg.CORBA.ORB orb;
+    Ministere m;
 
     /**
      * Creates new form Login
@@ -18,8 +29,14 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         errorLabel.setVisible(false);
         
-        // Récupération de la liste des rectorats
+        String[] test = {};
         
+        orb = org.omg.CORBA.ORB.init(test, null);
+        orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService");
+        m = GetObjectCorba.getMinistereCorba(orb);
+        
+        // Récupération de la liste des rectorats
+        Rectorat[] rectorats = m.getListeRectorat();
     }
 
     /**

@@ -7,6 +7,7 @@ import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.resultatCandidature;
 import Ministere.pojo.Accreditation;
+import Rectorat.RectoratImpl;
 import Util.GetObjectCorba;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class MinistereImpl extends MinisterePOA{
     //et la valeur le rectorat
     private HashMap<String,String> lesLiaisons;
     //Liste des rectorats
-    private ArrayList<Rectorat> lesRectorats;
+    private ArrayList<Rectorat> lesRectorats = new ArrayList<Rectorat>();
 
     public void setLesLiaisons(HashMap<String, String> lesLiaisons) {
         this.lesLiaisons = lesLiaisons;
@@ -65,8 +66,20 @@ public class MinistereImpl extends MinisterePOA{
 
     @Override
     public Rectorat[] getListeRectorat() {
-        Rectorat[] r = null;
-        return lesRectorats.toArray(r);
+        
+        System.out.println("Appel méthode MinistereImpl.getListeRectorat : Début");
+        //lesRectorats.add((Rectorat) new RectoratImpl("MDP"));
+        
+        Rectorat[] r = new Rectorat[0];
+//        int i = 0;lesRectorats.size()
+//        for(Rectorat t : lesRectorats) {
+//            System.out.println("Rectorat : " + t.nom());
+//            r[i] = t;
+//            i++;
+//        }
+        
+        System.out.println("Appel méthode MinistereImpl.getListeRectorat : Fin");
+        return r;
     }
 
     @Override

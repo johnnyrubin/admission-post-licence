@@ -188,14 +188,20 @@ public class RectoratImpl extends RectoratPOA{
     }
 
     @Override
-    public Master[] getListeMaster() {
+    public void enregistrerMaster(Master m) {
+        lesMasters.add(m);
+    }
+
+    @Override
+    public Master[] getListeMaster(String u) {
+        // TODO modif pour filtrer par universite
         Master[] m = null;
         return lesMasters.toArray(m);
     }
 
     @Override
-    public void enregistrerMaster(Master m) {
-        lesMasters.add(m);
+    public String[] getListeUniversite() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
