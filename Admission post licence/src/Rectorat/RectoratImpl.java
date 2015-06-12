@@ -2,15 +2,14 @@ package Rectorat;
 
 import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.EtudiantInconnu;
+import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Master;
 import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.RectoratPOA;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
-import AdmissionPostLicence.resultatCandidature;
 import Rectorat.database.CandidatureDAO;
 import Rectorat.pojo.Candidature;
-import Rectorat.pojo.ResultatCandidature;
 import Util.GetObjectCorba;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,32 +24,17 @@ public class RectoratImpl extends RectoratPOA{
     //La liste des candidatures du rectorat
     private List<Candidature> lesCandidatures;
     
-    //La liste des resultats des candidatures
-    private List<ResultatCandidature> lesResultatsCandidatures;
-
+    //La liste des gestions étudiants
+    private List<GestionEtudiant> lesGestionEtu;
+    
+    //La liste des masters
+    private List<Master> lesMasters;
+    
     /** Nom du Rectorat */
     private String nom;
     
-    /**
-     * Retourne le nom du Rectorat
-     * 
-     * @return le nom
-     */
-    public String getNom() {
-        return nom;
-    }
-    
-    /**
-     * Définit le nom du Rectorat
-     * 
-     * @param aNom 
-     */
-    public void setNom(String aNom) {
-        nom = aNom;
-    }
-
-    public RectoratImpl(String nom){
-        this.nom=nom;
+    public RectoratImpl(String aNom){
+        this.nom = aNom;
     }
 
     public List<Candidature> getLesCandidatures() {
@@ -103,34 +87,21 @@ public class RectoratImpl extends RectoratPOA{
     }
 
     @Override
-    public resultatCandidature[] consulterEtatCandidatures(candidature[] c) throws CandidatureInconnu {
-        resultatCandidature[] rcs=null;
-        resultatCandidature rc;
-        /*Boucler sur chaque candidature et dans la boucle aller chercher le resultat dans les résultats locaux
-        puis insérer dans la varible résultatCandidature a renvoyer*/
-        for (candidature c1 : c) {
-            rc = searchCandidature(c1);
-            addResultatCandidature(rcs, rc);
-        }
-        return rcs;
-    }
-
-    @Override
-    public void modifierCandidature(resultatCandidature candidature) throws CandidatureInconnu {
+    public void modifierCandidature(candidature candidature) throws CandidatureInconnu {
         boolean trouve=false;
-        for(int i=0;i<lesResultatsCandidatures.size()&&!trouve;i++){
+        for(int i=0;i<lesCandidatures.size()&&!trouve;i++){
             //Si je rentre dans le if c'est que j'ai trouvé le resultatCandidature
-            if(lesResultatsCandidatures.get(i).getCandidature().getEtu().getIne().equals(candidature.c.etudiant.ine) && 
-                    lesResultatsCandidatures.get(i).getCandidature().getMaster().equals(candidature.c.master)){
+            if(lesCandidatures.get(i).getEtu().getIne().equals(candidature.etudiant.ine) && 
+                    lesCandidatures.get(i).getMaster().equals(candidature.master)){
                 //Je le modifie alors
-                lesResultatsCandidatures.set(i, CandidatureMapper.resultatCandidatureCorbaToResultatCandidature(candidature));
+                lesCandidatures.set(i, CandidatureMapper.candidatureCorbaToCandidature(candidature));
                 trouve=true;
             }
         }
         //Si on a pas trouvé la candidature alors on l'ajoute
-        if(!trouve){
+        /*if(!trouve){
             lesResultatsCandidatures.add(CandidatureMapper.resultatCandidatureCorbaToResultatCandidature(candidature));
-        }
+        }*/
     }
     
     /*private Master getMasterCorba(String master) {
@@ -154,17 +125,17 @@ public class RectoratImpl extends RectoratPOA{
         return r;
     }*/
     
-    private resultatCandidature searchCandidature(candidature c){
-        resultatCandidature rc = null;
+    /*private candidature searchCandidature(candidature c){
+        candidature rc = null;
         for(int i=0;i<lesResultatsCandidatures.size();i++){
             //Si je rentre dans le if c'est que j'ai trouvé le resultatCandidature
             if(lesResultatsCandidatures.get(i).getCandidature().getEtu().getIne().equals(c.etudiant.ine) && 
                lesResultatsCandidatures.get(i).getCandidature().getMaster().equals(c.master)){
-                rc=CandidatureMapper.resultatCandidatureToResultatCandidatureCorba(lesResultatsCandidatures.get(i));
+                rc=CandidatureMapper.candidatureToCandidatureCorba(lesResultatsCandidatures.get(i));
             }
         }
         return rc;
-    }
+    }*/
     
     /**
      * Ajoute la nouvelle valeur dans le tableau
@@ -189,7 +160,7 @@ public class RectoratImpl extends RectoratPOA{
      * @param newValue
      * @return 
      */
-    private resultatCandidature[] addResultatCandidature(resultatCandidature[] oldArray,resultatCandidature newValue){
+    /*private resultatCandidature[] addResultatCandidature(resultatCandidature[] oldArray,resultatCandidature newValue){
         //define the new array
         resultatCandidature[] newArray = new resultatCandidature[oldArray.length + 1];
         //copy values into new array
@@ -198,6 +169,33 @@ public class RectoratImpl extends RectoratPOA{
         newArray[newArray.length-1] = newValue;
         
         return newArray;
+    }*/
+
+    @Override
+    public String nom() {
+        return this.nom;
+    }
+    
+    @Override
+    public GestionEtudiant[] getListeGestEtu() {
+        GestionEtudiant[] ge = null;
+        return lesGestionEtu.toArray(ge);
+    }
+
+    @Override
+    public void enregistrerGE(GestionEtudiant ge) {
+        lesGestionEtu.add(ge);
+    }
+
+    @Override
+    public Master[] getListeMaster() {
+        Master[] m = null;
+        return lesMasters.toArray(m);
+    }
+
+    @Override
+    public void enregistrerMaster(Master m) {
+        lesMasters.add(m);
     }
     
 }

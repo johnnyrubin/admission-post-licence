@@ -20,12 +20,22 @@ public class Candidature {
     private String Universite;
     //ordre de la candidature pour l'étudiant
     private int ordre;
+    //Etat de la candidature {nonValide, valide, cloture}, soit 0, 1 ou 2
+    private int etatCandidature;
+    //Décision du candidat { ouiDefinitif, ouiMais, nonMais, nonDefinitif } , soit 0, 1, 2 ou 3
+    private int decisionCandidat;
+    //Décision du master { admis, listeAttente, refuser } , soit 0, 1 ou 2
+    private int decisionMaster;
 
-    public Candidature(Etudiant etu, String master, String Universite, int ordre) {
+    public Candidature(Etudiant etu, String master, String Universite, int ordre,
+            int etatCandidature, int decisionCandidat, int decisionMaster) {
         this.etu = etu;
         this.master = master;
         this.Universite = Universite;
         this.ordre = ordre;
+        this.etatCandidature = etatCandidature;
+        this.decisionCandidat = decisionCandidat;
+        this.decisionMaster = decisionMaster;
     }
     
     
@@ -94,6 +104,52 @@ public class Candidature {
         this.ordre = ordre;
     }
     
-    
+    /**
+     * Récupère l'état de la candidature
+     * @return int
+     */
+    public int getEtatCandidature() {
+        return etatCandidature;
+    }
+
+    /**
+     * Définit l'état de la candidature
+     * @param etatCandidature 
+     */
+    public void setEtatCandidature(int etatCandidature) {
+        this.etatCandidature = etatCandidature;
+    }
+
+    /**
+     * Récupère la décision du candidat pour la candidature
+     * @return int
+     */
+    public int getDecisionCandidat() {
+        return decisionCandidat;
+    }
+
+    /**
+     * Définit la décision du candidat pour la candidature
+     * @param decisionCandidat 
+     */
+    public void setDecisionCandidat(int decisionCandidat) {
+        this.decisionCandidat = decisionCandidat;
+    }
+
+    /**
+     * Récupère la décision des décideurs du master
+     * @return int
+     */
+    public int getDecisionMaster() {
+        return decisionMaster;
+    }
+
+    /**
+     * Définit la décision des décideurs du master
+     * @param decisionMaster 
+     */
+    public void setDecisionMaster(int decisionMaster) {
+        this.decisionMaster = decisionMaster;
+    }
 
 }

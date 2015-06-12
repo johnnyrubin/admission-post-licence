@@ -37,7 +37,8 @@ public class CandidatureDAO {
             conn = new ConnexionRectorat(nomRectorat+".db");
             conn.connect();
             String sql = "Insert into CANDIDATURES values" +
-                    "('"+c.getEtu().getIne()+"','"+c.getMaster()+"','"+c.getUniversite()+"',"+c.getOrdre()+")";
+                    "('"+c.getEtu().getIne()+"','"+c.getMaster()+"','"+c.getUniversite()+"',"+c.getOrdre()+
+                    ","+c.getEtatCandidature()+","+c.getDecisionCandidat()+","+c.getDecisionMaster()+")";
             
             // Création de la candidature
             lineAffected=conn.statement.executeUpdate(sql);
@@ -51,7 +52,7 @@ public class CandidatureDAO {
         return (lineAffected!=0);
     }
     
-    public static candidature[] importCandidatures(String nomRectorat){
+    /*public static candidature[] importCandidatures(String nomRectorat){
         candidature[] candidatures=new candidature[0];
         // Connexion à la base de données
         conn = new ConnexionRectorat(nomRectorat+".db");
@@ -85,5 +86,5 @@ public class CandidatureDAO {
             conn.close();  
         }
         return candidatures;
-    }
+    }*/
 }

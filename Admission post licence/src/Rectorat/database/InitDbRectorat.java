@@ -33,7 +33,6 @@ public class InitDbRectorat {
         try {
             initTableRectorat();
             initTableCandidatures();
-            initTableResultatsCandidatures();
             displayInfo();
         } catch (SQLException ex) {
             Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,6 +83,9 @@ public class InitDbRectorat {
                 "IDMASTER TEXT,"+
                 "UNIVERSITE TEXT NOT NULL,"+
                 "ORDRE NUMBER NOT NULL,"+
+                "ETAT TEXT NOT NULL,"+
+                "DECISIONCANDIDAT TEXT NOT NULL,"+
+                "DECISIONMASTER TEXT NOT NULL,"+
                 "PRIMARY KEY(INE,IDMASTER)"
                 + ")";
 
@@ -91,33 +93,6 @@ public class InitDbRectorat {
         conn.statement.executeUpdate(sql);
         
         // Insertion des candidatures dans la table
-        // TODO voir avec Vincent pour les données
-        CandidatureDAO.ajoutCandidature(new Candidature(new Etudiant("0001", "rubin", "johnny", "paul sab", "fonda"), "UnMaster", "paul sab", (short)1),"Rectorat" );
-    }
-    
-    /**
-     * Création de la table RESULTATSCANDIDATURES
-     * @throws SQLException 
-     */
-    private static void initTableResultatsCandidatures() throws SQLException{
-        // Suppression de la table RESULTATSCANDIDATURES
-        String sql = "DROP TABLE IF EXISTS RESULTATSCANDIDATURES;";
-
-        conn.statement.executeUpdate(sql);
-
-        sql = "CREATE TABLE RESULTATSCANDIDATURES " +
-                "(INE TEXT," +
-                "IDMASTER TEXT,"+
-                "ETAT TEXT NOT NULL,"+
-                "DECISIONCANDIDAT TEXT NOT NULL,"+
-                "DECISIONMASTER TEXT NOT NULL,"+
-                "PRIMARY KEY(INE,IDMASTER)"
-                + ")";
-
-        // Création de la table RESULTATSCANDIDATURES
-        conn.statement.executeUpdate(sql);
-        
-        // Insertion des resultats candidatures dans la table
         // TODO voir avec Vincent pour les données
     }
     

@@ -10,6 +10,8 @@ import Ministere.pojo.Accreditation;
 import Util.GetObjectCorba;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,6 +23,8 @@ public class MinistereImpl extends MinisterePOA{
     //Liste qui permet de savoir à quel rectorat appartient une université, la clé est l'université
     //et la valeur le rectorat
     private HashMap<String,String> lesLiaisons;
+    //Liste des rectorats
+    private ArrayList<Rectorat> lesRectorats;
 
     public void setLesLiaisons(HashMap<String, String> lesLiaisons) {
         this.lesLiaisons = lesLiaisons;
@@ -45,9 +49,29 @@ public class MinistereImpl extends MinisterePOA{
     }
 
     @Override
-    public void transfererDecision(resultatCandidature r) throws CandidatureInconnu {
-        Rectorat rectorat = GetObjectCorba.getRectoratCorba(lesLiaisons.get(r.c.universite),ServerMinistere.orb);
-        rectorat.modifierCandidature(r);
+    public void transfererDecision(candidature c) throws CandidatureInconnu {
+        try{
+            for (Rectorat lesRectorat : lesRectorats) {
+                if (lesRectorat.nom().equals(lesLiaisons.get(c.universite))) {
+                    lesRectorat.modifierCandidature(c);
+                }
+            }
+        
+        } catch (CandidatureInconnu ex) {
+            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    @Override
+    public Rectorat[] getListeRectorat() {
+        Rectorat[] r = null;
+        return lesRectorats.toArray(r);
+    }
+
+    @Override
+    public void enregistrerRectorat(Rectorat r) {
+        lesRectorats.add(r);
     }
     
     /**

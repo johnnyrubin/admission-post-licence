@@ -9,9 +9,9 @@ import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.decisionCandidat;
 import AdmissionPostLicence.decisionMaster;
 import AdmissionPostLicence.etatCandidature;
-import AdmissionPostLicence.resultatCandidature;
+//import AdmissionPostLicence.resultatCandidature;
 import Rectorat.pojo.Candidature;
-import Rectorat.pojo.ResultatCandidature;
+//import Rectorat.pojo.ResultatCandidature;
 import Universite.GestionEtudiant.EtudiantMapper;
 
 /**
@@ -29,7 +29,9 @@ public class CandidatureMapper {
     public static candidature candidatureToCandidatureCorba(Candidature c) {
         candidature ca = null;
         if(c != null) {
-            ca = new candidature(EtudiantMapper.etudiantToIdentiteCorba(c.getEtu()), c.getMaster(), c.getUniversite(), (short)c.getOrdre());
+            ca = new candidature(EtudiantMapper.etudiantToIdentiteCorba(c.getEtu()), c.getMaster(), c.getUniversite(), 
+                    (short)c.getOrdre(),etatCandidature.from_int(c.getEtatCandidature()), 
+                    decisionCandidat.from_int(c.getDecisionCandidat()),decisionMaster.from_int(c.getDecisionMaster()));
         }
         return ca;
     }
@@ -45,7 +47,8 @@ public class CandidatureMapper {
         if(c != null) {
             //TODO ICI LE MASTER N'EST PAS BIEN REMPLI IL FAUDRAIT CREER UN OBJET MASTER MAIS IL FAUT AU PREALABLE
             //ALLER VOIR SI CE DERNIER N'EXISTE PAS DEJA POUR RÉCUPERER SON ID
-            ca = new Candidature(EtudiantMapper.identiteToEtudiantCorba(c.etudiant), c.master, c.universite, (int)c.ordre);
+            ca = new Candidature(EtudiantMapper.identiteToEtudiantCorba(c.etudiant), c.master, c.universite, (int)c.ordre,
+                                c.etat.value(), c.decisionC.value(),c.decisionM.value());
         }
         return ca;
     }
@@ -56,7 +59,7 @@ public class CandidatureMapper {
      * @param rc
      * @return {@link resultatCandidature}
      */
-    public static resultatCandidature resultatCandidatureToResultatCandidatureCorba(ResultatCandidature rc) {
+    /*public static resultatCandidature resultatCandidatureToResultatCandidatureCorba(ResultatCandidature rc) {
         resultatCandidature rca = null;
         if(rc != null) {
             rca = new resultatCandidature(CandidatureMapper.candidatureToCandidatureCorba(rc.getCandidature()),
@@ -64,7 +67,7 @@ public class CandidatureMapper {
                     decisionMaster.from_int(rc.getDecisionMaster()));
         }       
         return rca;
-    }
+    }*/
     
     /**
      * Convertit les infos de type resultatcandidature utilisé par corba vers l'objet ResultatCandidature
@@ -72,7 +75,7 @@ public class CandidatureMapper {
      * @param rc
      * @return {@link ResultatCandidature}
      */
-    public static ResultatCandidature resultatCandidatureCorbaToResultatCandidature(resultatCandidature rc) {
+    /*public static ResultatCandidature resultatCandidatureCorbaToResultatCandidature(resultatCandidature rc) {
         ResultatCandidature rca = null;
         if(rc != null) {
             rca = new ResultatCandidature(CandidatureMapper.candidatureCorbaToCandidature(rc.c),
@@ -80,6 +83,6 @@ public class CandidatureMapper {
                     rc.decisionM.value());
         }       
         return rca;
-    }
+    }*/
     
 }
