@@ -12,6 +12,7 @@ import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.MinistereHelper;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.identite;
+import Util.GetObjectCorba;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -40,24 +41,15 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         String[] test = {};
-        try {
-            orb = org.omg.CORBA.ORB.init(test,null);
-            orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService");
 
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.56.1:2001/NameService"));
-            //NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-            // On récupère le ministere
-            nameToFind[0] = new org.omg.CosNaming.NameComponent("Ministere", "");
-            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
-            m = MinistereHelper.narrow(remoteRef);
+        orb = org.omg.CORBA.ORB.init(test,null);
+        orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService");
+
+        m = GetObjectCorba.getMinistereCorba(orb);
             
-            /*List<Rectorat> lesRectorats = Arrays.asList(m.getListeRectorat());
-            jComboBoxRectorats.setModel(new DefaultComboBoxModel(lesRectorats.toArray()));*/
+        //List<Rectorat> lesRectorats = Arrays.asList(m.getListeRectorat());
+        jComboBoxRectorats.setModel(new DefaultComboBoxModel(m.getListeRectorat()));
             
-        } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
         /*jComboBoxRectorats.addActionListener (new ActionListener () {
         public void actionPerformed(ActionEvent e) {
         }

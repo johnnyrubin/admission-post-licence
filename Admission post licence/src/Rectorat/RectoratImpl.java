@@ -11,6 +11,7 @@ import AdmissionPostLicence.identite;
 import Rectorat.database.CandidatureDAO;
 import Rectorat.pojo.Candidature;
 import Util.GetObjectCorba;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,13 +23,13 @@ import java.util.logging.Logger;
 public class RectoratImpl extends RectoratPOA{
 
     //La liste des candidatures du rectorat
-    private List<Candidature> lesCandidatures;
+    private List<Candidature> lesCandidatures = new ArrayList<Candidature>();
     
     //La liste des gestions étudiants
-    private List<GestionEtudiant> lesGestionEtu;
+    private List<GestionEtudiant> lesGestionEtu = new ArrayList<GestionEtudiant>();
     
     //La liste des masters
-    private List<Master> lesMasters;
+    private List<Master> lesMasters = new ArrayList<Master>();
     
     /** Nom du Rectorat */
     private String nom;
