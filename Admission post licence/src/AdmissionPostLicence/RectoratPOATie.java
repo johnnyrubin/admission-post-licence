@@ -97,15 +97,6 @@ public class RectoratPOATie extends RectoratPOA
     }
 
     /**
-     * Operation consulterEtatCandidatures
-     */
-    public AdmissionPostLicence.candidature[] consulterEtatCandidatures(AdmissionPostLicence.candidature[] c)
-        throws AdmissionPostLicence.CandidatureInconnu
-    {
-        return _tie.consulterEtatCandidatures( c);
-    }
-
-    /**
      * Operation modifierCandidature
      */
     public void modifierCandidature(AdmissionPostLicence.candidature candidature)

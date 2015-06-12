@@ -115,9 +115,6 @@ module AdmissionPostLicence
         // Retourne la liste des candidatures d’un étudiant
         candidatures recupererCandidaturesEtudiant(in identite etudiant) raises (EtudiantInconnu);
 
-        // Permet d’avoir le détail de l’état des candidatures fournies en paramètre
-        candidatures consulterEtatCandidatures(in candidatures c) raises (CandidatureInconnu);
-
         // Permet de modifier l’état d'une candidature
         void modifierCandidature(in candidature candidature) raises (CandidatureInconnu); 
 

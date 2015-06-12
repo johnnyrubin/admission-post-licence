@@ -31,12 +31,6 @@ public interface RectoratOperations
         throws AdmissionPostLicence.EtudiantInconnu;
 
     /**
-     * Operation consulterEtatCandidatures
-     */
-    public AdmissionPostLicence.candidature[] consulterEtatCandidatures(AdmissionPostLicence.candidature[] c)
-        throws AdmissionPostLicence.CandidatureInconnu;
-
-    /**
      * Operation modifierCandidature
      */
     public void modifierCandidature(AdmissionPostLicence.candidature candidature)

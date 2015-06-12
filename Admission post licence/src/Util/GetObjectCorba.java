@@ -5,15 +5,10 @@
  */
 package Util;
 
-import AdmissionPostLicence.GestionEtudiant;
-import AdmissionPostLicence.GestionEtudiantHelper;
 import AdmissionPostLicence.Master;
 import AdmissionPostLicence.MasterHelper;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.RectoratHelper;
-import Rectorat.RectoratImpl;
-import Universite.GestionEtudiant.GestionEtudiantImpl;
-import Universite.pojo.Etudiant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -54,31 +49,6 @@ public class GetObjectCorba {
             Logger.getLogger(GetObjectCorba.class.getName()).log(Level.SEVERE, null, ex);
         }
         return r;
-    }
-    
-    /**
-     * Permet de récupérer l'etudiant de GestionEtudiant CORBA
-     * 
-     * @param universite
-     * @param ine
-     * @param orb
-     * @return {@link Etudiant}
-     */
-    public static Etudiant getEtudiant(String universite,String ine,org.omg.CORBA.ORB orb) {
-        // Initialisation de la variable de retour
-        GestionEtudiantImpl g = null;
-        try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-            
-            // On récupère le rectorat
-            nameToFind[0] = new org.omg.CosNaming.NameComponent("GestionEtudiant-"+universite, "");
-            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
-            g = (GestionEtudiantImpl)GestionEtudiantHelper.narrow(remoteRef);
-        } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
-            Logger.getLogger(GetObjectCorba.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return g.getEtudiant(ine);
     }
     
      /**

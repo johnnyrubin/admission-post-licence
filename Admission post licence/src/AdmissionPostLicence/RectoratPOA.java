@@ -33,8 +33,6 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
     static {
             operationMap.put("_get_nom",
                     new Operation__get_nom());
-            operationMap.put("consulterEtatCandidatures",
-                    new Operation_consulterEtatCandidatures());
             operationMap.put("creerCandidature",
                     new Operation_creerCandidature());
             operationMap.put("enregistrerGE",
@@ -131,28 +129,6 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
         {
             _output = handler.createExceptionReply();
             AdmissionPostLicence.EtudiantInconnuHelper.write(_output,_exception);
-        }
-        return _output;
-    }
-
-    private org.omg.CORBA.portable.OutputStream _invoke_consulterEtatCandidatures(
-            final org.omg.CORBA.portable.InputStream _is,
-            final org.omg.CORBA.portable.ResponseHandler handler) {
-        org.omg.CORBA.portable.OutputStream _output;
-        AdmissionPostLicence.candidature[] arg0_in = AdmissionPostLicence.candidaturesHelper.read(_is);
-
-        try
-        {
-            AdmissionPostLicence.candidature[] _arg_result = consulterEtatCandidatures(arg0_in);
-
-            _output = handler.createReply();
-            AdmissionPostLicence.candidaturesHelper.write(_output,_arg_result);
-
-        }
-        catch (AdmissionPostLicence.CandidatureInconnu _exception)
-        {
-            _output = handler.createExceptionReply();
-            AdmissionPostLicence.CandidatureInconnuHelper.write(_output,_exception);
         }
         return _output;
     }
@@ -275,16 +251,6 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
             return target._invoke_recupererCandidaturesEtudiant(_is, handler);
-        }
-    }
-
-    private static final class Operation_consulterEtatCandidatures extends AbstractOperation
-    {
-        protected org.omg.CORBA.portable.OutputStream invoke(
-                final RectoratPOA target,
-                final org.omg.CORBA.portable.InputStream _is,
-                final org.omg.CORBA.portable.ResponseHandler handler) {
-            return target._invoke_consulterEtatCandidatures(_is, handler);
         }
     }
 

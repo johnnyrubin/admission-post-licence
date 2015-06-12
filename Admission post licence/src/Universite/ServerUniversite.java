@@ -18,7 +18,11 @@ public class ServerUniversite {
     
     public static void main(String[] args) {
         //TODO remplacer le nom en dur par args[0] ou args[1] je sais plus lequel contient la donnée
-        String nameUniversite="Paul Sabatier";
+        String nameUniversite = "Paul Sabatier";
+        
+        // TODO remplacer par args
+        String nameRectorat = "Toulouse";
+        
         try {
             
             // Intialisation de l'ORB
@@ -28,8 +32,7 @@ public class ServerUniversite {
             POA rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             
             // Création du servant pour la gestion des étudiants
-            GestionEtudiantImpl gestEtu = new GestionEtudiantImpl();
-            gestEtu.setRectorat("Toulouse");
+            GestionEtudiantImpl gestEtu = new GestionEtudiantImpl(nameUniversite, nameRectorat);
             
             // Activer le POA manager
             rootPOA.the_POAManager().activate();
@@ -54,7 +57,7 @@ public class ServerUniversite {
             
             // Création du servant pour le master
             // (du coup il peut y en avoir plusieurs ici)
-            MasterImpl unMaster = new MasterImpl();
+            MasterImpl unMaster = new MasterImpl(nameUniversite, nameRectorat);
             
             // Activer le servant au sein du POA et récupérer son ID
             rootPOA.activate_object(unMaster);
