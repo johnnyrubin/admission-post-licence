@@ -33,7 +33,11 @@ public abstract class MinisterePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler)
     {
 
-        if (opName.equals("recupererAccreditations")) {
+        if (opName.equals("enregistrerRectorat")) {
+                return _invoke_enregistrerRectorat(_is, handler);
+        } else if (opName.equals("getListeRectorat")) {
+                return _invoke_getListeRectorat(_is, handler);
+        } else if (opName.equals("recupererAccreditations")) {
                 return _invoke_recupererAccreditations(_is, handler);
         } else if (opName.equals("transfererCandidature")) {
                 return _invoke_transfererCandidature(_is, handler);
@@ -75,7 +79,7 @@ public abstract class MinisterePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        AdmissionPostLicence.resultatCandidature arg0_in = AdmissionPostLicence.resultatCandidatureHelper.read(_is);
+        AdmissionPostLicence.candidature arg0_in = AdmissionPostLicence.candidatureHelper.read(_is);
 
         try
         {
@@ -89,6 +93,32 @@ public abstract class MinisterePOA extends org.omg.PortableServer.Servant
             _output = handler.createExceptionReply();
             AdmissionPostLicence.CandidatureInconnuHelper.write(_output,_exception);
         }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_getListeRectorat(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        AdmissionPostLicence.Rectorat[] _arg_result = getListeRectorat();
+
+        _output = handler.createReply();
+        AdmissionPostLicence.rectoratsHelper.write(_output,_arg_result);
+
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_enregistrerRectorat(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        AdmissionPostLicence.Rectorat arg0_in = AdmissionPostLicence.RectoratHelper.read(_is);
+
+        enregistrerRectorat(arg0_in);
+
+        _output = handler.createReply();
+
         return _output;
     }
 

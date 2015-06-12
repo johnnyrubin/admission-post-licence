@@ -33,7 +33,9 @@ public abstract class MasterPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler)
     {
 
-        if (opName.equals("consulterEtatCandidatures")) {
+        if (opName.equals("_get_nom")) {
+                return _invoke__get_nom(_is, handler);
+        } else if (opName.equals("consulterEtatCandidatures")) {
                 return _invoke_consulterEtatCandidatures(_is, handler);
         } else if (opName.equals("modifierDecision")) {
                 return _invoke_modifierDecision(_is, handler);
@@ -45,15 +47,25 @@ public abstract class MasterPOA extends org.omg.PortableServer.Servant
     }
 
     // helper methods
+    private org.omg.CORBA.portable.OutputStream _invoke__get_nom(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg = nom();
+        _output = handler.createReply();
+        _output.write_string(arg);
+        return _output;
+    }
+
     private org.omg.CORBA.portable.OutputStream _invoke_consulterEtatCandidatures(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
 
-        AdmissionPostLicence.resultatCandidature[] _arg_result = consulterEtatCandidatures();
+        AdmissionPostLicence.candidature[] _arg_result = consulterEtatCandidatures();
 
         _output = handler.createReply();
-        AdmissionPostLicence.resultatsCandidaturesHelper.write(_output,_arg_result);
+        AdmissionPostLicence.candidaturesHelper.write(_output,_arg_result);
 
         return _output;
     }
@@ -65,10 +77,18 @@ public abstract class MasterPOA extends org.omg.PortableServer.Servant
         AdmissionPostLicence.candidature arg0_in = AdmissionPostLicence.candidatureHelper.read(_is);
         AdmissionPostLicence.decisionMaster arg1_in = AdmissionPostLicence.decisionMasterHelper.read(_is);
 
-        modifierDecision(arg0_in, arg1_in);
+        try
+        {
+            modifierDecision(arg0_in, arg1_in);
 
-        _output = handler.createReply();
+            _output = handler.createReply();
 
+        }
+        catch (AdmissionPostLicence.CandidatureInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            AdmissionPostLicence.CandidatureInconnuHelper.write(_output,_exception);
+        }
         return _output;
     }
 

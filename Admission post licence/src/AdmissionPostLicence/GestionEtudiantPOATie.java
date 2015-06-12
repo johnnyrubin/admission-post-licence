@@ -63,6 +63,14 @@ public class GestionEtudiantPOATie extends GestionEtudiantPOA
     }
 
     /**
+     * Read accessor for nom attribute
+     */
+    public String nom()
+    {
+        return _tie.nom();
+    }
+
+    /**
      * Operation soumettreCandidature
      */
     public void soumettreCandidature(AdmissionPostLicence.candidature c)
@@ -83,7 +91,7 @@ public class GestionEtudiantPOATie extends GestionEtudiantPOA
     /**
      * Operation consulterEtatVoeux
      */
-    public AdmissionPostLicence.resultatCandidature[] consulterEtatVoeux(AdmissionPostLicence.identite etudiant)
+    public AdmissionPostLicence.candidature[] consulterEtatVoeux(AdmissionPostLicence.identite etudiant)
         throws AdmissionPostLicence.EtudiantInconnu
     {
         return _tie.consulterEtatVoeux( etudiant);

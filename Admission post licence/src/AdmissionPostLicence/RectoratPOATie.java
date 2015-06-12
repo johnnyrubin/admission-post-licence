@@ -63,6 +63,14 @@ public class RectoratPOATie extends RectoratPOA
     }
 
     /**
+     * Read accessor for nom attribute
+     */
+    public String nom()
+    {
+        return _tie.nom();
+    }
+
+    /**
      * Operation creerCandidature
      */
     public void creerCandidature(AdmissionPostLicence.candidature c)
@@ -91,7 +99,7 @@ public class RectoratPOATie extends RectoratPOA
     /**
      * Operation consulterEtatCandidatures
      */
-    public AdmissionPostLicence.resultatCandidature[] consulterEtatCandidatures(AdmissionPostLicence.candidature[] c)
+    public AdmissionPostLicence.candidature[] consulterEtatCandidatures(AdmissionPostLicence.candidature[] c)
         throws AdmissionPostLicence.CandidatureInconnu
     {
         return _tie.consulterEtatCandidatures( c);
@@ -100,10 +108,42 @@ public class RectoratPOATie extends RectoratPOA
     /**
      * Operation modifierCandidature
      */
-    public void modifierCandidature(AdmissionPostLicence.resultatCandidature candidature)
+    public void modifierCandidature(AdmissionPostLicence.candidature candidature)
         throws AdmissionPostLicence.CandidatureInconnu
     {
         _tie.modifierCandidature( candidature);
+    }
+
+    /**
+     * Operation getListeGestEtu
+     */
+    public AdmissionPostLicence.GestionEtudiant[] getListeGestEtu()
+    {
+        return _tie.getListeGestEtu();
+    }
+
+    /**
+     * Operation enregistrerGE
+     */
+    public void enregistrerGE(AdmissionPostLicence.GestionEtudiant ge)
+    {
+        _tie.enregistrerGE( ge);
+    }
+
+    /**
+     * Operation getListeMaster
+     */
+    public AdmissionPostLicence.Master[] getListeMaster()
+    {
+        return _tie.getListeMaster();
+    }
+
+    /**
+     * Operation enregistrerMaster
+     */
+    public void enregistrerMaster(AdmissionPostLicence.Master m)
+    {
+        _tie.enregistrerMaster( m);
     }
 
 }

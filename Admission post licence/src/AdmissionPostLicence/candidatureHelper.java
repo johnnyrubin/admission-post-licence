@@ -73,7 +73,7 @@ public class candidatureHelper
                     return org.omg.CORBA.ORB.init().create_recursive_tc(id());
                 _working = true;
                 org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-                org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[4];
+                org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[7];
 
                 _members[0] = new org.omg.CORBA.StructMember();
                 _members[0].name = "etudiant";
@@ -87,6 +87,15 @@ public class candidatureHelper
                 _members[3] = new org.omg.CORBA.StructMember();
                 _members[3].name = "ordre";
                 _members[3].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_short);
+                _members[4] = new org.omg.CORBA.StructMember();
+                _members[4].name = "etat";
+                _members[4].type = AdmissionPostLicence.etatCandidatureHelper.type();
+                _members[5] = new org.omg.CORBA.StructMember();
+                _members[5].name = "decisionC";
+                _members[5].type = AdmissionPostLicence.decisionCandidatHelper.type();
+                _members[6] = new org.omg.CORBA.StructMember();
+                _members[6].name = "decisionM";
+                _members[6].type = AdmissionPostLicence.decisionMasterHelper.type();
                 _tc = orb.create_struct_tc(id(),"candidature",_members);
                 _working = false;
             }
@@ -118,6 +127,9 @@ public class candidatureHelper
         new_one.master = istream.read_string();
         new_one.universite = istream.read_string();
         new_one.ordre = istream.read_short();
+        new_one.etat = AdmissionPostLicence.etatCandidatureHelper.read(istream);
+        new_one.decisionC = AdmissionPostLicence.decisionCandidatHelper.read(istream);
+        new_one.decisionM = AdmissionPostLicence.decisionMasterHelper.read(istream);
 
         return new_one;
     }
@@ -133,6 +145,9 @@ public class candidatureHelper
         ostream.write_string(value.master);
         ostream.write_string(value.universite);
         ostream.write_short(value.ordre);
+        AdmissionPostLicence.etatCandidatureHelper.write(ostream,value.etat);
+        AdmissionPostLicence.decisionCandidatHelper.write(ostream,value.decisionC);
+        AdmissionPostLicence.decisionMasterHelper.write(ostream,value.decisionM);
     }
 
 }

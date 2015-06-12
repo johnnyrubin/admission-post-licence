@@ -33,7 +33,9 @@ public abstract class GestionEtudiantPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler)
     {
 
-        if (opName.equals("consulterEtatVoeux")) {
+        if (opName.equals("_get_nom")) {
+                return _invoke__get_nom(_is, handler);
+        } else if (opName.equals("consulterEtatVoeux")) {
                 return _invoke_consulterEtatVoeux(_is, handler);
         } else if (opName.equals("modifierDecision")) {
                 return _invoke_modifierDecision(_is, handler);
@@ -49,6 +51,16 @@ public abstract class GestionEtudiantPOA extends org.omg.PortableServer.Servant
     }
 
     // helper methods
+    private org.omg.CORBA.portable.OutputStream _invoke__get_nom(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg = nom();
+        _output = handler.createReply();
+        _output.write_string(arg);
+        return _output;
+    }
+
     private org.omg.CORBA.portable.OutputStream _invoke_soumettreCandidature(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -100,10 +112,10 @@ public abstract class GestionEtudiantPOA extends org.omg.PortableServer.Servant
 
         try
         {
-            AdmissionPostLicence.resultatCandidature[] _arg_result = consulterEtatVoeux(arg0_in);
+            AdmissionPostLicence.candidature[] _arg_result = consulterEtatVoeux(arg0_in);
 
             _output = handler.createReply();
-            AdmissionPostLicence.resultatsCandidaturesHelper.write(_output,_arg_result);
+            AdmissionPostLicence.candidaturesHelper.write(_output,_arg_result);
 
         }
         catch (AdmissionPostLicence.EtudiantInconnu _exception)

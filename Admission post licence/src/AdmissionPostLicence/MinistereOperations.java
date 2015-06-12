@@ -20,7 +20,17 @@ public interface MinistereOperations
     /**
      * Operation transfererDecision
      */
-    public void transfererDecision(AdmissionPostLicence.resultatCandidature r)
+    public void transfererDecision(AdmissionPostLicence.candidature r)
         throws AdmissionPostLicence.CandidatureInconnu;
+
+    /**
+     * Operation getListeRectorat
+     */
+    public AdmissionPostLicence.Rectorat[] getListeRectorat();
+
+    /**
+     * Operation enregistrerRectorat
+     */
+    public void enregistrerRectorat(AdmissionPostLicence.Rectorat r);
 
 }

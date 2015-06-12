@@ -81,10 +81,26 @@ public class MinisterePOATie extends MinisterePOA
     /**
      * Operation transfererDecision
      */
-    public void transfererDecision(AdmissionPostLicence.resultatCandidature r)
+    public void transfererDecision(AdmissionPostLicence.candidature r)
         throws AdmissionPostLicence.CandidatureInconnu
     {
         _tie.transfererDecision( r);
+    }
+
+    /**
+     * Operation getListeRectorat
+     */
+    public AdmissionPostLicence.Rectorat[] getListeRectorat()
+    {
+        return _tie.getListeRectorat();
+    }
+
+    /**
+     * Operation enregistrerRectorat
+     */
+    public void enregistrerRectorat(AdmissionPostLicence.Rectorat r)
+    {
+        _tie.enregistrerRectorat( r);
     }
 
 }

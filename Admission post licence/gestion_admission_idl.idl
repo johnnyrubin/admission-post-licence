@@ -60,7 +60,7 @@ module AdmissionPostLicence
     interface GestionEtudiant
     {
         //Nom de la gestion étudiante
-        readonly attribute nom;
+        readonly attribute string nom;
 
         // Soumission d’une candidature à un master
         void soumettreCandidature(in candidature c) raises (MasterInconnu);
@@ -77,13 +77,15 @@ module AdmissionPostLicence
         //Permet à l’étudiant de se connecter 
         identite seConnecter(in string ine, in string mdp) raises (EtudiantInconnu);
     };
+	
+	typedef sequence<GestionEtudiant> gestionEtudiants;
 
     // Point d’accès aux informations fournies aux responsables de formation et aux
     // autres entités
     interface Master
     {     
         //Nom du master
-        readonly attribute nom;
+        readonly attribute string nom;
         
         // Retourne les candidatures au master ainsi que leurs états
         candidatures consulterEtatCandidatures();
@@ -94,12 +96,14 @@ module AdmissionPostLicence
         // Vérifie que la licence soit compatible avec le master
         boolean verifierPrerequis(in string licence) raises (MasterInconnu);
     };
+	
+	typedef sequence<Master> masters;
 
     // Code métier des Rectorats
     interface Rectorat
     {
         // Nom du rectorat
-        readonly attribute nom;
+        readonly attribute string nom;
 
         // Enregistre une candidature auprès du rectorat, vérifie que l’étudiant puisse
         // candidater au master grâce à Master
@@ -118,18 +122,20 @@ module AdmissionPostLicence
         void modifierCandidature(in candidature candidature) raises (CandidatureInconnu); 
 
         // Liste qui contient tous les gestions étudiantes du rectorat
-        List<GestionEtudiant> getListeGestEtu();
+        gestionEtudiants getListeGestEtu();
 
         // Fonction qui permet d'enregistrer une gestion etudiante auprès du rectorat
         void enregistrerGE(in GestionEtudiant ge);
 
         // Liste qui contient tous les masters du rectorat
-        List<Master> getListeMaster();
+        masters getListeMaster();
 
         // Fonction qui permet d'enregistrer un master auprès du rectorat
         void enregistrerMaster(in Master m);
 
     };
+	
+	typedef sequence<Rectorat> rectorats;
 
     interface Ministere
     {
@@ -140,10 +146,10 @@ module AdmissionPostLicence
         void transfererCandidature(in candidature c);
 
         // Transfere la décision d’un candidat vers un autre rectorat
-        void transfererDecision(in resultatCandidature r) raises (CandidatureInconnu); 
+        void transfererDecision(in candidature r) raises (CandidatureInconnu); 
 
         // Liste qui contient tous les rectorats du ministère
-        List<Rectorat> getListeRectorat();
+        rectorats getListeRectorat();
 
         // Fonction qui permet d'enregistrer un rectorat auprès du ministère
         void enregistrerRectorat(in Rectorat r);

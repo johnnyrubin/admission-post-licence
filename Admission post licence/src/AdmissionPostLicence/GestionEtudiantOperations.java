@@ -8,6 +8,12 @@ package AdmissionPostLicence;
 public interface GestionEtudiantOperations
 {
     /**
+     * Read accessor for nom attribute
+     * @return the attribute value
+     */
+    public String nom();
+
+    /**
      * Operation soumettreCandidature
      */
     public void soumettreCandidature(AdmissionPostLicence.candidature c)
@@ -22,7 +28,7 @@ public interface GestionEtudiantOperations
     /**
      * Operation consulterEtatVoeux
      */
-    public AdmissionPostLicence.resultatCandidature[] consulterEtatVoeux(AdmissionPostLicence.identite etudiant)
+    public AdmissionPostLicence.candidature[] consulterEtatVoeux(AdmissionPostLicence.identite etudiant)
         throws AdmissionPostLicence.EtudiantInconnu;
 
     /**

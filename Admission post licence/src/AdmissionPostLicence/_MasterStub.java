@@ -21,9 +21,51 @@ public class _MasterStub extends org.omg.CORBA.portable.ObjectImpl
     private final static Class _opsClass = AdmissionPostLicence.MasterOperations.class;
 
     /**
+     * Read accessor for nom attribute
+     * @return the attribute value
+     */
+    public String nom()
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("_get_nom",true);
+                    _input = this._invoke(_output);
+                    return _input.read_string();
+                } catch (final org.omg.CORBA.portable.RemarshalException _exception) {
+                    continue;
+                } catch (final org.omg.CORBA.portable.ApplicationException _exception) {
+                    final String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                } finally {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("_get_nom",_opsClass);
+                if (_so == null)
+                   continue;
+                AdmissionPostLicence.MasterOperations _self = (AdmissionPostLicence.MasterOperations) _so.servant;
+                try
+                {
+                    return _self.nom();
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
      * Operation consulterEtatCandidatures
      */
-    public AdmissionPostLicence.resultatCandidature[] consulterEtatCandidatures()
+    public AdmissionPostLicence.candidature[] consulterEtatCandidatures()
     {
         while(true)
         {
@@ -34,7 +76,7 @@ public class _MasterStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("consulterEtatCandidatures",true);
                     _input = this._invoke(_output);
-                    AdmissionPostLicence.resultatCandidature[] _arg_ret = AdmissionPostLicence.resultatsCandidaturesHelper.read(_input);
+                    AdmissionPostLicence.candidature[] _arg_ret = AdmissionPostLicence.candidaturesHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -73,6 +115,7 @@ public class _MasterStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation modifierDecision
      */
     public void modifierDecision(AdmissionPostLicence.candidature c, AdmissionPostLicence.decisionMaster dm)
+        throws AdmissionPostLicence.CandidatureInconnu
     {
         while(true)
         {
@@ -94,6 +137,11 @@ public class _MasterStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
+                    if (_exception_id.equals(AdmissionPostLicence.CandidatureInconnuHelper.id()))
+                    {
+                        throw AdmissionPostLicence.CandidatureInconnuHelper.read(_exception.getInputStream());
+                    }
+
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
                 }
                 finally

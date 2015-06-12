@@ -63,9 +63,17 @@ public class MasterPOATie extends MasterPOA
     }
 
     /**
+     * Read accessor for nom attribute
+     */
+    public String nom()
+    {
+        return _tie.nom();
+    }
+
+    /**
      * Operation consulterEtatCandidatures
      */
-    public AdmissionPostLicence.resultatCandidature[] consulterEtatCandidatures()
+    public AdmissionPostLicence.candidature[] consulterEtatCandidatures()
     {
         return _tie.consulterEtatCandidatures();
     }
@@ -74,6 +82,7 @@ public class MasterPOATie extends MasterPOA
      * Operation modifierDecision
      */
     public void modifierDecision(AdmissionPostLicence.candidature c, AdmissionPostLicence.decisionMaster dm)
+        throws AdmissionPostLicence.CandidatureInconnu
     {
         _tie.modifierDecision( c,  dm);
     }

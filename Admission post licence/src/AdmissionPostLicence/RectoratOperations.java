@@ -8,6 +8,12 @@ package AdmissionPostLicence;
 public interface RectoratOperations
 {
     /**
+     * Read accessor for nom attribute
+     * @return the attribute value
+     */
+    public String nom();
+
+    /**
      * Operation creerCandidature
      */
     public void creerCandidature(AdmissionPostLicence.candidature c);
@@ -27,13 +33,33 @@ public interface RectoratOperations
     /**
      * Operation consulterEtatCandidatures
      */
-    public AdmissionPostLicence.resultatCandidature[] consulterEtatCandidatures(AdmissionPostLicence.candidature[] c)
+    public AdmissionPostLicence.candidature[] consulterEtatCandidatures(AdmissionPostLicence.candidature[] c)
         throws AdmissionPostLicence.CandidatureInconnu;
 
     /**
      * Operation modifierCandidature
      */
-    public void modifierCandidature(AdmissionPostLicence.resultatCandidature candidature)
+    public void modifierCandidature(AdmissionPostLicence.candidature candidature)
         throws AdmissionPostLicence.CandidatureInconnu;
+
+    /**
+     * Operation getListeGestEtu
+     */
+    public AdmissionPostLicence.GestionEtudiant[] getListeGestEtu();
+
+    /**
+     * Operation enregistrerGE
+     */
+    public void enregistrerGE(AdmissionPostLicence.GestionEtudiant ge);
+
+    /**
+     * Operation getListeMaster
+     */
+    public AdmissionPostLicence.Master[] getListeMaster();
+
+    /**
+     * Operation enregistrerMaster
+     */
+    public void enregistrerMaster(AdmissionPostLicence.Master m);
 
 }
