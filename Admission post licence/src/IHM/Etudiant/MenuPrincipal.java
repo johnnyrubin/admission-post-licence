@@ -8,8 +8,12 @@ package IHM.Etudiant;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.MinistereHelper;
+import Ministere.AccreditationMapper;
+import Ministere.pojo.Accreditation;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
@@ -23,6 +27,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private final GestionEtudiant g;
     private final org.omg.CORBA.ORB orb;
     private Ministere m;
+    private boolean panelChoixVisible = false;
     /**
      * Creates new form MenuPrincipal
      * @param g
@@ -39,9 +44,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
             nameToFind[0] = new org.omg.CosNaming.NameComponent("Ministere", "");
             org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
             this.m = MinistereHelper.narrow(remoteRef);
+            ArrayList<Accreditation> lesAccreditations = AccreditationMapper.listAccreditationsToAccredidationCorba(this.m.recupererAccreditations());
+            //Initialisation des 5 listes déroulantes
+            InitListeDeroulante(jComboBoxAccreditations, lesAccreditations);
+            InitListeDeroulante(jComboBoxAccreditations2, lesAccreditations);
+            InitListeDeroulante(jComboBoxAccreditations3, lesAccreditations);
+            InitListeDeroulante(jComboBoxAccreditations4, lesAccreditations);
+            InitListeDeroulante(jComboBoxAccreditations5, lesAccreditations);
+            
+            //Récuperation des candidatures actuelles de l'étudiant
+            g.
+            
         } catch (NotFound | CannotProceed | InvalidName | org.omg.CORBA.ORBPackage.InvalidName ex) {
             Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //On masque les différents panels à l'init
+        jPanelChoix.setVisible(false);
     }
 
     /**
@@ -54,24 +72,85 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jButtonFaireChoix = new javax.swing.JButton();
+        jPanelChoix = new javax.swing.JPanel();
+        jComboBoxAccreditations = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxAccreditations4 = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBoxAccreditations3 = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBoxAccreditations2 = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBoxAccreditations5 = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Menu principal Gestion Etudiant");
 
-        jButton1.setText("Faire mes choix");
+        jButtonFaireChoix.setText("Faire mes choix");
+        jButtonFaireChoix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFaireChoixActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+        jLabel2.setText("Choix 1 :");
+
+        jLabel3.setText("Choix 2 :");
+
+        jLabel4.setText("Choix 3 :");
+
+        jLabel5.setText("Choix 4 :");
+
+        jLabel6.setText("Choix 5 :");
+
+        javax.swing.GroupLayout jPanelChoixLayout = new javax.swing.GroupLayout(jPanelChoix);
+        jPanelChoix.setLayout(jPanelChoixLayout);
+        jPanelChoixLayout.setHorizontalGroup(
+            jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelChoixLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(25, 25, 25)
+                .addGroup(jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxAccreditations2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxAccreditations, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxAccreditations3, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxAccreditations4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxAccreditations5, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 309, Short.MAX_VALUE)
+        jPanelChoixLayout.setVerticalGroup(
+            jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelChoixLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxAccreditations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxAccreditations2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxAccreditations3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxAccreditations4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelChoixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxAccreditations5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -81,14 +160,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(292, 292, 292)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jButton1))
+                        .addComponent(jButtonFaireChoix))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(281, 281, 281)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelChoix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(211, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -97,14 +176,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
-                .addComponent(jButton1)
+                .addComponent(jButtonFaireChoix)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jPanelChoix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonFaireChoixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFaireChoixActionPerformed
+        if(panelChoixVisible){
+            panelChoixVisible=false;
+            jPanelChoix.setVisible(false);
+            jButtonFaireChoix.setText("Faire mes choix");          
+        }
+        else{
+            panelChoixVisible=true;
+            jPanelChoix.setVisible(true);
+            jButtonFaireChoix.setText("Masquer choix");
+        }
+    }//GEN-LAST:event_jButtonFaireChoixActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,10 +204,32 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public static void main(String args[]) {
 
     }
+    
+    /**
+     * Initialise la liste déroulante (jcombobox) passé en paramètre avec les données de la list des accreditations
+     * @param j
+     * @param lesAccreditations 
+     */
+    private void InitListeDeroulante(JComboBox j, ArrayList<Accreditation> lesAccreditations){
+        for (Accreditation lesAccreditation : lesAccreditations) {
+            j.addItem(lesAccreditation);
+        }
+        j.setSelectedIndex(-1);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonFaireChoix;
+    private javax.swing.JComboBox jComboBoxAccreditations;
+    private javax.swing.JComboBox jComboBoxAccreditations2;
+    private javax.swing.JComboBox jComboBoxAccreditations3;
+    private javax.swing.JComboBox jComboBoxAccreditations4;
+    private javax.swing.JComboBox jComboBoxAccreditations5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanelChoix;
     // End of variables declaration//GEN-END:variables
 }

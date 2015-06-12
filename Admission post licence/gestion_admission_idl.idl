@@ -36,21 +36,13 @@ module AdmissionPostLicence
     struct candidature {
         identite etudiant;
         string master;
-		string universite;
+        string universite;
         short ordre;
-    };
-    typedef sequence<candidature> candidatures;
-
-    // En plus des informations basiques d'une candidature, cette structure contient aussi
-    // les données liées à l'état de la candidature et aux décisions du master et de
-    // l'étudiant
-    struct resultatCandidature {
-        candidature c;
         etatCandidature etat;
         decisionCandidat decisionC;
         decisionMaster decisionM;
     };
-    typedef sequence<resultatCandidature> resultatsCandidatures;
+    typedef sequence<candidature> candidatures;
     
     // Accréditation permettant de savoir si tel master est disponible dans telle université
     struct accreditation {
@@ -67,6 +59,9 @@ module AdmissionPostLicence
     // Point d’accès aux informations fournies aux étudiants
     interface GestionEtudiant
     {
+        //Nom de la gestion étudiante
+        readonly attribute nom;
+
         // Soumission d’une candidature à un master
         void soumettreCandidature(in candidature c) raises (MasterInconnu);
         
@@ -74,32 +69,38 @@ module AdmissionPostLicence
         resultatsEtudiant recupererResultats(in identite etudiant) raises (EtudiantInconnu);
 
         // Retourne l’état des candidatures de l’étudiant et leur statut
-        resultatsCandidatures consulterEtatVoeux(in identite etudiant) raises (EtudiantInconnu);
+        candidatures consulterEtatVoeux(in identite etudiant) raises (EtudiantInconnu);
 
         // Permet à l’étudiant d’accepter ou refuser une proposition
         void modifierDecision(in candidature c, in decisionCandidat dc);
 
-		//Permet à l’étudiant de se connecter 
-		identite seConnecter(in string ine, in string mdp) raises (EtudiantInconnu);
+        //Permet à l’étudiant de se connecter 
+        identite seConnecter(in string ine, in string mdp) raises (EtudiantInconnu);
     };
 
     // Point d’accès aux informations fournies aux responsables de formation et aux
     // autres entités
     interface Master
     {     
+        //Nom du master
+        readonly attribute nom;
+        
         // Retourne les candidatures au master ainsi que leurs états
-        resultatsCandidatures consulterEtatCandidatures();
+        candidatures consulterEtatCandidatures();
 
         // Modifie la décision d’une formation sur une candidature
-        void modifierDecision(in candidature c, in decisionMaster dm);
+        void modifierDecision(in candidature c, in decisionMaster dm) raises (CandidatureInconnu);
 
         // Vérifie que la licence soit compatible avec le master
         boolean verifierPrerequis(in string licence) raises (MasterInconnu);
     };
 
-// Code métier des Rectorats
+    // Code métier des Rectorats
     interface Rectorat
     {
+        // Nom du rectorat
+        readonly attribute nom;
+
         // Enregistre une candidature auprès du rectorat, vérifie que l’étudiant puisse
         // candidater au master grâce à Master
         void creerCandidature(in candidature c);
@@ -111,22 +112,41 @@ module AdmissionPostLicence
         candidatures recupererCandidaturesEtudiant(in identite etudiant) raises (EtudiantInconnu);
 
         // Permet d’avoir le détail de l’état des candidatures fournies en paramètre
-        resultatsCandidatures consulterEtatCandidatures(in candidatures c) raises (CandidatureInconnu);
+        candidatures consulterEtatCandidatures(in candidatures c) raises (CandidatureInconnu);
 
         // Permet de modifier l’état d'une candidature
-        void modifierCandidature(in resultatCandidature candidature) raises (CandidatureInconnu); 
+        void modifierCandidature(in candidature candidature) raises (CandidatureInconnu); 
+
+        // Liste qui contient tous les gestions étudiantes du rectorat
+        List<GestionEtudiant> getListeGestEtu();
+
+        // Fonction qui permet d'enregistrer une gestion etudiante auprès du rectorat
+        void enregistrerGE(in GestionEtudiant ge);
+
+        // Liste qui contient tous les masters du rectorat
+        List<Master> getListeMaster();
+
+        // Fonction qui permet d'enregistrer un master auprès du rectorat
+        void enregistrerMaster(in Master m);
+
     };
 
     interface Ministere
     {
-     // Fourni la liste des accréditations (sert de référentiel aux étudiants)
+        // Fourni la liste des accréditations (sert de référentiel aux étudiants)
         accreditations recupererAccreditations();
 
-    //Transfere une candidature d’un rectorat à un autre
-    void transfererCandidature(in candidature c);
+        // Transfere une candidature d’un rectorat à un autre
+        void transfererCandidature(in candidature c);
 
-    //Transfere la décision d’un candidat vers un autre rectorat
-    void transfererDecision(in resultatCandidature r) raises (CandidatureInconnu); 
+        // Transfere la décision d’un candidat vers un autre rectorat
+        void transfererDecision(in resultatCandidature r) raises (CandidatureInconnu); 
+
+        // Liste qui contient tous les rectorats du ministère
+        List<Rectorat> getListeRectorat();
+
+        // Fonction qui permet d'enregistrer un rectorat auprès du ministère
+        void enregistrerRectorat(in Rectorat r);
     };
 };
 

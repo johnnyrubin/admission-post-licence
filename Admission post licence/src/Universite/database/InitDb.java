@@ -84,6 +84,7 @@ public class InitDb {
 
         sql = "CREATE TABLE RESULTATSEMESTRE " +
                 "(CODE TEXT PRIMARY KEY," +
+                "SEMESTRE TEXT NOT NULL," +
                 "MOYENNE REAL NOT NULL," +
                 "POSITION INTEGER NOT NULL," +
                 "INE_ETUDIANT TEXT NOT NULL)";

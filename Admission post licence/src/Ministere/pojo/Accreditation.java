@@ -33,6 +33,12 @@ public class Accreditation {
     public void setDiplome(String diplome) {
         this.diplome = diplome;
     }
+
+    @Override
+    public String toString() {
+        return diplome + " - " + universite;
+    }
+    
     
     
 }

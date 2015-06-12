@@ -10,6 +10,9 @@ public class ResultatSemestre {
     /** Code du semestre */
     private String code;
     
+    /** numéro du Semestre */
+    private String semestre;
+    
     /** Moyenne de l'étudiant à ce semestre */
     private Double moyenne;
     
@@ -69,5 +72,20 @@ public class ResultatSemestre {
     public void setPosition(Integer aPosition) {
         position = aPosition;
     }
+
+    /**
+     * 
+     * 
+     * @return la semestre 
+     */
+    public String getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(String semestre) {
+        this.semestre = semestre;
+    }
+    
+    
     
 }

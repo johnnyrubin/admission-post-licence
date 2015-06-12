@@ -7,7 +7,7 @@ package Ministere;
 
 import AdmissionPostLicence.accreditation;
 import Ministere.pojo.Accreditation;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -46,7 +46,7 @@ public class AccreditationMapper {
      * @param a
      * @return {@link accreditation[]}
      */
-    public static accreditation[] accreditationsCorbaToListAccredidation(List<Accreditation> a) {
+    public static accreditation[] accreditationsCorbaToListAccredidation(ArrayList<Accreditation> a) {
         accreditation[] as = new accreditation[a.size()];
         if(!a.isEmpty()) {
             for(int i=0;i<a.size();i++){
@@ -59,10 +59,10 @@ public class AccreditationMapper {
      * Convertit les infos du type accredidations de corba vers une liste accreditation
      * 
      * @param a
-     * @return {@link List<Accreditation>}
+     * @return {@link ArrayList<Accreditation>}
      */
-    public static List<Accreditation> listAccreditationsToAccredidationCorba(accreditation[] a) {
-        List<Accreditation> as = null;
+    public static ArrayList<Accreditation> listAccreditationsToAccredidationCorba(accreditation[] a) {
+        ArrayList<Accreditation> as = new ArrayList();
         if(a.length!=0){
             for (accreditation a1 : a) {
                 as.add(accreditationCorbaToAccredidation(a1));

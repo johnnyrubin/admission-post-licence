@@ -8,6 +8,7 @@ package Ministere;
 
 import AdmissionPostLicence.accreditation;
 import Ministere.pojo.Accreditation;
+import java.util.ArrayList;
 import java.util.List;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
@@ -49,7 +50,7 @@ public class ServerMinistere {
 
             // Création du servant pour le ministere
             MinistereImpl ministere = new MinistereImpl();
-            List<Accreditation> mesAccreditations=null;
+            ArrayList<Accreditation> mesAccreditations=new ArrayList();
             mesAccreditations.add(new Accreditation("Paul Sabatier","MIAGE"));
             mesAccreditations.add(new Accreditation("Paul Sabatier","Fonda"));
             mesAccreditations.add(new Accreditation("UT1","Droits"));

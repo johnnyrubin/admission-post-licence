@@ -3,35 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Ministere/MinistereImpl.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Ministere/ServerMinistere.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/database/ResultatSemestreDAO.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/GestionEtudiant/GestionEtudiantImpl.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/ServerUniversite.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/Master/MasterImpl.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/database/ConnexionUniversite.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/database/MasterDAO.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/pojo/ResultatSemestre.java</file>
             <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Rectorat/RectoratImpl.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Ministere/database/InitDbMinistere.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/pojo/Master.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/IHM/Etudiant/MenuPrincipal.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Ministere/database/ConnexionMinistere.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/database/InitDb.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/GestionEtudiant/EtudiantMapper.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/database/LicenceDAO.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Rectorat/pojo/Candidature.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Rectorat/CandidatureMapper.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/pojo/Etudiant.java</file>
+            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Ministere/MinistereImpl.java</file>
             <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/IHM/Etudiant/Login.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Rectorat/database/ConnexionRectorat.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Rectorat/database/InitDbRectorat.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Rectorat/pojo/ResultatCandidature.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/database/EtudiantDAO.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Rectorat/database/CandidatureDAO.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/IHM/Etudiant/Inscription.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/pojo/Licence.java</file>
-            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Rectorat/ServerRectorat.java</file>
+            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Ministere/ServerMinistere.java</file>
+            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/IHM/Etudiant/MenuPrincipal.java</file>
+            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/GestionEtudiant/GestionEtudiantImpl.java</file>
+            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Ministere/pojo/Accreditation.java</file>
+            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Ministere/AccreditationMapper.java</file>
         </group>
     </open-files>
 </project-private>
