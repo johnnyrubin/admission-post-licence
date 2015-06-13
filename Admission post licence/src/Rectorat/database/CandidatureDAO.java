@@ -72,7 +72,9 @@ public class CandidatureDAO {
             conn.connect();
             
             // Exécution de la requête
-                String sql = "SELECT * FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "';";
+                String sql = "SELECT E.INE as INE, NOM, PRENOM, LICENCE,E.UNIVERSITE as UNIVERSITEETU, "
+                        + "IDMASTER, C.UNIVERSITE as UNIVERSITE, ORDRE, ETAT, DECISIONCANDIDAT,"
+                        + "DECISIONMASTER FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "';";
                 ResultSet rs = conn.statement.executeQuery(sql);
 
                 if(rs.next()) {
@@ -82,9 +84,10 @@ public class CandidatureDAO {
                     e.setNom(rs.getString("NOM"));
                     e.setPrenom(rs.getString("PRENOM"));
                     e.setLicence(rs.getString("LICENCE"));
-                    e.setUniversite(rs.getString("UNIVERSITE"));
-                    c = new Candidature(e,rs.getString("MASTER"),rs.getString("UNIVERSITE"),
+                    e.setUniversite(rs.getString("UNIVERSITEETU"));
+                    c = new Candidature(e,rs.getString("IDMASTER"),rs.getString("UNIVERSITE"),
                             rs.getInt("ORDRE"),rs.getInt("ETAT"),rs.getInt("DECISIONCANDIDAT"),rs.getInt("DECISIONMASTER"));
+                    System.out.println("CandidatureDAO.getCandidatureEtudiant Candidature => "+c);
                     lesCandidatures.add(c);
                 }
         } catch (SQLException ex) {

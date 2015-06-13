@@ -28,7 +28,7 @@ public class InitDbRectorat {
     public static void main(String[] args) {
         
         // Connexion à la base de données
-        conn = new ConnexionRectorat("Rectorat.db");
+        conn = new ConnexionRectorat("RectoratToulouse.db");
         conn.connect();
         try {
             initTableRectorat();
@@ -137,6 +137,14 @@ public class InitDbRectorat {
                 String UNIVERSITE = rs.getString("UNIVERSITE");
                 int ordre = rs.getInt("ORDRE");
                 System.out.println("Candidatures : " + INE + " " + IDMASTER + " " +  UNIVERSITE +  " " + ordre);
+            }
+            sql = "select * from etudiant";
+            rs = conn.statement.executeQuery(sql);
+            while(rs.next()){
+                String ID = rs.getString("INE");
+                String NOM = rs.getString("NOM");
+                String PRENOM = rs.getString("PRENOM");
+                System.out.println("Etudiant : " + ID + " " + NOM + " " + PRENOM);
             }
             sql = "select * from rectorat";
             rs = conn.statement.executeQuery(sql);
