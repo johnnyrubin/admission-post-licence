@@ -1,9 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package IHM.ResponsableFormation;
+
+import AdmissionPostLicence.candidature;
+import AdmissionPostLicence.decisionMaster;
 
 /**
  *
@@ -11,11 +9,42 @@ package IHM.ResponsableFormation;
  */
 public class CandidaturePanel extends javax.swing.JPanel {
 
+    private final candidature candidature;
+    
     /**
      * Creates new form CandidaturePanel
+     * @param uneCandidature
      */
-    public CandidaturePanel() {
+    public CandidaturePanel(candidature uneCandidature) {
         initComponents();
+        
+        candidature = uneCandidature;
+        
+        ineLabel.setText(candidature.etudiant.ine);
+        nomLabel.setText(candidature.etudiant.nom);
+        prenomLabel.setText(candidature.etudiant.nom);
+        universiteLabel.setText(candidature.etudiant.universite);
+        licenceLabel.setText(candidature.etudiant.licence);
+        
+        decisionComboBox.setSelectedItem(convertDecisionMasterToString(candidature.decisionM));
+    }
+    
+    private String convertDecisionMasterToString(decisionMaster decision) {
+        String retour;
+        
+        switch(decision.toString()) {
+            case "admis":
+                retour = "Admis";
+            case "listeAttente":
+                retour = "Attente";
+            case "refuser":
+                retour = "Refus";
+            default:
+                retour = "";
+                break;
+        }
+        
+        return retour;
     }
 
     /**
@@ -28,11 +57,59 @@ public class CandidaturePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         etudiantLabel = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        decisionComboBox = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        nomLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        prenomLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        universiteLabel = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        licenceLabel = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        ineLabel = new javax.swing.JLabel();
+        notesButton = new javax.swing.JButton();
 
-        etudiantLabel.setText("Etudiant");
+        etudiantLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        etudiantLabel.setText("Informations de l'étudiant");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez", "Admis", "Attente", "Refus" }));
+        decisionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez", "Admis", "Attente", "Refus" }));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("Décision :");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("Nom :");
+
+        nomLabel.setText("jLabel3");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setText("Prénom :");
+
+        prenomLabel.setText("jLabel5");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setText("Université :");
+
+        universiteLabel.setText("jLabel7");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel8.setText("Licence :");
+
+        licenceLabel.setText("jLabel9");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel10.setText("INE :");
+
+        ineLabel.setText("jLabel11");
+
+        notesButton.setText("Voir notes");
+        notesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                notesButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -40,25 +117,85 @@ public class CandidaturePanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(etudiantLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(etudiantLabel)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(decisionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(22, 22, 22)
+                        .addComponent(ineLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(notesButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(nomLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(prenomLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(universiteLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(licenceLabel)))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(etudiantLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(etudiantLabel)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(jLabel10)
+                    .addComponent(ineLabel)
+                    .addComponent(notesButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(nomLabel)
+                    .addComponent(jLabel4)
+                    .addComponent(prenomLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(universiteLabel)
+                    .addComponent(jLabel8)
+                    .addComponent(licenceLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(decisionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void notesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notesButtonActionPerformed
+        // Affichage des notes de l'étudiant
+    }//GEN-LAST:event_notesButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox decisionComboBox;
     private javax.swing.JLabel etudiantLabel;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel ineLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel licenceLabel;
+    private javax.swing.JLabel nomLabel;
+    private javax.swing.JButton notesButton;
+    private javax.swing.JLabel prenomLabel;
+    private javax.swing.JLabel universiteLabel;
     // End of variables declaration//GEN-END:variables
 }

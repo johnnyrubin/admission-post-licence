@@ -122,6 +122,14 @@ public class RectoratPOATie extends RectoratPOA
     }
 
     /**
+     * Operation getGestEtu
+     */
+    public String getGestEtu(String universite)
+    {
+        return _tie.getGestEtu( universite);
+    }
+
+    /**
      * Operation getListeMaster
      */
     public String[] getListeMaster(String u)

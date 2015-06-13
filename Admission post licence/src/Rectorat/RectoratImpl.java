@@ -11,6 +11,7 @@ import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
 import Rectorat.database.CandidatureDAO;
 import Rectorat.pojo.Candidature;
+import Universite.ServerUniversite;
 import Util.GetObjectCorba;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +25,16 @@ import java.util.logging.Logger;
 public class RectoratImpl extends RectoratPOA{
 
     //La liste des candidatures du rectorat
-    private List<Candidature> lesCandidatures = new ArrayList<Candidature>();
+    private List<Candidature> lesCandidatures = new ArrayList<>();
     
     //La liste des gestions étudiants
-    private List<String> lesGestionEtu = new ArrayList<String>();
+    private List<String> lesGestionEtu = new ArrayList<>();
     
     //La liste des masters
-    private List<String> lesMasters = new ArrayList<String>();
+    private List<String> lesMasters = new ArrayList<>();
     
     // La liste des universités
-    private List<String> lesUniversites = new ArrayList<>();
+    private final List<String> lesUniversites = new ArrayList<>();
     
     /** Nom du Rectorat */
     private final String nom;
@@ -247,6 +248,18 @@ public class RectoratImpl extends RectoratPOA{
         m.enregistrerRectorat(ServerRectorat.getIorFromObject(this));
         
         System.out.println("Méthode RectoratImpl.enregistrerSurMinistere : Fin");
+    }
+
+    @Override
+    public String getGestEtu(String universite) {
+        String gestEtu = null;
+        for (String ior : lesGestionEtu) {
+            GestionEtudiant g = GetObjectCorba.getGestionEtudiantCorba(ServerRectorat.orb, ior);
+            if(g.nom().equals(universite)) {
+                gestEtu = ior;
+            }
+        }
+        return gestEtu;
     }
     
 }

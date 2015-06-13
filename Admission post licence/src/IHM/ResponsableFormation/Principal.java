@@ -1,15 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package IHM.ResponsableFormation;
 
+import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Master;
 import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.candidature;
+import AdmissionPostLicence.identite;
+import Rectorat.ServerRectorat;
 import Util.GetObjectCorba;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,10 +31,12 @@ public class Principal extends javax.swing.JFrame {
     private final Rectorat rectorat;
     private final String universite;
     
-    private HashMap<String, Master> masters = new HashMap<>();
+    private final HashMap<String, Master> masters = new HashMap<>();
+    
+    private final GestionEtudiant gestionEtudiant;
     
     /**
-     * Creates new form Principal
+     * Creates new form PrincipalTemp
      * @param unRectorat
      * @param uneUniversite
      */
@@ -41,6 +50,10 @@ public class Principal extends javax.swing.JFrame {
         String[] argsOrb = {};
         orb = org.omg.CORBA.ORB.init(argsOrb, null);
         orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService");
+        
+        // Récupération de la gestion etudiant de l'université
+        String iorGe = rectorat.getGestEtu(universite);
+        gestionEtudiant = GetObjectCorba.getGestionEtudiantCorba(ServerRectorat.orb, iorGe);
         
         // Récupération de la liste des formations de l'université choisie
         String[] iorMasters = rectorat.getListeMaster(universite);
@@ -60,6 +73,7 @@ public class Principal extends javax.swing.JFrame {
         orb = null;
         rectorat = null;
         universite = null;
+        gestionEtudiant = null;
     }
 
     /**
@@ -71,21 +85,17 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        errorLabel = new javax.swing.JLabel();
-        masterSelectionPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         masterComboBox = new javax.swing.JComboBox();
         afficherButton = new javax.swing.JButton();
+        errorLabel = new javax.swing.JLabel();
         candidaturesPanel = new javax.swing.JPanel();
-        ButtonPanel = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         validerButton = new javax.swing.JButton();
         annulerButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Formation - Gestion des admissions");
-
-        errorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        errorLabel.setForeground(new java.awt.Color(255, 0, 0));
 
         jLabel1.setText("Choix de la formation :");
 
@@ -98,55 +108,64 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout masterSelectionPanelLayout = new javax.swing.GroupLayout(masterSelectionPanel);
-        masterSelectionPanel.setLayout(masterSelectionPanelLayout);
-        masterSelectionPanelLayout.setHorizontalGroup(
-            masterSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(masterSelectionPanelLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
+        errorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(masterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(masterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(afficherButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(errorLabel)
+                .addGap(230, 230, 230))
         );
-        masterSelectionPanelLayout.setVerticalGroup(
-            masterSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(masterSelectionPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(masterSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(masterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(afficherButton))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(errorLabel)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        candidaturesPanel.setLayout(new javax.swing.BoxLayout(candidaturesPanel, javax.swing.BoxLayout.LINE_AXIS));
+        candidaturesPanel.setLayout(new javax.swing.BoxLayout(candidaturesPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         validerButton.setText("Valider");
 
         annulerButton.setText("Annuler");
 
-        javax.swing.GroupLayout ButtonPanelLayout = new javax.swing.GroupLayout(ButtonPanel);
-        ButtonPanel.setLayout(ButtonPanelLayout);
-        ButtonPanelLayout.setHorizontalGroup(
-            ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ButtonPanelLayout.createSequentialGroup()
-                .addContainerGap(286, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(annulerButton)
                 .addGap(18, 18, 18)
                 .addComponent(validerButton)
-                .addGap(72, 72, 72))
-        );
-        ButtonPanelLayout.setVerticalGroup(
-            ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ButtonPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(annulerButton)
-                    .addComponent(validerButton))
                 .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(validerButton)
+                    .addComponent(annulerButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,31 +174,22 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(ButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(candidaturesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(masterSelectionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(errorLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(candidaturesPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(errorLabel)
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(masterSelectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(candidaturesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 352, Short.MAX_VALUE)
-                .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(292, Short.MAX_VALUE))
         );
 
         pack();
@@ -194,17 +204,23 @@ public class Principal extends javax.swing.JFrame {
             errorLabel.setText("Veuillez sélectionner un master !");
         } else {
             errorLabel.setText("");
-            
+            // Récupération de l'objet corba du master sélectionné
             Master m = masters.get(masterSel);
             
-            // Récupération de la liste des candidatures
             if(m != null) {
                 try {
+                    // Récupération de la liste des candidatures
                     candidature[] candidatures = rectorat.recupererCandidaturesMaster(m.nom());
                     
-                    // Affichage des candidatures
-                    candidaturesPanel.add(new CandidaturePanel());
-                    candidaturesPanel.add(new CandidaturePanel());
+                    if(candidatures.length == 0) {
+                        // Affichage d'une pop-up
+                        JOptionPane.showMessageDialog(this, "Aucune candidature pour le master " + masterSel, "Gestion des candidatures", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        // Affichage des candidatures
+                        for(candidature c : candidatures) {
+                            candidaturesPanel.add(new CandidaturePanel(c));
+                        }
+                    }
                 } catch (MasterInconnu ex) {
                     errorLabel.setText("Une erreur est survenue lors de la récupération des candidatures");
                     Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,6 +229,10 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_afficherButtonActionPerformed
 
+    public void afficherNotesEtudiant(identite etudiant) {
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -239,10 +259,10 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
                 new Principal().setVisible(true);
             }
@@ -250,14 +270,14 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel ButtonPanel;
     private javax.swing.JButton afficherButton;
     private javax.swing.JButton annulerButton;
     private javax.swing.JPanel candidaturesPanel;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JComboBox masterComboBox;
-    private javax.swing.JPanel masterSelectionPanel;
     private javax.swing.JButton validerButton;
     // End of variables declaration//GEN-END:variables
 }

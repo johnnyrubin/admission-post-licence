@@ -47,6 +47,11 @@ public interface RectoratOperations
     public void enregistrerGE(String ior, String universite);
 
     /**
+     * Operation getGestEtu
+     */
+    public String getGestEtu(String universite);
+
+    /**
      * Operation getListeMaster
      */
     public String[] getListeMaster(String u);
