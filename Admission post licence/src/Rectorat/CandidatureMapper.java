@@ -71,6 +71,22 @@ public class CandidatureMapper {
     }
     
     /**
+     * Convertit les infos de la liste des candidatures vers candidature[] de corba
+     * 
+     * @param c
+     * @return {@link List<Candidature>}
+     */
+    public static candidature[] candidaturesCorbaToListCandidature(List<Candidature> c) {
+        candidature[] cs = new candidature[c.size()];
+        if(!c.isEmpty()){
+            for (int i=0;i<c.size();i++) {
+                cs[i]=candidatureToCandidatureCorba(c.get(i));
+            }
+        }
+        return cs;
+    }
+    
+    /**
      * Convertit les infos de l'objet ResultatCandidature vers son type resultatcandidature utilisé par corba
      * 
      * @param rc

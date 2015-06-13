@@ -82,13 +82,13 @@ public class RectoratImpl extends RectoratPOA{
 
     @Override
     public candidature[] recupererCandidaturesEtudiant(identite etudiant) throws EtudiantInconnu {
-        candidature[] candidatures={};
+        /*candidature[] candidatures={};
         for (Candidature lesCandidature : lesCandidatures) {
             if (lesCandidature.getEtu().getIne().equals(etudiant.ine)) {
                 candidatures = addCandidature(candidatures, CandidatureMapper.candidatureToCandidatureCorba(lesCandidature));
             }
-        }
-        return candidatures;
+        }*/
+        return CandidatureMapper.candidaturesCorbaToListCandidature(CandidatureDAO.getCandidaturesEtudiant(etudiant.ine, nom));
     }
 
     @Override

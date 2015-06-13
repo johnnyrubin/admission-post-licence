@@ -9,9 +9,12 @@ import AdmissionPostLicence.candidature;
 import Rectorat.ServerRectorat;
 import Rectorat.pojo.Candidature;
 import Universite.GestionEtudiant.EtudiantMapper;
+import Universite.pojo.Etudiant;
 import Util.GetObjectCorba;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +35,7 @@ public class CandidatureDAO {
      */
     public static boolean ajoutCandidature(Candidature c,String nomRectorat){
         int lineAffected=0;
+        int lineAffected2=0;
         try {
             // Connexion à la base de données
             conn = new ConnexionRectorat(nomRectorat+".db");
@@ -42,6 +46,12 @@ public class CandidatureDAO {
             
             // Création de la candidature
             lineAffected=conn.statement.executeUpdate(sql);
+            sql = "Insert into ETUDIANT values" +
+                    "('"+c.getEtu().getIne()+"','"+c.getEtu().getNom()+"','"+c.getEtu().getPrenom()+"','"+c.getEtu().getUniversite()+
+                    "','"+c.getEtu().getLicence()+"')";
+            
+            // Création de la candidature
+            lineAffected2=conn.statement.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -49,29 +59,33 @@ public class CandidatureDAO {
             // Fermeture de la connexion
             conn.close();  
         }
-        return (lineAffected!=0);
+        return (lineAffected!=0 && lineAffected2!=0);
     }
     
-    public static candidature[] getCandidatureEtudiant(String ine,String nomRectorat){
-        candidature[] cs;
-        candidature c;
+    public static List<Candidature> getCandidaturesEtudiant(String ine,String nomRectorat){
+        List<Candidature> lesCandidatures = new ArrayList<>();
+        Candidature c;
+        Etudiant e;
         try {
             // Connexion à la base de données
             conn = new ConnexionRectorat(nomRectorat+".db");
             conn.connect();
             
             // Exécution de la requête
-                String sql = "SELECT * FROM CANDIDATURES WHERE INE = '" + ine + "';";
+                String sql = "SELECT * FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "';";
                 ResultSet rs = conn.statement.executeQuery(sql);
 
                 if(rs.next()) {
                     // Traitement du résultat
-                    c = new candidature(rs.getString("INE"),rs.getString("MASTER"),rs.getString("UNIVERSITE"),rs.getInt("ORDRE"),rs.getInt("ETAT"),rs.getInt("DECISIONCANDIDAT"),rs.getInt("DECISIONMASTER"));
-                    
-                    // Récupération des résultats scolaires de l'étudiant
-                    List<ResultatSemestre> resultats = ResultatSemestreDAO.getFromEtudiant(etudiant);
-                    
-                    etudiant.setResultats(resultats);
+                    e = new Etudiant();
+                    e.setIne(rs.getString("INE"));
+                    e.setNom(rs.getString("NOM"));
+                    e.setPrenom(rs.getString("PRENOM"));
+                    e.setLicence(rs.getString("LICENCE"));
+                    e.setUniversite(rs.getString("UNIVERSITE"));
+                    c = new Candidature(e,rs.getString("MASTER"),rs.getString("UNIVERSITE"),
+                            rs.getInt("ORDRE"),rs.getInt("ETAT"),rs.getInt("DECISIONCANDIDAT"),rs.getInt("DECISIONMASTER"));
+                    lesCandidatures.add(c);
                 }
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,6 +94,7 @@ public class CandidatureDAO {
             // Fermeture de la connexion
             conn.close();  
         }
+        return lesCandidatures;
     }
     
     /*public static candidature[] importCandidatures(String nomRectorat){
