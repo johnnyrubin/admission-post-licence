@@ -132,8 +132,17 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldINE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="123456E"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldINEActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jPasswordField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="toto"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonConnect">
       <Properties>

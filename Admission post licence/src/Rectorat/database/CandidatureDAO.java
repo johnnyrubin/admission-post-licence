@@ -52,6 +52,36 @@ public class CandidatureDAO {
         return (lineAffected!=0);
     }
     
+    public static candidature[] getCandidatureEtudiant(String ine,String nomRectorat){
+        candidature[] cs;
+        candidature c;
+        try {
+            // Connexion à la base de données
+            conn = new ConnexionRectorat(nomRectorat+".db");
+            conn.connect();
+            
+            // Exécution de la requête
+                String sql = "SELECT * FROM CANDIDATURES WHERE INE = '" + ine + "';";
+                ResultSet rs = conn.statement.executeQuery(sql);
+
+                if(rs.next()) {
+                    // Traitement du résultat
+                    c = new candidature(rs.getString("INE"),rs.getString("MASTER"),rs.getString("UNIVERSITE"),rs.getInt("ORDRE"),rs.getInt("ETAT"),rs.getInt("DECISIONCANDIDAT"),rs.getInt("DECISIONMASTER"));
+                    
+                    // Récupération des résultats scolaires de l'étudiant
+                    List<ResultatSemestre> resultats = ResultatSemestreDAO.getFromEtudiant(etudiant);
+                    
+                    etudiant.setResultats(resultats);
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            // Fermeture de la connexion
+            conn.close();  
+        }
+    }
+    
     /*public static candidature[] importCandidatures(String nomRectorat){
         candidature[] candidatures=new candidature[0];
         // Connexion à la base de données

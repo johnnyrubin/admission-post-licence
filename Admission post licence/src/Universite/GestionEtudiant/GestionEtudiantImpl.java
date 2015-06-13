@@ -106,12 +106,14 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         
         if(e != null) {
             // On compare les mots de passe
+            System.out.println(e.getMdp() + " = " + mdp);
             if(e.getMdp().equals(mdp)) {
                 id = EtudiantMapper.etudiantToIdentiteCorba(e);
             }
         } else {
             throw new EtudiantInconnu();
         }
+        System.out.println("Appel de la méthode GestionEtudiantImpl.seConnecter : identite => " + id);
         return id;
     }
 

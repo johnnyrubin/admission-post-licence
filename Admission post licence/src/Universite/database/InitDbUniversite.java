@@ -59,7 +59,9 @@ public class InitDbUniversite {
                 "(INE TEXT PRIMARY KEY," +
                 "NOM TEXT NOT NULL," +
                 "PRENOM TEXT NOT NULL," +
-                "MDP TEXT NOT NULL)";
+                "MDP TEXT NOT NULL,"+
+                "UNIVERSITE TEXT NOT NULL,"+
+                "LICENCE TEXT NOT NULL)";
 
         // Création de la table ETUDIANT
         conn.statement.executeUpdate(sql);
@@ -67,7 +69,7 @@ public class InitDbUniversite {
         // Insertion des étudiants dans la table
         // TODO voir avec Vincent pour les données
         
-        sql = "INSERT INTO ETUDIANT VALUES ('123456E', 'dupond', 'jean', 'toto');";
+        sql = "INSERT INTO ETUDIANT VALUES ('123456E', 'dupond', 'jean', 'toto','Paul sabatier','info');";
         conn.statement.executeUpdate(sql);
     }
     

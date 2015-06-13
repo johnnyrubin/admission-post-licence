@@ -22,10 +22,12 @@ public class EtudiantMapper {
      * @return {@link identite}
      */
     public static identite etudiantToIdentiteCorba(Etudiant etudiant) {
+        System.out.println("EtudiantMapper.etudiantToIdentiteCorba Début");
         identite identite = null;
         if(etudiant != null) {
-            identite = new identite(etudiant.getIne(), etudiant.getNom(), etudiant.getPrenom(), "", "");
+            identite = new identite(etudiant.getIne(), etudiant.getNom(), etudiant.getPrenom(), etudiant.getUniversite(), etudiant.getLicence());
         }
+        System.out.println("EtudiantMapper.etudiantToIdentiteCorba identite => "+ identite.nom + " " + identite.prenom + " " + identite.licence);
         return identite;
     }
     

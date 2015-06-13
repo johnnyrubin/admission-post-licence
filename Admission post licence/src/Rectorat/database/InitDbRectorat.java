@@ -83,17 +83,19 @@ public class InitDbRectorat {
                 "IDMASTER TEXT,"+
                 "UNIVERSITE TEXT NOT NULL,"+
                 "ORDRE NUMBER NOT NULL,"+
-                "ETAT TEXT NOT NULL,"+
-                "DECISIONCANDIDAT TEXT NOT NULL,"+
-                "DECISIONMASTER TEXT NOT NULL,"+
+                "ETAT NUMBER NOT NULL,"+
+                "DECISIONCANDIDAT NUMBER NOT NULL,"+
+                "DECISIONMASTER NUMBER NOT NULL,"+
                 "PRIMARY KEY(INE,IDMASTER)"
                 + ")";
-
+        
         // Création de la table CANDIDATURES
         conn.statement.executeUpdate(sql);
         
         // Insertion des candidatures dans la table
         // TODO voir avec Vincent pour les données
+        sql = "Insert into CANDIDATURES values ( '123456E', 'MIAGE', 'Paul Sabatier', 1, 0 , 0 , 0 )";
+        conn.statement.executeUpdate(sql);
     }
     
     private static void displayInfo(){

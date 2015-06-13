@@ -152,4 +152,11 @@ public class Candidature {
         this.decisionMaster = decisionMaster;
     }
 
+    @Override
+    public String toString() {
+        return "Candidature{" + "etu=" + etu + ", master=" + master + ", Universite=" + Universite + ", ordre=" + ordre + ", etatCandidature=" + etatCandidature + ", decisionCandidat=" + decisionCandidat + ", decisionMaster=" + decisionMaster + '}';
+    }
+
+    
+    
 }

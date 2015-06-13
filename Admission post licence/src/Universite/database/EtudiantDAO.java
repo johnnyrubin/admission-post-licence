@@ -22,6 +22,7 @@ public class EtudiantDAO {
      * @return {@link Etudiant}
      */
     public static Etudiant getFromIne(String aIne) {
+        System.out.println("EtudiantDAO.getFromINE Début");
         // Initialisation de la variable de retour
         Etudiant etudiant = null;
         
@@ -42,6 +43,8 @@ public class EtudiantDAO {
                     etudiant.setNom(rs.getString("NOM"));
                     etudiant.setPrenom(rs.getString("PRENOM"));
                     etudiant.setMdp(rs.getString("MDP"));
+                    etudiant.setLicence(rs.getString("LICENCE"));
+                    etudiant.setUniversite(rs.getString("UNIVERSITE"));
                     
                     // Récupération des résultats scolaires de l'étudiant
                     List<ResultatSemestre> resultats = ResultatSemestreDAO.getFromEtudiant(etudiant);
@@ -55,7 +58,7 @@ public class EtudiantDAO {
             // Fermeture de la connexion
             conn.close();
         }
-        
+        System.out.println("EtudiantDAO.getFromINE Etudiant => "+etudiant);
         return etudiant;
     }
     

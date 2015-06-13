@@ -189,6 +189,11 @@ public class Etudiant {
     public void setLicence(String licence) {
         this.licence = licence;
     }
+
+    @Override
+    public String toString() {
+        return "Etudiant{" + "ine=" + ine + ", nom=" + nom + ", prenom=" + prenom + ", mdp=" + mdp + ", universite=" + universite + ", licence=" + licence + ", resultats=" + resultats + '}';
+    }
     
     
     

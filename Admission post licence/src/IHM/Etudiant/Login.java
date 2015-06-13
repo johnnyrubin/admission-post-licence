@@ -5,13 +5,18 @@
  */
 package IHM.Etudiant;
 
+import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.Rectorat;
+import AdmissionPostLicence.identite;
+import Universite.GestionEtudiant.EtudiantMapper;
 import Util.GetObjectCorba;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -97,6 +102,15 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("INE :");
 
         jLabel3.setText("Mot de passe :");
+
+        jTextFieldINE.setText("123456E");
+        jTextFieldINE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldINEActionPerformed(evt);
+            }
+        });
+
+        jPasswordField.setText("toto");
 
         jButtonConnect.setText("Se connecter");
         jButtonConnect.addActionListener(new java.awt.event.ActionListener() {
@@ -206,31 +220,28 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
-        if(!jTextFieldINE.getText().equals("")&&!jTextFieldINE.getText().equals("")&&
+        String ine = jTextFieldINE.getText();
+        String mdp = new String(jPasswordField.getPassword());
+        if(!ine.equals("")&&!mdp.equals("")&&
                 jComboBoxUniversite.getSelectedIndex()!=-1 && !jComboBoxRectorats.getSelectedItem().equals("Séléctionner")){
-            /*try {
-                //NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-                NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@130.120.247.254:2001/NameService"));
-                org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-
-                // On récupère la gestion etudiant
-                nameToFind[0] = new org.omg.CosNaming.NameComponent("GestionEtudiant-"+jComboBoxRectorats.getSelectedItem(), "");
-                org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
-                g = GestionEtudiantHelper.narrow(remoteRef);
-                identite i = g.seConnecter("123456E","toto");
+            try {
+                GestionEtudiant g = lesGestionEtudiants.get(jComboBoxUniversite.getSelectedItem());
+                identite i = g.seConnecter(ine,mdp);
                 if(i!=null){
                     //les identifiants sont ok
                     jLabelError.setText("");
-                    MenuPrincipal m = new MenuPrincipal(g,orb);
-                    m.setVisible(true);
+                    MenuPrincipal menu = new MenuPrincipal(m,lesRectorats.get(jComboBoxRectorats.getSelectedItem()),
+                            g,orb,i);
+                    menu.setVisible(true);
                     this.setVisible(false);
                 }
                 else{
                     jLabelError.setText("Identifiants ou mot de passe incorrect");
                 }
-            } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | EtudiantInconnu ex) {
+            } catch (EtudiantInconnu ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+            }
+            
         }
     }//GEN-LAST:event_jButtonConnectActionPerformed
 
@@ -247,6 +258,10 @@ public class Login extends javax.swing.JFrame {
     private void jComboBoxUniversiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxUniversiteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxUniversiteActionPerformed
+
+    private void jTextFieldINEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldINEActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldINEActionPerformed
 
     /**
      * @param args the command line arguments

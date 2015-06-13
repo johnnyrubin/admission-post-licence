@@ -5,12 +5,21 @@
  */
 package IHM.Etudiant;
 
+import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.MinistereHelper;
+import AdmissionPostLicence.Rectorat;
+import AdmissionPostLicence.identite;
 import Ministere.AccreditationMapper;
 import Ministere.pojo.Accreditation;
+import Rectorat.CandidatureMapper;
+import Rectorat.pojo.Candidature;
+import Universite.GestionEtudiant.EtudiantMapper;
+import Universite.pojo.Etudiant;
+import Util.GetObjectCorba;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -26,38 +35,49 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 public class MenuPrincipal extends javax.swing.JFrame {
     private final GestionEtudiant g;
     private final org.omg.CORBA.ORB orb;
-    private Ministere m;
+    private final Ministere m;
+    private final Rectorat r;
+    private final identite moi;
     private boolean panelChoixVisible = false;
     /**
      * Creates new form MenuPrincipal
+     * @param m
+     * @param r
      * @param g
      * @param orb
+     * @param i
      */
-    public MenuPrincipal(GestionEtudiant g,org.omg.CORBA.ORB orb) {
+    public MenuPrincipal(Ministere m, Rectorat r,GestionEtudiant g,org.omg.CORBA.ORB orb,identite i) {
         initComponents();
         this.g=g;
         this.orb=orb;
-        try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-            // On récupère le ministere
-            nameToFind[0] = new org.omg.CosNaming.NameComponent("Ministere", "");
-            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
-            this.m = MinistereHelper.narrow(remoteRef);
-            ArrayList<Accreditation> lesAccreditations = AccreditationMapper.listAccreditationsToAccredidationCorba(this.m.recupererAccreditations());
-            //Initialisation des 5 listes déroulantes
-            InitListeDeroulante(jComboBoxAccreditations, lesAccreditations);
-            InitListeDeroulante(jComboBoxAccreditations2, lesAccreditations);
-            InitListeDeroulante(jComboBoxAccreditations3, lesAccreditations);
-            InitListeDeroulante(jComboBoxAccreditations4, lesAccreditations);
-            InitListeDeroulante(jComboBoxAccreditations5, lesAccreditations);
-            
-            //Récuperation des candidatures actuelles de l'étudiant
-            //g.
-            
-        } catch (NotFound | CannotProceed | InvalidName | org.omg.CORBA.ORBPackage.InvalidName ex) {
-            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        this.m=m;
+        this.r = r;
+        this.moi = i;
+        ArrayList<Accreditation> lesAccreditations = AccreditationMapper.listAccreditationsToAccredidationCorba(this.m.recupererAccreditations());
+        //Initialisation des 5 listes déroulantes
+        InitListeDeroulante(jComboBoxAccreditations, lesAccreditations);
+        InitListeDeroulante(jComboBoxAccreditations2, lesAccreditations);
+        InitListeDeroulante(jComboBoxAccreditations3, lesAccreditations);
+        InitListeDeroulante(jComboBoxAccreditations4, lesAccreditations);
+        InitListeDeroulante(jComboBoxAccreditations5, lesAccreditations);
+
+        String[] iorRectorats;
+        iorRectorats = m.getListeRectorat();
+        Rectorat rTemp;
+        List<Candidature> lesCandidaturesTemp;
+        for(String ior : iorRectorats) {
+            rTemp = GetObjectCorba.getRectoratCorba(orb, ior);
+            if( rTemp != null) {
+                try {
+                     lesCandidaturesTemp = CandidatureMapper.candidaturesCorbaToListCandidature(rTemp.recupererCandidaturesEtudiant(moi));
+                     System.out.println(lesCandidaturesTemp);
+                } catch (EtudiantInconnu ex) {
+                    Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
+        
         //On masque les différents panels à l'init
         jPanelChoix.setVisible(false);
     }

@@ -54,6 +54,8 @@ public class ServerUniversite {
             // Création du servant pour la gestion des étudiants
             GestionEtudiantImpl gestEtu = new GestionEtudiantImpl(nameUniversite, nameRectorat);
             
+            orb.string_to_object("corbaloc:iiop:1.2@192.168.0.28:2001/NameService");
+            
             // Activer le POA manager
             rootPOA.the_POAManager().activate();
             
@@ -65,11 +67,11 @@ public class ServerUniversite {
             
             // Construction du nom à enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
-            nameToRegister[0] = new org.omg.CosNaming.NameComponent("GestionEtudiant-"+nameUniversite, "");
+            nameToRegister[0] = new org.omg.CosNaming.NameComponent(nameUniversite, "");
             
             // Enregistrement de l'objet CORBA dans le service de noms
             nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(gestEtu));
-            System.out.println("==> Nom \"GestionEtudiant\" est enregistré dans l'espace de noms");
+            System.out.println("==> Nom \""+nameUniversite+"\" est enregistré dans l'espace de noms");
             
             String IORServant = orb.object_to_string(rootPOA.servant_to_reference(gestEtu));
             System.out.println("L'objet possède la référence suivante : ");
@@ -80,13 +82,13 @@ public class ServerUniversite {
             MasterImpl unMaster = new MasterImpl("MIAGE", nameRectorat, nameUniversite);
             
             // Activer le servant au sein du POA et récupérer son ID
-            rootPOA.activate_object(unMaster);
+            //rootPOA.activate_object(unMaster);
             
-            nameToRegister[0] = new org.omg.CosNaming.NameComponent("UnMaster-"+nameUniversite, "");
+            nameToRegister[0] = new org.omg.CosNaming.NameComponent("MIAGE", "");
             
             // Enregistrement de l'objet CORBA dans le service de noms
             nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(unMaster));
-            System.out.println("==> Nom \"UnMaster\" est enregistré dans l'espace de noms");
+            System.out.println("==> Nom \"MIAGE\" est enregistré dans l'espace de noms");
             
             IORServant = orb.object_to_string(rootPOA.servant_to_reference(unMaster));
             System.out.println("L'objet possède la référence suivante : ");
@@ -95,7 +97,7 @@ public class ServerUniversite {
             // Lancement de l'ORB et mise en attente de la requête
             orb.run();
             
-        } catch(InvalidName | AdapterInactive | ServantAlreadyActive | WrongPolicy | ServantNotActive | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
+        } catch(InvalidName | AdapterInactive | WrongPolicy | ServantNotActive | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
             e.printStackTrace();
         }
         

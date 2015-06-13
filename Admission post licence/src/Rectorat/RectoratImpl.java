@@ -73,7 +73,6 @@ public class RectoratImpl extends RectoratPOA{
         candidature[] candidatures={};
 
         for (Candidature lesCandidature : lesCandidatures) {
-            //Si les deux string master sont identique, alors on garde cette candidature
             if (lesCandidature.getMaster().equals(master)) {
                 candidatures = addCandidature(candidatures, CandidatureMapper.candidatureToCandidatureCorba(lesCandidature));
             }
@@ -85,7 +84,6 @@ public class RectoratImpl extends RectoratPOA{
     public candidature[] recupererCandidaturesEtudiant(identite etudiant) throws EtudiantInconnu {
         candidature[] candidatures={};
         for (Candidature lesCandidature : lesCandidatures) {
-            //Si les deux string master sont identique, alors on garde cette candidature
             if (lesCandidature.getEtu().getIne().equals(etudiant.ine)) {
                 candidatures = addCandidature(candidatures, CandidatureMapper.candidatureToCandidatureCorba(lesCandidature));
             }
@@ -185,24 +183,33 @@ public class RectoratImpl extends RectoratPOA{
     
     @Override
     public String[] getListeGestEtu() {
-        String[] ge = null;
-        return lesGestionEtu.toArray(ge);
+        String[] ge = new String[lesGestionEtu.size()];
+        for(int i=0;i<lesGestionEtu.size();i++){
+            ge[i]=lesGestionEtu.get(i);
+        }
+        return  ge;
     }
 
     @Override
     public void enregistrerGE(String ior, String universite) {
-        lesGestionEtu.add(ior);
-        lesUniversites.add(universite);
+        if(!lesGestionEtu.contains(ior)){
+            lesGestionEtu.add(ior);
+        }
+        if(!lesUniversites.contains(universite)){
+            lesUniversites.add(universite);
+        }
     }
 
     @Override
     public void enregistrerMaster(String ior) {
-        lesMasters.add(ior);
+        if(!lesMasters.contains(ior)){
+            lesMasters.add(ior);
+        }
         
         // Récupération de l'objet master
-        Master m = GetObjectCorba.getMasterCorba(ior, ServerRectorat.orb);
+        /*Master m = GetObjectCorba.getMasterCorba(ior, ServerRectorat.orb);
         
-        lesUniversites.add(m.universite());
+        lesUniversites.add(m.universite());*/
     }
 
     @Override
