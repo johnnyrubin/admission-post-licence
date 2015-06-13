@@ -190,8 +190,9 @@ public class RectoratImpl extends RectoratPOA{
     }
 
     @Override
-    public void enregistrerGE(String ior) {
+    public void enregistrerGE(String ior, String universite) {
         lesGestionEtu.add(ior);
+        lesUniversites.add(universite);
     }
 
     @Override
@@ -213,7 +214,11 @@ public class RectoratImpl extends RectoratPOA{
 
     @Override
     public String[] getListeUniversite() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] u = new String[lesUniversites.size()];
+        for(int i=0;i<lesUniversites.size();i++){
+            u[i]=lesUniversites.get(i);
+        }
+        return  u;
     }
     
     /**

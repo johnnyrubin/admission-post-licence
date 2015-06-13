@@ -153,7 +153,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         // Récupération du rectorat
         Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
         
-        r.enregistrerGE(ServerUniversite.getIorFromObject(this));
+        r.enregistrerGE(ServerUniversite.getIorFromObject(this),nom);
     }
     
 }

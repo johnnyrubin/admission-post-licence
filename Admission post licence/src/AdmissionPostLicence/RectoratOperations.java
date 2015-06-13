@@ -44,7 +44,7 @@ public interface RectoratOperations
     /**
      * Operation enregistrerGE
      */
-    public void enregistrerGE(String ior);
+    public void enregistrerGE(String ior, String universite);
 
     /**
      * Operation getListeMaster

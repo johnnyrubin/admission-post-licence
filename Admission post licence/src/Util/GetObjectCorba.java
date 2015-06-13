@@ -5,6 +5,8 @@
  */
 package Util;
 
+import AdmissionPostLicence.GestionEtudiant;
+import AdmissionPostLicence.GestionEtudiantHelper;
 import AdmissionPostLicence.Master;
 import AdmissionPostLicence.MasterHelper;
 import AdmissionPostLicence.Ministere;
@@ -95,7 +97,7 @@ public class GetObjectCorba {
         Ministere m = null;
         
         try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService"));
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.0.28:2001/NameService"));
             org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
             
             // On récupère le ministère
@@ -118,5 +120,9 @@ public class GetObjectCorba {
     
     public static Rectorat getRectoratCorba(org.omg.CORBA.ORB orb, String ior) {
         return RectoratHelper.narrow(orb.string_to_object(ior)); 
+    }
+    
+    public static GestionEtudiant getGestionEtudiantCorba(org.omg.CORBA.ORB orb, String ior) {
+        return GestionEtudiantHelper.narrow(orb.string_to_object(ior)); 
     }
 }

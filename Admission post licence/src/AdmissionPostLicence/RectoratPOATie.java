@@ -116,9 +116,9 @@ public class RectoratPOATie extends RectoratPOA
     /**
      * Operation enregistrerGE
      */
-    public void enregistrerGE(String ior)
+    public void enregistrerGE(String ior, String universite)
     {
-        _tie.enregistrerGE( ior);
+        _tie.enregistrerGE( ior,  universite);
     }
 
     /**

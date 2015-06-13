@@ -5,25 +5,13 @@
  */
 package IHM.Etudiant;
 
-import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
-import AdmissionPostLicence.GestionEtudiantHelper;
 import AdmissionPostLicence.Ministere;
-import AdmissionPostLicence.MinistereHelper;
 import AdmissionPostLicence.Rectorat;
-import AdmissionPostLicence.identite;
 import Util.GetObjectCorba;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import org.omg.CORBA.ORBPackage.InvalidName;
-import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
+import java.util.HashMap;
 
 /**
  *
@@ -34,7 +22,9 @@ public class Login extends javax.swing.JFrame {
     org.omg.CORBA.ORB orb;
     GestionEtudiant g;
     Ministere m;
-    
+    HashMap<String,Rectorat> lesRectorats = new HashMap<>();
+    HashMap<String,GestionEtudiant> lesGestionEtudiants = new HashMap<>();
+
     /**
      * Creates new form Login
      */
@@ -44,22 +34,36 @@ public class Login extends javax.swing.JFrame {
 
         orb = org.omg.CORBA.ORB.init(test,null);
         orb.string_to_object("corbaloc:iiop:1.2@192.168.0.28:2001/NameService");
-
         m = GetObjectCorba.getMinistereCorba(orb);
-            
-        //List<Rectorat> lesRectorats = Arrays.asList(m.getListeRectorat());
-        jComboBoxRectorats.setModel(new DefaultComboBoxModel(m.getListeRectorat()));
-            
-        /*jComboBoxRectorats.addActionListener (new ActionListener () {
-        public void actionPerformed(ActionEvent e) {
-        }
-        });*/ 
         
-        /*jComboBoxRectorats.addActionListener (new ActionListener () {
-            public void actionPerformed(ActionEvent e) {
-                
+        // Récupération de la liste des rectorats
+        String[] iorRectorats = m.getListeRectorat();
+        Rectorat r;
+        for(String ior : iorRectorats) {
+            r = GetObjectCorba.getRectoratCorba(orb, ior);
+            if( r != null) {
+                lesRectorats.put(r.nom(), r);
+                jComboBoxRectorats.addItem(r.nom());
             }
-        });*/
+        }
+
+        
+       jComboBoxRectorats.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                if(!jComboBoxRectorats.getSelectedItem().equals("Séléctionner")){
+                    Rectorat r = lesRectorats.get(jComboBoxRectorats.getSelectedItem());
+                    GestionEtudiant g;
+                    String[] gestEtus = r.getListeGestEtu();
+                    for(String ior : gestEtus) {
+                        g = GetObjectCorba.getGestionEtudiantCorba(orb, ior);
+                        if( g != null) {
+                            lesGestionEtudiants.put(g.nom(), g);
+                            jComboBoxUniversite.addItem(g.nom());
+                        }
+                    }
+                }  
+            }
+        });
         
     }
 
@@ -112,7 +116,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setText("Choisir un rectorat :");
 
-        jComboBoxRectorats.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "empty" }));
+        jComboBoxRectorats.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Séléctionner" }));
         jComboBoxRectorats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxRectoratsActionPerformed(evt);
@@ -121,7 +125,6 @@ public class Login extends javax.swing.JFrame {
 
         jLabel5.setText("Choisir une université :");
 
-        jComboBoxUniversite.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "empty" }));
         jComboBoxUniversite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxUniversiteActionPerformed(evt);
@@ -203,7 +206,8 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
-        //if(!jTextFieldINE.getText().equals("")&&!jTextFieldINE.getText().equals("")){
+        if(!jTextFieldINE.getText().equals("")&&!jTextFieldINE.getText().equals("")&&
+                jComboBoxUniversite.getSelectedIndex()!=-1 && !jComboBoxRectorats.getSelectedItem().equals("Séléctionner")){
             /*try {
                 //NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
                 NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@130.120.247.254:2001/NameService"));
@@ -227,7 +231,7 @@ public class Login extends javax.swing.JFrame {
             } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | EtudiantInconnu ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }*/
-        //}
+        }
     }//GEN-LAST:event_jButtonConnectActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -130,7 +130,7 @@ module AdmissionPostLicence
         gestionEtudiants getListeGestEtu();
 
         // Fonction qui permet d'enregistrer une gestion etudiante auprès du rectorat
-        void enregistrerGE(in string ior);
+        void enregistrerGE(in string ior, in string universite);
 
         // Liste qui contient tous les masters d'une université
         masters getListeMaster(in string u);

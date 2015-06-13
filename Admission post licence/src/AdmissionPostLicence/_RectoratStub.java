@@ -332,7 +332,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation enregistrerGE
      */
-    public void enregistrerGE(String ior)
+    public void enregistrerGE(String ior, String universite)
     {
         while(true)
         {
@@ -343,6 +343,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("enregistrerGE",true);
                     _output.write_string(ior);
+                    _output.write_string(universite);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -368,7 +369,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.RectoratOperations _self = (AdmissionPostLicence.RectoratOperations) _so.servant;
                 try
                 {
-                    _self.enregistrerGE( ior);
+                    _self.enregistrerGE( ior,  universite);
                     return;
                 }
                 finally
