@@ -88,11 +88,14 @@ public class GetObjectCorba {
      * @return {@link Ministere}
      */
     public static Ministere getMinistereCorba(org.omg.CORBA.ORB orb) {
+        
+        System.out.println("Méthode GetObjectCorba.getMinistereCorba : Début");
+        
         // Initialisation de la variable de retour
         Ministere m = null;
         
         try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.0.28:2001/NameService"));
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService"));
             org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
             
             // On récupère le ministère
@@ -104,6 +107,16 @@ public class GetObjectCorba {
             Logger.getLogger(GetObjectCorba.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        System.out.println("Méthode GetObjectCorba.getMinistereCorba : Fin");
+        
         return m;
+    }
+    
+    public static Master getMasterCorba(String ior, org.omg.CORBA.ORB orb) {
+        return MasterHelper.narrow(orb.string_to_object(ior)); 
+    }
+    
+    public static Rectorat getRectoratCorba(org.omg.CORBA.ORB orb, String ior) {
+        return RectoratHelper.narrow(orb.string_to_object(ior)); 
     }
 }

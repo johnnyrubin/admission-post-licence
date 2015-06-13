@@ -108,7 +108,7 @@ public class RectoratPOATie extends RectoratPOA
     /**
      * Operation getListeGestEtu
      */
-    public AdmissionPostLicence.GestionEtudiant[] getListeGestEtu()
+    public String[] getListeGestEtu()
     {
         return _tie.getListeGestEtu();
     }
@@ -116,15 +116,15 @@ public class RectoratPOATie extends RectoratPOA
     /**
      * Operation enregistrerGE
      */
-    public void enregistrerGE(AdmissionPostLicence.GestionEtudiant ge)
+    public void enregistrerGE(String ior)
     {
-        _tie.enregistrerGE( ge);
+        _tie.enregistrerGE( ior);
     }
 
     /**
      * Operation getListeMaster
      */
-    public AdmissionPostLicence.Master[] getListeMaster(String u)
+    public String[] getListeMaster(String u)
     {
         return _tie.getListeMaster( u);
     }
@@ -132,9 +132,9 @@ public class RectoratPOATie extends RectoratPOA
     /**
      * Operation enregistrerMaster
      */
-    public void enregistrerMaster(AdmissionPostLicence.Master m)
+    public void enregistrerMaster(String ior)
     {
-        _tie.enregistrerMaster( m);
+        _tie.enregistrerMaster( ior);
     }
 
     /**

@@ -27,12 +27,16 @@ public class MasterImpl extends MasterPOA {
     /** Le nom du rectorat auquel appartient l'université de ce master */
     private final String rectorat;
     
-    public MasterImpl(String aNom, String aRectorat) {
+    /** Le nom de l'université d'appartenance */
+    private final String universite;
+    
+    public MasterImpl(String aNom, String aRectorat, String aUniversite) {
         nom = aNom;
         rectorat = aRectorat;
+        universite = aUniversite;
         
         // Enregistrement auprès du rectorat
-        addOnRectorat();
+        enregistrerSurRectorat();
     }
 
     @Override
@@ -109,10 +113,15 @@ public class MasterImpl extends MasterPOA {
     /**
      * Permet d'enregistrer le master auprès du rectorat
      */
-    private void addOnRectorat() {
+    private void enregistrerSurRectorat() {
         // Récupération du rectorat
         Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
         
-        r.enregistrerMaster((AdmissionPostLicence.Master) this);
+        r.enregistrerMaster(ServerUniversite.getIorFromObject(this));
+    }
+
+    @Override
+    public String universite() {
+        return universite;
     }
 }

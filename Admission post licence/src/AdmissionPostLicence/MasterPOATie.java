@@ -71,6 +71,14 @@ public class MasterPOATie extends MasterPOA
     }
 
     /**
+     * Read accessor for universite attribute
+     */
+    public String universite()
+    {
+        return _tie.universite();
+    }
+
+    /**
      * Operation consulterEtatCandidatures
      */
     public AdmissionPostLicence.candidature[] consulterEtatCandidatures()

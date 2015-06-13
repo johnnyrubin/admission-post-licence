@@ -81,7 +81,8 @@ module AdmissionPostLicence
         identite seConnecter(in string ine, in string mdp) raises (EtudiantInconnu);
     };
 	
-	typedef sequence<GestionEtudiant> gestionEtudiants;
+	// Liste des IOR des gestion étudiants enregistrés auprès du rectorat
+	typedef sequence<string> gestionEtudiants;
 
     // Point d’accès aux informations fournies aux responsables de formation et aux
     // autres entités
@@ -89,6 +90,9 @@ module AdmissionPostLicence
     {     
         //Nom du master
         readonly attribute string nom;
+		
+		// université d'appartenance
+		readonly attribute string universite;
         
         // Retourne les candidatures au master ainsi que leurs états
         candidatures consulterEtatCandidatures();
@@ -100,7 +104,8 @@ module AdmissionPostLicence
         boolean verifierPrerequis(in string licence) raises (MasterInconnu);
     };
 	
-	typedef sequence<Master> masters;
+	// Liste des IOR des masters enregistrés auprès du rectorat
+	typedef sequence<string> masters;
 
     // Code métier des Rectorats
     interface Rectorat
@@ -125,19 +130,20 @@ module AdmissionPostLicence
         gestionEtudiants getListeGestEtu();
 
         // Fonction qui permet d'enregistrer une gestion etudiante auprès du rectorat
-        void enregistrerGE(in GestionEtudiant ge);
+        void enregistrerGE(in string ior);
 
         // Liste qui contient tous les masters d'une université
         masters getListeMaster(in string u);
 
         // Fonction qui permet d'enregistrer un master auprès du rectorat
-        void enregistrerMaster(in Master m);
+        void enregistrerMaster(in string ior);
 		
 		// Liste des universités qui ont enregistrées des formations auprès du rectorat
 		universites getListeUniversite(); 
     };
 	
-	typedef sequence<Rectorat> rectorats;
+	// Liste des IOR des rectorats enregistrés auprès du ministère
+	typedef sequence<string> rectorats;
 
     interface Ministere
     {
@@ -154,7 +160,7 @@ module AdmissionPostLicence
         rectorats getListeRectorat();
 
         // Fonction qui permet d'enregistrer un rectorat auprès du ministère
-        void enregistrerRectorat(in Rectorat r);
+        void enregistrerRectorat(in string ior);
     };
 };
 

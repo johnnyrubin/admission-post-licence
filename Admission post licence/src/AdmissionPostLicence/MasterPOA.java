@@ -35,6 +35,8 @@ public abstract class MasterPOA extends org.omg.PortableServer.Servant
 
         if (opName.equals("_get_nom")) {
                 return _invoke__get_nom(_is, handler);
+        } else if (opName.equals("_get_universite")) {
+                return _invoke__get_universite(_is, handler);
         } else if (opName.equals("consulterEtatCandidatures")) {
                 return _invoke_consulterEtatCandidatures(_is, handler);
         } else if (opName.equals("modifierDecision")) {
@@ -52,6 +54,16 @@ public abstract class MasterPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg = nom();
+        _output = handler.createReply();
+        _output.write_string(arg);
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke__get_universite(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg = universite();
         _output = handler.createReply();
         _output.write_string(arg);
         return _output;

@@ -11,7 +11,7 @@ final public class gestionEtudiantsHolder
     /**
      * Internal gestionEtudiants value
      */
-    public AdmissionPostLicence.GestionEtudiant[] value;
+    public String[] value;
 
     /**
      * Default constructor
@@ -23,7 +23,7 @@ final public class gestionEtudiantsHolder
      * Constructor with value initialisation
      * @param initial the initial value
      */
-    public gestionEtudiantsHolder(AdmissionPostLicence.GestionEtudiant[] initial)
+    public gestionEtudiantsHolder(String[] initial)
     {
         value = initial;
     }

@@ -283,7 +283,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation getListeGestEtu
      */
-    public AdmissionPostLicence.GestionEtudiant[] getListeGestEtu()
+    public String[] getListeGestEtu()
     {
         while(true)
         {
@@ -294,7 +294,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("getListeGestEtu",true);
                     _input = this._invoke(_output);
-                    AdmissionPostLicence.GestionEtudiant[] _arg_ret = AdmissionPostLicence.gestionEtudiantsHelper.read(_input);
+                    String[] _arg_ret = AdmissionPostLicence.gestionEtudiantsHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -332,7 +332,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation enregistrerGE
      */
-    public void enregistrerGE(AdmissionPostLicence.GestionEtudiant ge)
+    public void enregistrerGE(String ior)
     {
         while(true)
         {
@@ -342,7 +342,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("enregistrerGE",true);
-                    AdmissionPostLicence.GestionEtudiantHelper.write(_output,ge);
+                    _output.write_string(ior);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -368,7 +368,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.RectoratOperations _self = (AdmissionPostLicence.RectoratOperations) _so.servant;
                 try
                 {
-                    _self.enregistrerGE( ge);
+                    _self.enregistrerGE( ior);
                     return;
                 }
                 finally
@@ -382,7 +382,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation getListeMaster
      */
-    public AdmissionPostLicence.Master[] getListeMaster(String u)
+    public String[] getListeMaster(String u)
     {
         while(true)
         {
@@ -394,7 +394,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                     org.omg.CORBA.portable.OutputStream _output = this._request("getListeMaster",true);
                     _output.write_string(u);
                     _input = this._invoke(_output);
-                    AdmissionPostLicence.Master[] _arg_ret = AdmissionPostLicence.mastersHelper.read(_input);
+                    String[] _arg_ret = AdmissionPostLicence.mastersHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -432,7 +432,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation enregistrerMaster
      */
-    public void enregistrerMaster(AdmissionPostLicence.Master m)
+    public void enregistrerMaster(String ior)
     {
         while(true)
         {
@@ -442,7 +442,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("enregistrerMaster",true);
-                    AdmissionPostLicence.MasterHelper.write(_output,m);
+                    _output.write_string(ior);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -468,7 +468,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.RectoratOperations _self = (AdmissionPostLicence.RectoratOperations) _so.servant;
                 try
                 {
-                    _self.enregistrerMaster( m);
+                    _self.enregistrerMaster( ior);
                     return;
                 }
                 finally

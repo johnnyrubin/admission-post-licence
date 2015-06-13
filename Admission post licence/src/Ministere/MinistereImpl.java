@@ -5,9 +5,7 @@ import AdmissionPostLicence.MinisterePOA;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
-import AdmissionPostLicence.resultatCandidature;
 import Ministere.pojo.Accreditation;
-import Rectorat.RectoratImpl;
 import Util.GetObjectCorba;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +23,7 @@ public class MinistereImpl extends MinisterePOA{
     //et la valeur le rectorat
     private HashMap<String,String> lesLiaisons;
     //Liste des rectorats
-    private ArrayList<Rectorat> lesRectorats = new ArrayList<Rectorat>();
+    private ArrayList<String> lesRectorats = new ArrayList<String>();
 
     public void setLesLiaisons(HashMap<String, String> lesLiaisons) {
         this.lesLiaisons = lesLiaisons;
@@ -52,9 +50,12 @@ public class MinistereImpl extends MinisterePOA{
     @Override
     public void transfererDecision(candidature c) throws CandidatureInconnu {
         try{
-            for (Rectorat lesRectorat : lesRectorats) {
-                if (lesRectorat.nom().equals(lesLiaisons.get(c.universite))) {
-                    lesRectorat.modifierCandidature(c);
+            Rectorat r;
+            for (String ior : lesRectorats) {
+                r = GetObjectCorba.getRectoratCorba(ServerMinistere.orb, ior);
+                
+                if (r.nom().equals(lesLiaisons.get(c.universite))) {
+                    r.modifierCandidature(c);
                 }
             }
         
@@ -65,11 +66,11 @@ public class MinistereImpl extends MinisterePOA{
     }
 
     @Override
-    public Rectorat[] getListeRectorat() {
+    public String[] getListeRectorat() {
         
         System.out.println("Appel méthode MinistereImpl.getListeRectorat : Début");
         
-        Rectorat[] r = new Rectorat[0];
+        String[] r = new String[0];
 //        int i = 0;lesRectorats.size()
 //        for(Rectorat t : lesRectorats) {
 //            System.out.println("Rectorat : " + t.nom());
@@ -78,12 +79,14 @@ public class MinistereImpl extends MinisterePOA{
 //        }
         
         System.out.println("Appel méthode MinistereImpl.getListeRectorat : Fin");
-        return r;
+        return lesRectorats.toArray(r);
     }
 
     @Override
-    public void enregistrerRectorat(Rectorat r) {
-        lesRectorats.add(r);
+    public void enregistrerRectorat(String ior) {
+        System.out.println("Méthode MinistereImpl.enregistrerRectorat : Début");
+        lesRectorats.add(ior);
+        System.out.println("Méthode MinistereImpl.enregistrerRectorat : Fin");
     }
     
     /**

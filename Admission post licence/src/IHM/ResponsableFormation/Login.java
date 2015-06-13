@@ -20,7 +20,7 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 public class Login extends javax.swing.JFrame {
     
     org.omg.CORBA.ORB orb;
-    Ministere m;
+    Ministere ministere;
 
     /**
      * Creates new form Login
@@ -33,10 +33,17 @@ public class Login extends javax.swing.JFrame {
         
         orb = org.omg.CORBA.ORB.init(test, null);
         orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService");
-        m = GetObjectCorba.getMinistereCorba(orb);
+        ministere = GetObjectCorba.getMinistereCorba(orb);
         
         // Récupération de la liste des rectorats
-        Rectorat[] rectorats = m.getListeRectorat();
+        String[] iorRectorats = ministere.getListeRectorat();
+        Rectorat r;
+        for(String ior : iorRectorats) {
+            r = GetObjectCorba.getRectoratCorba(orb, ior);
+            if( r != null) {
+                rectoratComboBox.addItem(r.nom());
+            }
+        }
     }
 
     /**

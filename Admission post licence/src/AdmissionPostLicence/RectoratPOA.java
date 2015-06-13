@@ -161,7 +161,7 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
 
-        AdmissionPostLicence.GestionEtudiant[] _arg_result = getListeGestEtu();
+        String[] _arg_result = getListeGestEtu();
 
         _output = handler.createReply();
         AdmissionPostLicence.gestionEtudiantsHelper.write(_output,_arg_result);
@@ -173,7 +173,7 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        AdmissionPostLicence.GestionEtudiant arg0_in = AdmissionPostLicence.GestionEtudiantHelper.read(_is);
+        String arg0_in = _is.read_string();
 
         enregistrerGE(arg0_in);
 
@@ -188,7 +188,7 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = _is.read_string();
 
-        AdmissionPostLicence.Master[] _arg_result = getListeMaster(arg0_in);
+        String[] _arg_result = getListeMaster(arg0_in);
 
         _output = handler.createReply();
         AdmissionPostLicence.mastersHelper.write(_output,_arg_result);
@@ -200,7 +200,7 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        AdmissionPostLicence.Master arg0_in = AdmissionPostLicence.MasterHelper.read(_is);
+        String arg0_in = _is.read_string();
 
         enregistrerMaster(arg0_in);
 

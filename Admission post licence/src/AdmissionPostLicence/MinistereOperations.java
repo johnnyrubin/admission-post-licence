@@ -26,11 +26,11 @@ public interface MinistereOperations
     /**
      * Operation getListeRectorat
      */
-    public AdmissionPostLicence.Rectorat[] getListeRectorat();
+    public String[] getListeRectorat();
 
     /**
      * Operation enregistrerRectorat
      */
-    public void enregistrerRectorat(AdmissionPostLicence.Rectorat r);
+    public void enregistrerRectorat(String ior);
 
 }

@@ -11,7 +11,7 @@ final public class mastersHolder
     /**
      * Internal masters value
      */
-    public AdmissionPostLicence.Master[] value;
+    public String[] value;
 
     /**
      * Default constructor
@@ -23,7 +23,7 @@ final public class mastersHolder
      * Constructor with value initialisation
      * @param initial the initial value
      */
-    public mastersHolder(AdmissionPostLicence.Master[] initial)
+    public mastersHolder(String[] initial)
     {
         value = initial;
     }

@@ -11,7 +11,7 @@ final public class rectoratsHolder
     /**
      * Internal rectorats value
      */
-    public AdmissionPostLicence.Rectorat[] value;
+    public String[] value;
 
     /**
      * Default constructor
@@ -23,7 +23,7 @@ final public class rectoratsHolder
      * Constructor with value initialisation
      * @param initial the initial value
      */
-    public rectoratsHolder(AdmissionPostLicence.Rectorat[] initial)
+    public rectoratsHolder(String[] initial)
     {
         value = initial;
     }

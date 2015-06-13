@@ -90,7 +90,7 @@ public class MinisterePOATie extends MinisterePOA
     /**
      * Operation getListeRectorat
      */
-    public AdmissionPostLicence.Rectorat[] getListeRectorat()
+    public String[] getListeRectorat()
     {
         return _tie.getListeRectorat();
     }
@@ -98,9 +98,9 @@ public class MinisterePOATie extends MinisterePOA
     /**
      * Operation enregistrerRectorat
      */
-    public void enregistrerRectorat(AdmissionPostLicence.Rectorat r)
+    public void enregistrerRectorat(String ior)
     {
-        _tie.enregistrerRectorat( r);
+        _tie.enregistrerRectorat( ior);
     }
 
 }

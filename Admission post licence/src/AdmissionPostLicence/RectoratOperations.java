@@ -39,22 +39,22 @@ public interface RectoratOperations
     /**
      * Operation getListeGestEtu
      */
-    public AdmissionPostLicence.GestionEtudiant[] getListeGestEtu();
+    public String[] getListeGestEtu();
 
     /**
      * Operation enregistrerGE
      */
-    public void enregistrerGE(AdmissionPostLicence.GestionEtudiant ge);
+    public void enregistrerGE(String ior);
 
     /**
      * Operation getListeMaster
      */
-    public AdmissionPostLicence.Master[] getListeMaster(String u);
+    public String[] getListeMaster(String u);
 
     /**
      * Operation enregistrerMaster
      */
-    public void enregistrerMaster(AdmissionPostLicence.Master m);
+    public void enregistrerMaster(String ior);
 
     /**
      * Operation getListeUniversite

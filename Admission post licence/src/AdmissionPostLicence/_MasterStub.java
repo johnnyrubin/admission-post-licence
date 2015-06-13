@@ -63,6 +63,48 @@ public class _MasterStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     /**
+     * Read accessor for universite attribute
+     * @return the attribute value
+     */
+    public String universite()
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("_get_universite",true);
+                    _input = this._invoke(_output);
+                    return _input.read_string();
+                } catch (final org.omg.CORBA.portable.RemarshalException _exception) {
+                    continue;
+                } catch (final org.omg.CORBA.portable.ApplicationException _exception) {
+                    final String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                } finally {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("_get_universite",_opsClass);
+                if (_so == null)
+                   continue;
+                AdmissionPostLicence.MasterOperations _self = (AdmissionPostLicence.MasterOperations) _so.servant;
+                try
+                {
+                    return _self.universite();
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
      * Operation consulterEtatCandidatures
      */
     public AdmissionPostLicence.candidature[] consulterEtatCandidatures()

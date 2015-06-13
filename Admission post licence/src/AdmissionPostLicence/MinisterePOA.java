@@ -101,7 +101,7 @@ public abstract class MinisterePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
 
-        AdmissionPostLicence.Rectorat[] _arg_result = getListeRectorat();
+        String[] _arg_result = getListeRectorat();
 
         _output = handler.createReply();
         AdmissionPostLicence.rectoratsHelper.write(_output,_arg_result);
@@ -113,7 +113,7 @@ public abstract class MinisterePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        AdmissionPostLicence.Rectorat arg0_in = AdmissionPostLicence.RectoratHelper.read(_is);
+        String arg0_in = _is.read_string();
 
         enregistrerRectorat(arg0_in);
 

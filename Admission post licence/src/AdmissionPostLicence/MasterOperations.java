@@ -14,6 +14,12 @@ public interface MasterOperations
     public String nom();
 
     /**
+     * Read accessor for universite attribute
+     * @return the attribute value
+     */
+    public String universite();
+
+    /**
      * Operation consulterEtatCandidatures
      */
     public AdmissionPostLicence.candidature[] consulterEtatCandidatures();

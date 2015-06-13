@@ -23,7 +23,7 @@ public class rectoratsHelper
      * @param a an any
      * @param t rectorats value
      */
-    public static void insert(org.omg.CORBA.Any a, AdmissionPostLicence.Rectorat[] t)
+    public static void insert(org.omg.CORBA.Any a, String[] t)
     {
         a.insert_Streamable(new AdmissionPostLicence.rectoratsHolder(t));
     }
@@ -33,7 +33,7 @@ public class rectoratsHelper
      * @param a an any
      * @return the extracted rectorats value
      */
-    public static AdmissionPostLicence.Rectorat[] extract(org.omg.CORBA.Any a)
+    public static String[] extract(org.omg.CORBA.Any a)
     {
         if (!a.type().equal(type()))
             throw new org.omg.CORBA.MARSHAL();
@@ -66,7 +66,7 @@ public class rectoratsHelper
     {
         if (_tc == null) {
             org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-            _tc = orb.create_alias_tc(id(),"rectorats",orb.create_sequence_tc(0,AdmissionPostLicence.RectoratHelper.type()));
+            _tc = orb.create_alias_tc(id(),"rectorats",orb.create_sequence_tc(0,orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string)));
         }
         return _tc;
     }
@@ -87,15 +87,15 @@ public class rectoratsHelper
      * @param istream the input stream
      * @return the readed rectorats value
      */
-    public static AdmissionPostLicence.Rectorat[] read(org.omg.CORBA.portable.InputStream istream)
+    public static String[] read(org.omg.CORBA.portable.InputStream istream)
     {
-        AdmissionPostLicence.Rectorat[] new_one;
+        String[] new_one;
         {
         int size7 = istream.read_ulong();
-        new_one = new AdmissionPostLicence.Rectorat[size7];
+        new_one = new String[size7];
         for (int i7=0; i7<new_one.length; i7++)
          {
-            new_one[i7] = AdmissionPostLicence.RectoratHelper.read(istream);
+            new_one[i7] = istream.read_string();
 
          }
         }
@@ -108,12 +108,12 @@ public class rectoratsHelper
      * @param ostream the output stream
      * @param value rectorats value
      */
-    public static void write(org.omg.CORBA.portable.OutputStream ostream, AdmissionPostLicence.Rectorat[] value)
+    public static void write(org.omg.CORBA.portable.OutputStream ostream, String[] value)
     {
         ostream.write_ulong(value.length);
         for (int i7=0; i7<value.length; i7++)
         {
-            AdmissionPostLicence.RectoratHelper.write(ostream,value[i7]);
+            ostream.write_string(value[i7]);
 
         }
     }

@@ -34,7 +34,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         rectorat = aRectorat;
         
         // Enregistrement auprès du rectorat
-        addOnRectorat();
+        enregistrerSurRectorat();
     }
 
     @Override
@@ -149,11 +149,11 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     /**
      * Permet d'enregistrer la gestion étudiant auprès du rectorat
      */
-    private void addOnRectorat() {
+    private void enregistrerSurRectorat() {
         // Récupération du rectorat
         Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
         
-        r.enregistrerGE((AdmissionPostLicence.GestionEtudiant) this);
+        r.enregistrerGE(ServerUniversite.getIorFromObject(this));
     }
     
 }

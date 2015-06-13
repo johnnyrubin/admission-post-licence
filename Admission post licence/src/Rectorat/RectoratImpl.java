@@ -5,6 +5,7 @@ import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Master;
 import AdmissionPostLicence.MasterInconnu;
+import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.RectoratPOA;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
@@ -26,16 +27,21 @@ public class RectoratImpl extends RectoratPOA{
     private List<Candidature> lesCandidatures = new ArrayList<Candidature>();
     
     //La liste des gestions étudiants
-    private List<GestionEtudiant> lesGestionEtu = new ArrayList<GestionEtudiant>();
+    private List<String> lesGestionEtu = new ArrayList<String>();
     
     //La liste des masters
-    private List<Master> lesMasters = new ArrayList<Master>();
+    private List<String> lesMasters = new ArrayList<String>();
+    
+    // La liste des universités
+    private List<String> lesUniversites = new ArrayList<>();
     
     /** Nom du Rectorat */
-    private String nom;
+    private final String nom;
     
     public RectoratImpl(String aNom){
         this.nom = aNom;
+        
+        enregistrerSurMinistere();
     }
 
     public List<Candidature> getLesCandidatures() {
@@ -178,31 +184,50 @@ public class RectoratImpl extends RectoratPOA{
     }
     
     @Override
-    public GestionEtudiant[] getListeGestEtu() {
-        GestionEtudiant[] ge = null;
+    public String[] getListeGestEtu() {
+        String[] ge = null;
         return lesGestionEtu.toArray(ge);
     }
 
     @Override
-    public void enregistrerGE(GestionEtudiant ge) {
-        lesGestionEtu.add(ge);
+    public void enregistrerGE(String ior) {
+        lesGestionEtu.add(ior);
     }
 
     @Override
-    public void enregistrerMaster(Master m) {
-        lesMasters.add(m);
+    public void enregistrerMaster(String ior) {
+        lesMasters.add(ior);
+        
+        // Récupération de l'objet master
+        Master m = GetObjectCorba.getMasterCorba(ior, ServerRectorat.orb);
+        
+        lesUniversites.add(m.universite());
     }
 
     @Override
-    public Master[] getListeMaster(String u) {
+    public String[] getListeMaster(String u) {
         // TODO modif pour filtrer par universite
-        Master[] m = null;
+        String[] m = null;
         return lesMasters.toArray(m);
     }
 
     @Override
     public String[] getListeUniversite() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     * Permet d'enregistrer le rectorat auprès du ministère
+     */
+    private void enregistrerSurMinistere() {
+        System.out.println("Méthode RectoratImpl.enregistrerSurMinistere : Début");
+        
+        // Récupération du ministère
+        Ministere m = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
+        
+        m.enregistrerRectorat(ServerRectorat.getIorFromObject(this));
+        
+        System.out.println("Méthode RectoratImpl.enregistrerSurMinistere : Fin");
     }
     
 }

@@ -178,7 +178,7 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation getListeRectorat
      */
-    public AdmissionPostLicence.Rectorat[] getListeRectorat()
+    public String[] getListeRectorat()
     {
         while(true)
         {
@@ -189,7 +189,7 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("getListeRectorat",true);
                     _input = this._invoke(_output);
-                    AdmissionPostLicence.Rectorat[] _arg_ret = AdmissionPostLicence.rectoratsHelper.read(_input);
+                    String[] _arg_ret = AdmissionPostLicence.rectoratsHelper.read(_input);
                     return _arg_ret;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
@@ -227,7 +227,7 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation enregistrerRectorat
      */
-    public void enregistrerRectorat(AdmissionPostLicence.Rectorat r)
+    public void enregistrerRectorat(String ior)
     {
         while(true)
         {
@@ -237,7 +237,7 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("enregistrerRectorat",true);
-                    AdmissionPostLicence.RectoratHelper.write(_output,r);
+                    _output.write_string(ior);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -263,7 +263,7 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.MinistereOperations _self = (AdmissionPostLicence.MinistereOperations) _so.servant;
                 try
                 {
-                    _self.enregistrerRectorat( r);
+                    _self.enregistrerRectorat( ior);
                     return;
                 }
                 finally
