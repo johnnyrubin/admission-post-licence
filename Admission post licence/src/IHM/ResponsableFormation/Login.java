@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package IHM.ResponsableFormation;
 
 import AdmissionPostLicence.Ministere;
@@ -10,10 +5,10 @@ import AdmissionPostLicence.Rectorat;
 import Util.GetObjectCorba;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -21,36 +16,65 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  */
 public class Login extends javax.swing.JFrame {
     
-    org.omg.CORBA.ORB orb;
-    Ministere ministere;
+    private final org.omg.CORBA.ORB orb;
+    private final Ministere ministere;
+    
+    private final String comboDefault = "Sélectionnez";
+    private final String comboDefaultUniversite = "Sélectionnez un rectorat";
+    
+    private HashMap<String,Rectorat> rectorats = new HashMap<>();
+    
+    private Rectorat rectoratSel;
+    
+    private final String loginAdmin = "admin";
+    private final String mdpAdmin = "admin";
 
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
-        errorLabel.setVisible(false);
         
-        String[] test = {};
-        
-        orb = org.omg.CORBA.ORB.init(test, null);
+        // Initialisation de l'orb
+        String[] argsOrb = {};
+        orb = org.omg.CORBA.ORB.init(argsOrb, null);
         orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService");
+        
+        // Récupération du ministère
         ministere = GetObjectCorba.getMinistereCorba(orb);
         
         // Récupération de la liste des rectorats
         String[] iorRectorats = ministere.getListeRectorat();
         Rectorat r;
+        
+        // Remplissage de la liste déroulante
         for(String ior : iorRectorats) {
             r = GetObjectCorba.getRectoratCorba(orb, ior);
             if( r != null) {
+                rectorats.put(r.nom(), r);
                 rectoratComboBox.addItem(r.nom());
             }
         }
         
+        // Récupère les universités une fois un rectorat sélectionné
         rectoratComboBox.addActionListener (new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                // Récupération du rectorat sélectionné
+                String rectorat = (String) rectoratComboBox.getSelectedItem();
+                
+                if(!rectorat.equals(comboDefault)) {
+                    // On récupère l'objet corba du rectorat
+                    rectoratSel = rectorats.get(rectorat);
+                    
+                    // Récupération de la liste des universités                    
+                    List<String> universites = new ArrayList<>(Arrays.asList(rectoratSel.getListeUniversite()));
+                    
+                    // Remplissage de la liste déroulante
+                    for(String universite : universites) {
+                        universiteComboBox.addItem(universite);
+                    }
+                }
             }
         });
     }
@@ -90,7 +114,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel6.setText("Rectorat :");
 
-        universiteComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez" }));
+        universiteComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez un rectorat" }));
 
         rectoratComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez" }));
 
@@ -103,21 +127,23 @@ public class Login extends javax.swing.JFrame {
 
         errorLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
-        errorLabel.setText("Tous les champs son obligatoires !");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(164, 164, 164)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(errorLabel)
+                .addGap(97, 97, 97))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(loginButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(loginButton)))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -126,21 +152,16 @@ public class Login extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(mdpTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                        .addComponent(loginTextField))
-                                    .addComponent(rectoratComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(mdpTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(loginTextField)
+                                    .addComponent(rectoratComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(universiteComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(errorLabel)))
-                .addGap(97, 97, 97))
+                                .addComponent(universiteComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +186,7 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(universiteComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(errorLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(loginButton)
                 .addGap(19, 19, 19))
         );
@@ -180,17 +201,24 @@ public class Login extends javax.swing.JFrame {
         String rectorat = (String) rectoratComboBox.getSelectedItem();
         String universite = (String) universiteComboBox.getSelectedItem();
         
-        String comboDefault = "Sélectionnez";
-        
-        if(login.isEmpty() || mdp.isEmpty() || universite.equals(comboDefault) || rectorat.equals(comboDefault)) {
-            // Afficher un message d'erreur
-            errorLabel.setVisible(true);
+        if(login.isEmpty() || mdp.isEmpty() || rectorat.equals(comboDefaultUniversite) || universite.equals(comboDefault)) {
+            // Affichage d'un message d'erreur
+            errorLabel.setText("Tous les champs son obligatoires !");
         } else {
             // Masquer le message d'erreur
-            errorLabel.setVisible(false);
+            errorLabel.setText("");
             
-            // TODO appel CORBA
-            
+            // Vérification du couple login/mdp
+            if(loginAdmin.equals(login) && mdpAdmin.equals(mdp)) {
+                    // On affiche la fenêtre de gestion des candidatures
+                    Principal m = new Principal(rectoratSel, universite);
+                    m.setVisible(true);
+                    // Et on masque la fenêtre de connexion
+                    this.setVisible(false);
+            } else {
+                // Affichage d'un message d'erreur
+                errorLabel.setText("Le couple login / mot de passe est incorrect !");
+            }
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
@@ -223,6 +251,7 @@ public class Login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Login().setVisible(true);
             }

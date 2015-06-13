@@ -214,9 +214,16 @@ public class RectoratImpl extends RectoratPOA{
 
     @Override
     public String[] getListeMaster(String u) {
-        // TODO modif pour filtrer par universite
-        String[] m = null;
-        return lesMasters.toArray(m);
+        String[] m = new String[lesMasters.size()];
+        int i = 0;
+        for (String ior : lesMasters) {
+            Master master = GetObjectCorba.getMasterCorba(ior, ServerRectorat.orb);
+            if(master.universite().equals(u)) {
+                m[i] = ior;
+                i++;
+            }
+        }
+        return m;
     }
 
     @Override
