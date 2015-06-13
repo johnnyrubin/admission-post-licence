@@ -44,10 +44,13 @@ module AdmissionPostLicence
     };
     typedef sequence<candidature> candidatures;
     
+    //Liste de plusieurs masters
+    typedef sequence<string> listeMasters;
+    
     // Accréditation permettant de savoir si tel master est disponible dans telle université
     struct accreditation {
         string universite;
-        string master;
+        listeMasters master;
     };
     typedef sequence<accreditation> accreditations;
 	
