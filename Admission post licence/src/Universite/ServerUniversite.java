@@ -41,7 +41,7 @@ public class ServerUniversite {
         String nameUniversite = "Paul Sabatier";
         
         // TODO remplacer par args
-        String nameRectorat = "Toulouse";
+        String nameRectorat = "RectoratToulouse";
         
         try {
             
@@ -58,7 +58,7 @@ public class ServerUniversite {
             rootPOA.the_POAManager().activate();
             
             // Activer le servant au sein du POA et récupérer son ID
-            rootPOA.activate_object(gestEtu);
+            //rootPOA.activate_object(gestEtu);
             
             // Récupération du naming service
             NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));

@@ -60,7 +60,7 @@ public class ServerRectorat {
             
             // Construction du nom à enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
-            nameToRegister[0] = new org.omg.CosNaming.NameComponent("Rectorat", "");
+            nameToRegister[0] = new org.omg.CosNaming.NameComponent("RectoratToulouse", "");
             
             // Enregistrement de l'objet CORBA dans le service de noms
             nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(rectorat));

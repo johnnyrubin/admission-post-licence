@@ -8,6 +8,8 @@ package IHM.ResponsableFormation;
 import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.Rectorat;
 import Util.GetObjectCorba;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -44,6 +46,13 @@ public class Login extends javax.swing.JFrame {
                 rectoratComboBox.addItem(r.nom());
             }
         }
+        
+        rectoratComboBox.addActionListener (new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
     }
 
     /**
