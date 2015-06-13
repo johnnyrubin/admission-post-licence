@@ -80,7 +80,7 @@ public class accreditationHelper
                 _members[0].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string);
                 _members[1] = new org.omg.CORBA.StructMember();
                 _members[1].name = "master";
-                _members[1].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string);
+                _members[1].type = AdmissionPostLicence.listeMastersHelper.type();
                 _tc = orb.create_struct_tc(id(),"accreditation",_members);
                 _working = false;
             }
@@ -109,7 +109,7 @@ public class accreditationHelper
         AdmissionPostLicence.accreditation new_one = new AdmissionPostLicence.accreditation();
 
         new_one.universite = istream.read_string();
-        new_one.master = istream.read_string();
+        new_one.master = AdmissionPostLicence.listeMastersHelper.read(istream);
 
         return new_one;
     }
@@ -122,7 +122,7 @@ public class accreditationHelper
     public static void write(org.omg.CORBA.portable.OutputStream ostream, AdmissionPostLicence.accreditation value)
     {
         ostream.write_string(value.universite);
-        ostream.write_string(value.master);
+        AdmissionPostLicence.listeMastersHelper.write(ostream,value.master);
     }
 
 }

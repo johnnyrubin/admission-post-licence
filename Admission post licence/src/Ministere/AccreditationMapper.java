@@ -23,7 +23,7 @@ public class AccreditationMapper {
     public static accreditation accreditationToAccredidationCorba(Accreditation a) {
         accreditation ac = null;
         if(a != null) {
-            ac = new accreditation(a.getUniversite(),a.getDiplome());
+            //ac = new accreditation(a.getUniversite(),a.getDiplome());
         }
         return ac;
     }
@@ -36,7 +36,7 @@ public class AccreditationMapper {
     public static Accreditation accreditationCorbaToAccredidation(accreditation a) {
         Accreditation ac = null;
         if(a != null) {
-            ac = new Accreditation(a.universite,a.master);
+            //ac = new Accreditation(a.universite,a.master);
         }
         return ac;
     }

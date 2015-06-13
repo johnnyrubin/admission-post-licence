@@ -15,7 +15,7 @@ public final class accreditation implements org.omg.CORBA.portable.IDLEntity
     /**
      * Struct member master
      */
-    public String master;
+    public String[] master;
 
     /**
      * Default constructor
@@ -28,7 +28,7 @@ public final class accreditation implements org.omg.CORBA.portable.IDLEntity
      * @param universite universite struct member
      * @param master master struct member
      */
-    public accreditation(String universite, String master)
+    public accreditation(String universite, String[] master)
     {
         this.universite = universite;
         this.master = master;
