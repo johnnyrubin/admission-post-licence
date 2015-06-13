@@ -39,6 +39,8 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
                     new Operation_enregistrerGE());
             operationMap.put("enregistrerMaster",
                     new Operation_enregistrerMaster());
+            operationMap.put("getGestEtu",
+                    new Operation_getGestEtu());
             operationMap.put("getListeGestEtu",
                     new Operation_getListeGestEtu());
             operationMap.put("getListeMaster",
@@ -183,6 +185,20 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
         return _output;
     }
 
+    private org.omg.CORBA.portable.OutputStream _invoke_getGestEtu(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = _is.read_string();
+
+        String _arg_result = getGestEtu(arg0_in);
+
+        _output = handler.createReply();
+        _output.write_string(_arg_result);
+
+        return _output;
+    }
+
     private org.omg.CORBA.portable.OutputStream _invoke_getListeMaster(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
@@ -298,6 +314,16 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
             return target._invoke_enregistrerGE(_is, handler);
+        }
+    }
+
+    private static final class Operation_getGestEtu extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final RectoratPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_getGestEtu(_is, handler);
         }
     }
 
