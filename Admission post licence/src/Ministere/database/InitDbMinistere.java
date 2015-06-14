@@ -28,6 +28,10 @@ public class InitDbMinistere {
         try {
             initTableMinistere();
             initTableLiaisonUniversiteRectorat();
+            initTableDiplomes();
+            initTableAccreditations();
+            initTableUniversite();
+            AccreditationDAO.getAccreditations();
         } catch (SQLException ex) {
             Logger.getLogger(InitDbMinistere.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,5 +83,82 @@ public class InitDbMinistere {
         
         // Insertion des liaisons dans la table
         // TODO voir avec Vincent pour les données
+    }
+    
+    
+    
+    /**
+     * Création de la table Diplome qui stockera tous les diplomes
+     * @throws SQLException 
+     */
+    private static void initTableDiplomes() throws SQLException{
+        // Suppression de la table LIAISON
+        String sql = "DROP TABLE IF EXISTS DIPLOME;";
+
+        conn.statement.executeUpdate(sql);
+
+        sql = "CREATE TABLE DIPLOME " +
+                "(IDDIPLOME NUMBER PRIMARY KEY," +
+                "DIPLOME TEXT NOT NULL)";
+
+        // Création de la table DIPLOME
+        conn.statement.executeUpdate(sql);
+        // TODO voir avec Vincent pour les données
+        sql = "Insert into DIPLOME values ( 1, 'MIAGE')";
+        conn.statement.executeUpdate(sql);
+        sql = "Insert into DIPLOME values ( 2, 'Fonda')";
+        conn.statement.executeUpdate(sql);
+        sql = "Insert into DIPLOME values ( 3, 'Droits')";
+        conn.statement.executeUpdate(sql);
+    }
+    
+    /**
+     * Création de la table Universite qui stockera tous les UNIVERSITÉS
+     * @throws SQLException 
+     */
+    private static void initTableUniversite() throws SQLException{
+        // Suppression de la table LIAISON
+        String sql = "DROP TABLE IF EXISTS UNIVERSITE;";
+
+        conn.statement.executeUpdate(sql);
+
+        sql = "CREATE TABLE UNIVERSITE " +
+                "(IDUNIVERSITE NUMBER PRIMARY KEY," +
+                "UNIVERSITE TEXT NOT NULL)";
+
+        // Création de la table UNIVERSITE
+        conn.statement.executeUpdate(sql);
+        // TODO voir avec Vincent pour les données
+        sql = "Insert into UNIVERSITE values ( 1, 'Paul Sabatier')";
+        conn.statement.executeUpdate(sql);
+        sql = "Insert into UNIVERSITE values ( 2, 'UT1')";
+        conn.statement.executeUpdate(sql);
+    }
+    
+    
+    /**
+     * Création de la table Accreditations qui stockera tous les Accreditations
+     * @throws SQLException 
+     */
+    private static void initTableAccreditations() throws SQLException{
+        // Suppression de la table LIAISON
+        String sql = "DROP TABLE IF EXISTS ACCREDITATIONS;";
+
+        conn.statement.executeUpdate(sql);
+
+        sql = "CREATE TABLE ACCREDITATIONS " +
+                "(IDUNIVERSITE NUMBER," +
+                "IDDIPLOME NUMBER,"+
+                "PRIMARY KEY(IDUNIVERSITE,IDDIPLOME))";
+
+        // Création de la table ACCREDITATIONS
+        conn.statement.executeUpdate(sql);
+        // TODO voir avec Vincent pour les données
+        sql = "Insert into ACCREDITATIONS values (1, 1)";
+        conn.statement.executeUpdate(sql);
+        sql = "Insert into ACCREDITATIONS values (2, 3)";
+        conn.statement.executeUpdate(sql);
+        sql = "Insert into ACCREDITATIONS values (1, 2)";
+        conn.statement.executeUpdate(sql);
     }
 }

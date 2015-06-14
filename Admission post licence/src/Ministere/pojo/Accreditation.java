@@ -5,17 +5,25 @@
  */
 package Ministere.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author johnny
  */
 public class Accreditation {
     private String universite;
-    private String diplome;
+    private List<String> diplome;
 
-    public Accreditation(String universite, String diplome) {
+    public Accreditation(String universite, List<String> diplome) {
         this.universite = universite;
         this.diplome = diplome;
+    }
+    
+    public Accreditation(String universite){
+        this.universite = universite;
+        this.diplome = new ArrayList<>();
     }
     
     public String getUniversite() {
@@ -26,19 +34,22 @@ public class Accreditation {
         this.universite = universite;
     }
 
-    public String getDiplome() {
+    public List<String> getDiplome() {
         return diplome;
     }
 
-    public void setDiplome(String diplome) {
+    public void setDiplome(List<String> diplome) {
         this.diplome = diplome;
+    }
+    
+    public void addDiplome(String diplome){
+        this.diplome.add(diplome);
     }
 
     @Override
     public String toString() {
-        return diplome + " - " + universite;
+        return "Accreditation{" + "universite=" + universite + ", diplome=" + diplome + '}';
     }
-    
     
     
 }
