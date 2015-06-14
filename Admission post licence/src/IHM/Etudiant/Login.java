@@ -38,7 +38,7 @@ public class Login extends javax.swing.JFrame {
         String[] test = {};
 
         orb = org.omg.CORBA.ORB.init(test,null);
-        orb.string_to_object("corbaloc:iiop:1.2@192.168.0.28:2001/NameService");
+        orb.string_to_object("corbaloc:iiop:1.2@macbook-pro-de-johnny.home:2001/NameService");
         m = GetObjectCorba.getMinistereCorba(orb);
         
         // Récupération de la liste des rectorats

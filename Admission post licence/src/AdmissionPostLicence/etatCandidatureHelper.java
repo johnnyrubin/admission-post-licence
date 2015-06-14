@@ -43,10 +43,11 @@ public class etatCandidatureHelper
     {
         if (_tc == null) {
             org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-            String []_members = new String[3];
-            _members[0] = "nonValide";
-            _members[1] = "valide";
-            _members[2] = "cloture";
+            String []_members = new String[4];
+            _members[0] = "nonTraite";
+            _members[1] = "nonValide";
+            _members[2] = "valide";
+            _members[3] = "cloture";
             _tc = orb.create_enum_tc(id(),"etatCandidature",_members);
         }
         return _tc;

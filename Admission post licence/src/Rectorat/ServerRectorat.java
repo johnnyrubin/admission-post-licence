@@ -43,7 +43,7 @@ public class ServerRectorat {
             // Création du servant pour la gestion des étudiants
             RectoratImpl rectorat = new RectoratImpl("RectoratToulouse");
             
-            orb.string_to_object("corbaloc:iiop:1.2@192.168.0.28:2001/NameService");
+            orb.string_to_object("corbaloc:iiop:1.2@macbook-pro-de-johnny.home:2001/NameService");
 
             InitDbRectorat.main(args);
             //Import des données de la base

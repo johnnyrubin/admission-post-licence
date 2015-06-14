@@ -4,9 +4,9 @@
 module AdmissionPostLicence
 {
     //Enumération utiles pour les différents choix
-    enum etatCandidature { nonValide, valide, cloture };
-    enum decisionCandidat { ouiDefinitif, ouiMais, nonMais, nonDefinitif };
-    enum decisionMaster { admis, listeAttente, refuser };
+    enum etatCandidature { nonTraite, nonValide, valide, cloture };
+    enum decisionCandidat { nonTraite, ouiDefinitif, ouiMais, nonMais, nonDefinitif };
+    enum decisionMaster { nonTraite, admis, listeAttente, refuser };
 
     // Structure contenant les résultats d'un semestre
     struct resultat {

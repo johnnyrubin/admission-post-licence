@@ -8,9 +8,19 @@ package AdmissionPostLicence;
 public final class decisionMaster implements org.omg.CORBA.portable.IDLEntity
 {
     /**
+     * Enum member nonTraite value 
+     */
+    public static final int _nonTraite = 0;
+
+    /**
+     * Enum member nonTraite
+     */
+    public static final decisionMaster nonTraite = new decisionMaster(_nonTraite);
+
+    /**
      * Enum member admis value 
      */
-    public static final int _admis = 0;
+    public static final int _admis = 1;
 
     /**
      * Enum member admis
@@ -20,7 +30,7 @@ public final class decisionMaster implements org.omg.CORBA.portable.IDLEntity
     /**
      * Enum member listeAttente value 
      */
-    public static final int _listeAttente = 1;
+    public static final int _listeAttente = 2;
 
     /**
      * Enum member listeAttente
@@ -30,7 +40,7 @@ public final class decisionMaster implements org.omg.CORBA.portable.IDLEntity
     /**
      * Enum member refuser value 
      */
-    public static final int _refuser = 2;
+    public static final int _refuser = 3;
 
     /**
      * Enum member refuser
@@ -79,10 +89,12 @@ public final class decisionMaster implements org.omg.CORBA.portable.IDLEntity
         switch (value)
         {
         case 0 :
-            return admis;
+            return nonTraite;
         case 1 :
-            return listeAttente;
+            return admis;
         case 2 :
+            return listeAttente;
+        case 3 :
             return refuser;
         }
         throw new org.omg.CORBA.BAD_OPERATION();
@@ -97,10 +109,12 @@ public final class decisionMaster implements org.omg.CORBA.portable.IDLEntity
         switch (_decisionMaster_value)
         {
         case 0 :
-            return "admis";
+            return "nonTraite";
         case 1 :
-            return "listeAttente";
+            return "admis";
         case 2 :
+            return "listeAttente";
+        case 3 :
             return "refuser";
         }
         throw new org.omg.CORBA.BAD_OPERATION();

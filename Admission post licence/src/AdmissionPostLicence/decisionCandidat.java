@@ -8,9 +8,19 @@ package AdmissionPostLicence;
 public final class decisionCandidat implements org.omg.CORBA.portable.IDLEntity
 {
     /**
+     * Enum member nonTraite value 
+     */
+    public static final int _nonTraite = 0;
+
+    /**
+     * Enum member nonTraite
+     */
+    public static final decisionCandidat nonTraite = new decisionCandidat(_nonTraite);
+
+    /**
      * Enum member ouiDefinitif value 
      */
-    public static final int _ouiDefinitif = 0;
+    public static final int _ouiDefinitif = 1;
 
     /**
      * Enum member ouiDefinitif
@@ -20,7 +30,7 @@ public final class decisionCandidat implements org.omg.CORBA.portable.IDLEntity
     /**
      * Enum member ouiMais value 
      */
-    public static final int _ouiMais = 1;
+    public static final int _ouiMais = 2;
 
     /**
      * Enum member ouiMais
@@ -30,7 +40,7 @@ public final class decisionCandidat implements org.omg.CORBA.portable.IDLEntity
     /**
      * Enum member nonMais value 
      */
-    public static final int _nonMais = 2;
+    public static final int _nonMais = 3;
 
     /**
      * Enum member nonMais
@@ -40,7 +50,7 @@ public final class decisionCandidat implements org.omg.CORBA.portable.IDLEntity
     /**
      * Enum member nonDefinitif value 
      */
-    public static final int _nonDefinitif = 3;
+    public static final int _nonDefinitif = 4;
 
     /**
      * Enum member nonDefinitif
@@ -89,12 +99,14 @@ public final class decisionCandidat implements org.omg.CORBA.portable.IDLEntity
         switch (value)
         {
         case 0 :
-            return ouiDefinitif;
+            return nonTraite;
         case 1 :
-            return ouiMais;
+            return ouiDefinitif;
         case 2 :
-            return nonMais;
+            return ouiMais;
         case 3 :
+            return nonMais;
+        case 4 :
             return nonDefinitif;
         }
         throw new org.omg.CORBA.BAD_OPERATION();
@@ -109,12 +121,14 @@ public final class decisionCandidat implements org.omg.CORBA.portable.IDLEntity
         switch (_decisionCandidat_value)
         {
         case 0 :
-            return "ouiDefinitif";
+            return "nonTraite";
         case 1 :
-            return "ouiMais";
+            return "ouiDefinitif";
         case 2 :
-            return "nonMais";
+            return "ouiMais";
         case 3 :
+            return "nonMais";
+        case 4 :
             return "nonDefinitif";
         }
         throw new org.omg.CORBA.BAD_OPERATION();

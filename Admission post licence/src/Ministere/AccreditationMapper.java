@@ -8,6 +8,7 @@ package Ministere;
 import AdmissionPostLicence.accreditation;
 import Ministere.pojo.Accreditation;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,7 +24,11 @@ public class AccreditationMapper {
     public static accreditation accreditationToAccredidationCorba(Accreditation a) {
         accreditation ac = null;
         if(a != null) {
-            //ac = new accreditation(a.getUniversite(),a.getDiplome());
+            String[] diplome = new String[a.getDiplome().size()];
+            for(int i=0;i<a.getDiplome().size();i++){
+                diplome[i]=a.getDiplome().get(i);
+            }
+            ac = new accreditation(a.getUniversite(),diplome);
         }
         return ac;
     }
@@ -36,7 +41,10 @@ public class AccreditationMapper {
     public static Accreditation accreditationCorbaToAccredidation(accreditation a) {
         Accreditation ac = null;
         if(a != null) {
-            //ac = new Accreditation(a.universite,a.master);
+            ac = new Accreditation(a.universite);
+            for (String master : a.master) {
+                ac.addDiplome(master);
+            }
         }
         return ac;
     }
@@ -46,7 +54,7 @@ public class AccreditationMapper {
      * @param a
      * @return {@link accreditation[]}
      */
-    public static accreditation[] accreditationsCorbaToListAccredidation(ArrayList<Accreditation> a) {
+    public static accreditation[] accreditationsCorbaToListAccredidation(List<Accreditation> a) {
         accreditation[] as = new accreditation[a.size()];
         if(!a.isEmpty()) {
             for(int i=0;i<a.size();i++){
@@ -59,10 +67,10 @@ public class AccreditationMapper {
      * Convertit les infos du type accredidations de corba vers une liste accreditation
      * 
      * @param a
-     * @return {@link ArrayList<Accreditation>}
+     * @return {@link List<Accreditation>}
      */
-    public static ArrayList<Accreditation> listAccreditationsToAccredidationCorba(accreditation[] a) {
-        ArrayList<Accreditation> as = new ArrayList();
+    public static List<Accreditation> listAccreditationsToAccredidationCorba(accreditation[] a) {
+        List<Accreditation> as = new ArrayList();
         if(a.length!=0){
             for (accreditation a1 : a) {
                 as.add(accreditationCorbaToAccredidation(a1));

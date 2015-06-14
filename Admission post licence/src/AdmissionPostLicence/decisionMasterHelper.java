@@ -43,10 +43,11 @@ public class decisionMasterHelper
     {
         if (_tc == null) {
             org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-            String []_members = new String[3];
-            _members[0] = "admis";
-            _members[1] = "listeAttente";
-            _members[2] = "refuser";
+            String []_members = new String[4];
+            _members[0] = "nonTraite";
+            _members[1] = "admis";
+            _members[2] = "listeAttente";
+            _members[3] = "refuser";
             _tc = orb.create_enum_tc(id(),"decisionMaster",_members);
         }
         return _tc;
