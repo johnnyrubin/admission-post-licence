@@ -124,4 +124,9 @@ public class MasterImpl extends MasterPOA {
     public String universite() {
         return universite;
     }
+
+    @Override
+    public String rectorat() {
+        return rectorat;
+    }
 }

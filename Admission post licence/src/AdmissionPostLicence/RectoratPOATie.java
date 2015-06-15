@@ -79,6 +79,15 @@ public class RectoratPOATie extends RectoratPOA
     }
 
     /**
+     * Operation supprimerCandidature
+     */
+    public void supprimerCandidature(AdmissionPostLicence.candidature c)
+        throws AdmissionPostLicence.CandidatureInconnu
+    {
+        _tie.supprimerCandidature( c);
+    }
+
+    /**
      * Operation recupererCandidaturesMaster
      */
     public AdmissionPostLicence.candidature[] recupererCandidaturesMaster(String master)

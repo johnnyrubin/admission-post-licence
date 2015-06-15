@@ -54,7 +54,7 @@ public class ServerUniversite {
             // Création du servant pour la gestion des étudiants
             GestionEtudiantImpl gestEtu = new GestionEtudiantImpl(nameUniversite, nameRectorat);
             
-            orb.string_to_object("corbaloc:iiop:1.2@macbook-pro-de-johnny.home:2001/NameService");
+            orb.string_to_object("corbaloc:iiop:1.2@dhcp-7-117-72.univ-tlse1.fr:2001/NameService");
             
             // Activer le POA manager
             rootPOA.the_POAManager().activate();

@@ -35,7 +35,6 @@ public class CandidatureDAO {
      */
     public static boolean ajoutCandidature(Candidature c,String nomRectorat){
         int lineAffected=0;
-        int lineAffected2=0;
         try {
             // Connexion à la base de données
             conn = new ConnexionRectorat(nomRectorat+".db");
@@ -43,15 +42,21 @@ public class CandidatureDAO {
             String sql = "Insert into CANDIDATURES values" +
                     "('"+c.getEtu().getIne()+"','"+c.getMaster()+"','"+c.getUniversite()+"',"+c.getOrdre()+
                     ","+c.getEtatCandidature()+","+c.getDecisionCandidat()+","+c.getDecisionMaster()+")";
-            
+            System.out.println(sql);
             // Création de la candidature
             lineAffected=conn.statement.executeUpdate(sql);
-            sql = "Insert into ETUDIANT values" +
-                    "('"+c.getEtu().getIne()+"','"+c.getEtu().getNom()+"','"+c.getEtu().getPrenom()+"','"+c.getEtu().getUniversite()+
-                    "','"+c.getEtu().getLicence()+"')";
+            sql = "select count(*) as tot from ETUDIANT where INE='" + c.getEtu().getIne() + "';";
+            ResultSet rs = conn.statement.executeQuery(sql);
+
+            if(!rs.next()) {
+                sql = "Insert into ETUDIANT values" +
+                        "('"+c.getEtu().getIne()+"','"+c.getEtu().getNom()+"','"+c.getEtu().getPrenom()+"','"+c.getEtu().getUniversite()+
+                        "','"+c.getEtu().getLicence()+"')";
+                System.out.println(sql);
+                // Création de la candidature
+                conn.statement.executeUpdate(sql);
+            }
             
-            // Création de la candidature
-            lineAffected2=conn.statement.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,7 +64,7 @@ public class CandidatureDAO {
             // Fermeture de la connexion
             conn.close();  
         }
-        return (lineAffected!=0 && lineAffected2!=0);
+        return (lineAffected!=0);
     }
     
     public static List<Candidature> getCandidaturesEtudiant(String ine,String nomRectorat){
@@ -77,7 +82,7 @@ public class CandidatureDAO {
                         + "DECISIONMASTER FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "';";
                 ResultSet rs = conn.statement.executeQuery(sql);
 
-                if(rs.next()) {
+                while(rs.next()) {
                     // Traitement du résultat
                     e = new Etudiant();
                     e.setIne(rs.getString("INE"));

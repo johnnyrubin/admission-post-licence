@@ -19,6 +19,12 @@ public interface RectoratOperations
     public void creerCandidature(AdmissionPostLicence.candidature c);
 
     /**
+     * Operation supprimerCandidature
+     */
+    public void supprimerCandidature(AdmissionPostLicence.candidature c)
+        throws AdmissionPostLicence.CandidatureInconnu;
+
+    /**
      * Operation recupererCandidaturesMaster
      */
     public AdmissionPostLicence.candidature[] recupererCandidaturesMaster(String master)

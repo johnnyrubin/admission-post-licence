@@ -107,11 +107,17 @@ public class InitDbUniversite {
         conn.statement.executeUpdate(sql);
 
         sql = "CREATE TABLE MASTER " +
-                "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "(ID INTEGER PRIMARY KEY," +
                 "NOM TEXT NOT NULL)";
 
         // Création de la table MASTER
         conn.statement.executeUpdate(sql);
+        sql="INSERT INTO MASTER values (1,'MIAGE');";
+        conn.statement.executeUpdate(sql);      
+        sql="INSERT INTO MASTER values (2,'Fonda');";
+        conn.statement.executeUpdate(sql);      
+        sql="INSERT INTO MASTER values (3,'Droits');";
+        conn.statement.executeUpdate(sql);     
     }
     
     /**
@@ -126,11 +132,16 @@ public class InitDbUniversite {
         conn.statement.executeUpdate(sql);
 
         sql = "CREATE TABLE LICENCE " +
-                "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "(ID INTEGER PRIMARY KEY," +
                 "NOM TEXT NOT NULL)";
 
         // Création de la table LICENCE
         conn.statement.executeUpdate(sql);
+        sql = "INSERT INTO Licence values (1,'MIAGE');";
+        conn.statement.executeUpdate(sql);
+        sql = "INSERT INTO Licence values (2,'info');";
+        conn.statement.executeUpdate(sql);
+
     }
     
     /**
@@ -150,6 +161,14 @@ public class InitDbUniversite {
                 "PRIMARY KEY (ID_MASTER, ID_LICENCE))";
 
         // Création de la table PREREQUIS
+        conn.statement.executeUpdate(sql);
+        sql = "INSERT INTO PREREQUIS values (1,1);";
+        conn.statement.executeUpdate(sql);
+        sql = "INSERT INTO PREREQUIS values (1,2);";
+        conn.statement.executeUpdate(sql);
+        sql = "INSERT INTO PREREQUIS values (2,1);";
+        conn.statement.executeUpdate(sql);
+        sql = "INSERT INTO PREREQUIS values (2,2);";
         conn.statement.executeUpdate(sql);
     }
     

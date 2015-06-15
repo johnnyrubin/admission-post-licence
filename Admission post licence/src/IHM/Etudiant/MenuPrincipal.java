@@ -101,6 +101,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                              mesCandidatures.add(lesCandidaturesTemp1);
                              jComboBoxAccreditations.addItem(lesCandidaturesTemp1.getMaster() + "-" + lesCandidaturesTemp1.getUniversite());
                              ordreDejaSaisies.add(lesCandidaturesTemp1.getOrdre());
+                             System.out.println("ordre : "+lesCandidaturesTemp1.getOrdre());
                          }
                      }
                 } catch (EtudiantInconnu ex) {
@@ -350,11 +351,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jButtonCandidaterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCandidaterActionPerformed
         if(jComboBoxFormationNouvelleCandidature.getSelectedIndex()!=-1){
-            if(!ordreDejaSaisies.contains(Integer.parseInt(jTextFieldOrdre.getText()))){
+            if(!ordreDejaSaisies.contains(Integer.parseInt(jTextFieldOrdreNouvelleCandidature.getText()))){
                 jLabelErrorNewCandidature.setText(" ");
                 candidature c = new candidature(moi, jComboBoxFormationNouvelleCandidature.getSelectedItem().toString(), 
-                        jComboBoxUniversiteNouvelleCandidature.getSelectedItem().toString(), Short.parseShort(jTextFieldOrdre.getText()), 
+                        jComboBoxUniversiteNouvelleCandidature.getSelectedItem().toString(), Short.parseShort(jTextFieldOrdreNouvelleCandidature.getText()), 
                         etatCandidature.nonTraite, decisionCandidat.nonTraite, decisionMaster.nonTraite);
+                r.creerCandidature(c);
 
             }
             else{

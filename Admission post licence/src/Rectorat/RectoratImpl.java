@@ -52,17 +52,35 @@ public class RectoratImpl extends RectoratPOA{
     @Override
     public void creerCandidature(candidature c) {
         Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
-        // Récupération du rectorat
-        Master m = GetObjectCorba.getMasterCorba(candidature.getMaster(),candidature.getUniversite(),ServerRectorat.orb);
+        // Récupération du master
+        //Master m = GetObjectCorba.getMasterCorba(candidature.getMaster(),candidature.getUniversite(),ServerRectorat.orb);
+        // Récupération de la liste des rectorats
+        Master m=null;
+        boolean trouve=false;
+        for(int i=0;i<lesMasters.size()&&trouve==false;i++) {
+            m = GetObjectCorba.getMasterCorba(lesMasters.get(i), ServerRectorat.orb);
+            if( m != null) {
+                if(m.nom().equals(c.master)){
+                    trouve=true;
+                }
+            }
+        }
+        
         try {
             if(m != null) {
-                //Vérification des pré requis
-                if(m.verifierPrerequis(candidature.getEtu().getLicence())){
-                    //Enregistrer candidature
-                    lesCandidatures.add(candidature);
-                    CandidatureDAO.ajoutCandidature(candidature, this.nom);
-                    //TODO créer resultatCandidature a blanc pour pouvoir mettre en place l'exception
-                }  
+                // Si je suis le rectorat cible, soit le rectorat où le master visé est stocké
+                if(m.rectorat().equals(nom)){
+                    //Vérification des pré requis
+                    if(m.verifierPrerequis(candidature.getEtu().getLicence())){
+                        //Enregistrer candidature
+                        //lesCandidatures.add(candidature);
+                        CandidatureDAO.ajoutCandidature(candidature, this.nom);
+                    }  
+                }
+                else{
+                    Ministere ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
+                    ministere.transfererCandidature(c);
+                }
             }
         } catch (MasterInconnu ex) {
             Logger.getLogger(RectoratImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,6 +278,11 @@ public class RectoratImpl extends RectoratPOA{
             }
         }
         return gestEtu;
+    }
+
+    @Override
+    public void supprimerCandidature(candidature c) throws CandidatureInconnu {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

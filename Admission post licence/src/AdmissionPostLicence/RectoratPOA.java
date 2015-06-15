@@ -53,6 +53,8 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
                     new Operation_recupererCandidaturesEtudiant());
             operationMap.put("recupererCandidaturesMaster",
                     new Operation_recupererCandidaturesMaster());
+            operationMap.put("supprimerCandidature",
+                    new Operation_supprimerCandidature());
     }
 
     public final org.omg.CORBA.portable.OutputStream _invoke(final String opName,
@@ -90,6 +92,27 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
 
         _output = handler.createReply();
 
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_supprimerCandidature(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        AdmissionPostLicence.candidature arg0_in = AdmissionPostLicence.candidatureHelper.read(_is);
+
+        try
+        {
+            supprimerCandidature(arg0_in);
+
+            _output = handler.createReply();
+
+        }
+        catch (AdmissionPostLicence.CandidatureInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            AdmissionPostLicence.CandidatureInconnuHelper.write(_output,_exception);
+        }
         return _output;
     }
 
@@ -264,6 +287,16 @@ public abstract class RectoratPOA extends org.omg.PortableServer.Servant
                 final org.omg.CORBA.portable.InputStream _is,
                 final org.omg.CORBA.portable.ResponseHandler handler) {
             return target._invoke_creerCandidature(_is, handler);
+        }
+    }
+
+    private static final class Operation_supprimerCandidature extends AbstractOperation
+    {
+        protected org.omg.CORBA.portable.OutputStream invoke(
+                final RectoratPOA target,
+                final org.omg.CORBA.portable.InputStream _is,
+                final org.omg.CORBA.portable.ResponseHandler handler) {
+            return target._invoke_supprimerCandidature(_is, handler);
         }
     }
 
