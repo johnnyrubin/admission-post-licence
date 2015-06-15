@@ -73,9 +73,9 @@ public class MinisterePOATie extends MinisterePOA
     /**
      * Operation transfererCandidature
      */
-    public void transfererCandidature(AdmissionPostLicence.candidature c)
+    public void transfererCandidature(AdmissionPostLicence.candidature c, String decision)
     {
-        _tie.transfererCandidature( c);
+        _tie.transfererCandidature( c,  decision);
     }
 
     /**

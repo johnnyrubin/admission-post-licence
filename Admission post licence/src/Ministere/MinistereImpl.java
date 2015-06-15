@@ -6,7 +6,6 @@ import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
 import Ministere.database.AccreditationDAO;
-import Ministere.pojo.Accreditation;
 import Util.GetObjectCorba;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +17,6 @@ import java.util.logging.Logger;
  * @author Teddy
  */
 public class MinistereImpl extends MinisterePOA{
-    //Liste des accreditations
-    //private ArrayList<Accreditation> mesAccreditations;
     //Liste qui permet de savoir à quel rectorat appartient une université, la clé est l'université
     //et la valeur le rectorat
     private HashMap<String,String> lesLiaisons;
@@ -29,10 +26,6 @@ public class MinistereImpl extends MinisterePOA{
     public void setLesLiaisons(HashMap<String, String> lesLiaisons) {
         this.lesLiaisons = lesLiaisons;
     }
-
-    /*public void setMesAccreditations(ArrayList<Accreditation> mesAccredidations) {
-        this.mesAccreditations = mesAccredidations;
-    }*/
     
     @Override
     public accreditation[] recupererAccreditations() {
@@ -40,12 +33,44 @@ public class MinistereImpl extends MinisterePOA{
     }
 
     @Override
-    public void transfererCandidature(candidature c) {
+    public void transfererCandidature(candidature c, String action) {
         //L'orientation de transfert se fait à partir des variables universite et master qui se trouvent
         //dans la candidature
         //on récupère donc le rectorat
-        Rectorat r = GetObjectCorba.getRectoratCorba(lesLiaisons.get(c.universite),ServerMinistere.orb);
-        r.creerCandidature(c);
+        //Rectorat r = GetObjectCorba.getRectoratCorba(lesLiaisons.get(c.universite),ServerMinistere.orb);
+        Rectorat r=null;
+        boolean trouve=false;
+        for(int i=0;i<lesRectorats.size()&&trouve==false;i++) {
+            r = GetObjectCorba.getRectoratCorba(ServerMinistere.orb, lesRectorats.get(i));
+            if( r != null) {
+                for(String universite : r.getListeUniversite()){
+                    if(universite.equals(c.universite)){
+                        trouve=true;
+                    }
+                }
+            }
+        }
+        switch(action){
+            case "creerCandidature":
+                r.creerCandidature(c);
+                break;
+            case "modifierCandidature":
+                try {
+                    r.modifierCandidature(c);
+                } catch (CandidatureInconnu ex) {
+                    Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "supprimerCandidature":
+                try {
+                    r.supprimerCandidature(c);
+                } catch (CandidatureInconnu ex) {
+                    Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            default:
+                break;
+        } 
     }
 
     @Override
@@ -89,35 +114,5 @@ public class MinistereImpl extends MinisterePOA{
         lesRectorats.add(ior);
         System.out.println("Méthode MinistereImpl.enregistrerRectorat : Fin");
     }
-    
-    /**
-     * Permet de récupérer l'objet CORBA du rectorat
-     * 
-     * @return {@link Rectorat}
-     */
-    /*private Rectorat getRectoratCorba(String nomRectorat) {
-        // Initialisation de la variable de retour
-        Rectorat r = null;
-        try {
-            
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(ServerMinistere.orb.resolve_initial_references("NameService"));
-            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-            
-            // On récupère le rectorat
-            nameToFind[0] = new org.omg.CosNaming.NameComponent(nomRectorat, "");
-            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
-            r = RectoratHelper.narrow(remoteRef);
-            
-        } catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
-            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotFound ex) {
-            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CannotProceed ex) {
-            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidName ex) {
-            Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return r;
-    }*/
     
 }

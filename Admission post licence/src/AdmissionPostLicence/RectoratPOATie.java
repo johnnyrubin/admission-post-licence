@@ -108,10 +108,10 @@ public class RectoratPOATie extends RectoratPOA
     /**
      * Operation modifierCandidature
      */
-    public void modifierCandidature(AdmissionPostLicence.candidature candidature)
+    public void modifierCandidature(AdmissionPostLicence.candidature c)
         throws AdmissionPostLicence.CandidatureInconnu
     {
-        _tie.modifierCandidature( candidature);
+        _tie.modifierCandidature( c);
     }
 
     /**

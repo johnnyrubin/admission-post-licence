@@ -67,8 +67,9 @@ public abstract class MinisterePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         AdmissionPostLicence.candidature arg0_in = AdmissionPostLicence.candidatureHelper.read(_is);
+        String arg1_in = _is.read_string();
 
-        transfererCandidature(arg0_in);
+        transfererCandidature(arg0_in, arg1_in);
 
         _output = handler.createReply();
 

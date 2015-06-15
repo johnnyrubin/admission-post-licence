@@ -39,7 +39,7 @@ public interface RectoratOperations
     /**
      * Operation modifierCandidature
      */
-    public void modifierCandidature(AdmissionPostLicence.candidature candidature)
+    public void modifierCandidature(AdmissionPostLicence.candidature c)
         throws AdmissionPostLicence.CandidatureInconnu;
 
     /**

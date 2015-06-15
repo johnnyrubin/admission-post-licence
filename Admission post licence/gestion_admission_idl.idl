@@ -133,7 +133,7 @@ module AdmissionPostLicence
         candidatures recupererCandidaturesEtudiant(in identite etudiant) raises (EtudiantInconnu);
 
         // Permet de modifier l’état d'une candidature
-        void modifierCandidature(in candidature candidature) raises (CandidatureInconnu); 
+        void modifierCandidature(in candidature c) raises (CandidatureInconnu); 
 
         // Liste qui contient tous les gestions étudiantes du rectorat
         gestionEtudiants getListeGestEtu();
@@ -163,7 +163,7 @@ module AdmissionPostLicence
         accreditations recupererAccreditations();
 
         // Transfere une candidature d’un rectorat à un autre
-        void transfererCandidature(in candidature c);
+        void transfererCandidature(in candidature c, in string decision);
 
         // Transfere la décision d’un candidat vers un autre rectorat
         void transfererDecision(in candidature r) raises (CandidatureInconnu); 

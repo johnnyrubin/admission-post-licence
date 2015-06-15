@@ -54,36 +54,38 @@ public class RectoratImpl extends RectoratPOA{
         Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
         // Récupération du master
         //Master m = GetObjectCorba.getMasterCorba(candidature.getMaster(),candidature.getUniversite(),ServerRectorat.orb);
-        // Récupération de la liste des rectorats
-        Master m=null;
-        boolean trouve=false;
-        for(int i=0;i<lesMasters.size()&&trouve==false;i++) {
-            m = GetObjectCorba.getMasterCorba(lesMasters.get(i), ServerRectorat.orb);
-            if( m != null) {
-                if(m.nom().equals(c.master)){
-                    trouve=true;
-                }
-            }
-        }
         
-        try {
-            if(m != null) {
-                // Si je suis le rectorat cible, soit le rectorat où le master visé est stocké
-                if(m.rectorat().equals(nom)){
-                    //Vérification des pré requis
-                    if(m.verifierPrerequis(candidature.getEtu().getLicence())){
-                        //Enregistrer candidature
-                        //lesCandidatures.add(candidature);
-                        CandidatureDAO.ajoutCandidature(candidature, this.nom);
-                    }  
+        //Je regarde si l'université cible fait partit de ma liste d'université
+        for(String universite : lesUniversites){
+            if(universite.equals(c.universite)){
+                // Récupération de la liste des masters
+                Master m=null;
+                boolean trouve=false;
+                for(int i=0;i<lesMasters.size()&&trouve==false;i++) {
+                    m = GetObjectCorba.getMasterCorba(lesMasters.get(i), ServerRectorat.orb);
+                    if( m != null) {
+                        if(m.nom().equals(c.master)){
+                            trouve=true;
+                        }
+                    }
                 }
-                else{
-                    Ministere ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
-                    ministere.transfererCandidature(c);
+                try {
+                    if(m != null) {
+                        //Vérification des pré requis
+                        if(m.verifierPrerequis(candidature.getEtu().getLicence())){
+                            //Enregistrer candidature
+                            //lesCandidatures.add(candidature);
+                            CandidatureDAO.ajoutCandidature(candidature, this.nom);
+                        }  
+                    }
+                } catch (MasterInconnu ex) {
+                    Logger.getLogger(RectoratImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } catch (MasterInconnu ex) {
-            Logger.getLogger(RectoratImpl.class.getName()).log(Level.SEVERE, null, ex);
+            else{
+                Ministere ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
+                ministere.transfererCandidature(c,"creerCandidature");
+            }
         }
     }
 
@@ -111,55 +113,35 @@ public class RectoratImpl extends RectoratPOA{
     }
 
     @Override
-    public void modifierCandidature(candidature candidature) throws CandidatureInconnu {
-        boolean trouve=false;
-        for(int i=0;i<lesCandidatures.size()&&!trouve;i++){
-            //Si je rentre dans le if c'est que j'ai trouvé le resultatCandidature
-            if(lesCandidatures.get(i).getEtu().getIne().equals(candidature.etudiant.ine) && 
-                    lesCandidatures.get(i).getMaster().equals(candidature.master)){
-                //Je le modifie alors
-                lesCandidatures.set(i, CandidatureMapper.candidatureCorbaToCandidature(candidature));
-                trouve=true;
+    public void modifierCandidature(candidature c) throws CandidatureInconnu {
+        Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
+        // Récupération du master
+        //Master m = GetObjectCorba.getMasterCorba(candidature.getMaster(),candidature.getUniversite(),ServerRectorat.orb);
+        
+        //Je regarde si l'université cible fait partit de ma liste d'université
+        for(String universite : lesUniversites){
+            if(universite.equals(c.universite)){
+                // Récupération de la liste des masters
+                Master m=null;
+                boolean trouve=false;
+                for(int i=0;i<lesMasters.size()&&trouve==false;i++) {
+                    m = GetObjectCorba.getMasterCorba(lesMasters.get(i), ServerRectorat.orb);
+                    if( m != null) {
+                        if(m.nom().equals(c.master)){
+                            trouve=true;
+                        }
+                    }
+                }
+                if(m != null) {
+                    CandidatureDAO.modifierCandidature(candidature, this.nom);
+                }
+            }
+            else{
+                Ministere ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
+                ministere.transfererCandidature(c,"modifierCandidature");
             }
         }
-        //Si on a pas trouvé la candidature alors on l'ajoute
-        /*if(!trouve){
-            lesResultatsCandidatures.add(CandidatureMapper.resultatCandidatureCorbaToResultatCandidature(candidature));
-        }*/
     }
-    
-    /*private Master getMasterCorba(String master) {
-        // Initialisation de la variable de retour
-        Master r = null;
-        
-        try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(ServerRectorat.orb.resolve_initial_references("NameService"));
-            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-            
-            // On récupère le rectorat
-            nameToFind[0] = new org.omg.CosNaming.NameComponent(master, "");
-            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
-            r = MasterHelper.narrow(remoteRef);
-            
-            return r;
-        } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
-            Logger.getLogger(RectoratImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return r;
-    }*/
-    
-    /*private candidature searchCandidature(candidature c){
-        candidature rc = null;
-        for(int i=0;i<lesResultatsCandidatures.size();i++){
-            //Si je rentre dans le if c'est que j'ai trouvé le resultatCandidature
-            if(lesResultatsCandidatures.get(i).getCandidature().getEtu().getIne().equals(c.etudiant.ine) && 
-               lesResultatsCandidatures.get(i).getCandidature().getMaster().equals(c.master)){
-                rc=CandidatureMapper.candidatureToCandidatureCorba(lesResultatsCandidatures.get(i));
-            }
-        }
-        return rc;
-    }*/
     
     /**
      * Ajoute la nouvelle valeur dans le tableau
@@ -177,23 +159,6 @@ public class RectoratImpl extends RectoratPOA{
         
         return newArray;
     }
-    
-    /**
-     * Ajoute la nouvelle valeur dans le tableau
-     * @param oldArray
-     * @param newValue
-     * @return 
-     */
-    /*private resultatCandidature[] addResultatCandidature(resultatCandidature[] oldArray,resultatCandidature newValue){
-        //define the new array
-        resultatCandidature[] newArray = new resultatCandidature[oldArray.length + 1];
-        //copy values into new array
-        System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
-        //add new value to the new array
-        newArray[newArray.length-1] = newValue;
-        
-        return newArray;
-    }*/
 
     @Override
     public String nom() {
@@ -224,11 +189,6 @@ public class RectoratImpl extends RectoratPOA{
         if(!lesMasters.contains(ior)){
             lesMasters.add(ior);
         }
-        
-        // Récupération de l'objet master
-        /*Master m = GetObjectCorba.getMasterCorba(ior, ServerRectorat.orb);
-        
-        lesUniversites.add(m.universite());*/
     }
 
     @Override
@@ -282,7 +242,30 @@ public class RectoratImpl extends RectoratPOA{
 
     @Override
     public void supprimerCandidature(candidature c) throws CandidatureInconnu {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
+
+        //Je regarde si l'université cible fait partit de ma liste d'université
+        for(String universite : lesUniversites){
+            if(universite.equals(c.universite)){
+                // Récupération de la liste des masters
+                Master m=null;
+                boolean trouve=false;
+                for(int i=0;i<lesMasters.size()&&trouve==false;i++) {
+                    m = GetObjectCorba.getMasterCorba(lesMasters.get(i), ServerRectorat.orb);
+                    if( m != null) {
+                        if(m.nom().equals(c.master)){
+                            trouve=true;
+                        }
+                    }
+                }
+                if(m != null) {
+                    CandidatureDAO.supprimerCandidature(candidature, this.nom);
+                }
+            }
+            else{
+                Ministere ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
+                ministere.transfererCandidature(c,"supprimerCandidature");
+            }
+        }    }
     
 }

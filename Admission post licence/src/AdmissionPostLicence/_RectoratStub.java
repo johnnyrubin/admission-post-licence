@@ -283,7 +283,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierCandidature
      */
-    public void modifierCandidature(AdmissionPostLicence.candidature candidature)
+    public void modifierCandidature(AdmissionPostLicence.candidature c)
         throws AdmissionPostLicence.CandidatureInconnu
     {
         while(true)
@@ -294,7 +294,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("modifierCandidature",true);
-                    AdmissionPostLicence.candidatureHelper.write(_output,candidature);
+                    AdmissionPostLicence.candidatureHelper.write(_output,c);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -325,7 +325,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.RectoratOperations _self = (AdmissionPostLicence.RectoratOperations) _so.servant;
                 try
                 {
-                    _self.modifierCandidature( candidature);
+                    _self.modifierCandidature( c);
                     return;
                 }
                 finally

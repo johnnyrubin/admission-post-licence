@@ -86,36 +86,4 @@ public class CandidatureMapper {
         return cs;
     }
     
-    /**
-     * Convertit les infos de l'objet ResultatCandidature vers son type resultatcandidature utilisé par corba
-     * 
-     * @param rc
-     * @return {@link resultatCandidature}
-     */
-    /*public static resultatCandidature resultatCandidatureToResultatCandidatureCorba(ResultatCandidature rc) {
-        resultatCandidature rca = null;
-        if(rc != null) {
-            rca = new resultatCandidature(CandidatureMapper.candidatureToCandidatureCorba(rc.getCandidature()),
-                    etatCandidature.from_int(rc.getEtatCandidature()), decisionCandidat.from_int(rc.getDecisionCandidat()),
-                    decisionMaster.from_int(rc.getDecisionMaster()));
-        }       
-        return rca;
-    }*/
-    
-    /**
-     * Convertit les infos de type resultatcandidature utilisé par corba vers l'objet ResultatCandidature
-     * 
-     * @param rc
-     * @return {@link ResultatCandidature}
-     */
-    /*public static ResultatCandidature resultatCandidatureCorbaToResultatCandidature(resultatCandidature rc) {
-        ResultatCandidature rca = null;
-        if(rc != null) {
-            rca = new ResultatCandidature(CandidatureMapper.candidatureCorbaToCandidature(rc.c),
-                    rc.etat.value(), rc.decisionC.value(),
-                    rc.decisionM.value());
-        }       
-        return rca;
-    }*/
-    
 }

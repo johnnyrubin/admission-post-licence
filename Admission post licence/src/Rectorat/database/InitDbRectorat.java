@@ -6,8 +6,6 @@
 
 package Rectorat.database;
 
-import Rectorat.pojo.Candidature;
-import Universite.pojo.Etudiant;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;

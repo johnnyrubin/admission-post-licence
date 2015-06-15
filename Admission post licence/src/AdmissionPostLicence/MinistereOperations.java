@@ -15,7 +15,7 @@ public interface MinistereOperations
     /**
      * Operation transfererCandidature
      */
-    public void transfererCandidature(AdmissionPostLicence.candidature c);
+    public void transfererCandidature(AdmissionPostLicence.candidature c, String decision);
 
     /**
      * Operation transfererDecision

@@ -72,7 +72,7 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation transfererCandidature
      */
-    public void transfererCandidature(AdmissionPostLicence.candidature c)
+    public void transfererCandidature(AdmissionPostLicence.candidature c, String decision)
     {
         while(true)
         {
@@ -83,6 +83,7 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("transfererCandidature",true);
                     AdmissionPostLicence.candidatureHelper.write(_output,c);
+                    _output.write_string(decision);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -108,7 +109,7 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.MinistereOperations _self = (AdmissionPostLicence.MinistereOperations) _so.servant;
                 try
                 {
-                    _self.transfererCandidature( c);
+                    _self.transfererCandidature( c,  decision);
                     return;
                 }
                 finally

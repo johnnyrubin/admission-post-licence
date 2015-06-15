@@ -5,12 +5,8 @@
  */
 package Rectorat.database;
 
-import AdmissionPostLicence.candidature;
-import Rectorat.ServerRectorat;
 import Rectorat.pojo.Candidature;
-import Universite.GestionEtudiant.EtudiantMapper;
 import Universite.pojo.Etudiant;
-import Util.GetObjectCorba;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -105,39 +101,35 @@ public class CandidatureDAO {
         return lesCandidatures;
     }
     
-    /*public static candidature[] importCandidatures(String nomRectorat){
-        candidature[] candidatures=new candidature[0];
-        // Connexion à la base de données
-        conn = new ConnexionRectorat(nomRectorat+".db");
-        conn.connect();
-        String sql = "select count(*) from candidatures";
-        int compteur=0;
+    public static void modifierCandidature(Candidature c,String nomRectorat){
         try {
-            ResultSet rs = conn.statement.executeQuery(sql);
-            rs.next();
-            //récupération du premier resultat, soit le count
-            int nb = (int)rs.getObject(0);
-            //Initialisation du tableau avec le nombre de candidatures dans la table
-            candidatures=new candidature[nb];
-            //maintenant on récupère à proprement dit les datas
-            sql = "select * from candidatures";
-            rs = conn.statement.executeQuery(sql);
-            while(rs.next()){
-                String INE = rs.getString("INE");
-                String IDMASTER = rs.getString("IDMASTER");
-                String UNIVERSITE = rs.getString("UNIVERSITE");
-                short ordre = (short)rs.getInt("ORDRE");
-                //on ajoute au tableau des candidature, la candidature récupérée
-                candidatures[compteur]=new candidature(EtudiantMapper.etudiantToIdentiteCorba(GetObjectCorba.getEtudiant("UniversitePaulSab", INE, ServerRectorat.orb)),
-                        IDMASTER,UNIVERSITE,ordre);
-            }
+            // Connexion à la base de données
+            conn = new ConnexionRectorat(nomRectorat+".db");
+            conn.connect();
+            String sql = "update CANDIDATURES set UNIVERSITE='"+c.getUniversite()+"', ORDRE="+c.getOrdre()+
+                    ", Etat="+c.getEtatCandidature()+", DecisionCandidat="+c.getDecisionCandidat()+", DecisionMaster="+c.getDecisionMaster()+
+                    " where INE='"+c.getEtu().getIne()+"' AND IDMASTER='"+c.getMaster()+"';";
+            System.out.println(sql);
+            // Création de la candidature
+            conn.statement.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        finally{
-            // Fermeture de la connexion
-            conn.close();  
+            
+    }
+    
+    public static void supprimerCandidature(Candidature c,String nomRectorat){
+        try {
+            // Connexion à la base de données
+            conn = new ConnexionRectorat(nomRectorat+".db");
+            conn.connect();
+            String sql = "delete from CANDIDATURES where INE='"+c.getEtu().getIne()+"' AND IDMASTER='"+c.getMaster()+"';";
+            System.out.println(sql);
+            // Création de la candidature
+            conn.statement.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return candidatures;
-    }*/
+            
+    }
 }
