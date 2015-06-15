@@ -50,11 +50,6 @@ public class ServerMinistere {
 
             // Création du servant pour le ministere
             MinistereImpl ministere = new MinistereImpl();
-            /*ArrayList<Accreditation> mesAccreditations=new ArrayList();
-            mesAccreditations.add(new Accreditation("Paul Sabatier","MIAGE"));
-            mesAccreditations.add(new Accreditation("Paul Sabatier","Fonda"));
-            mesAccreditations.add(new Accreditation("UT1","Droits"));
-            ministere.setMesAccreditations(mesAccreditations);*/
 
             // Activer le servant au sein du POA et récupérer son ID
             // byte[] ToulouseId = rootPOA.activate_object(Toulouse);

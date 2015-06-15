@@ -5,6 +5,7 @@ import AdmissionPostLicence.MinisterePOA;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
+import AdmissionPostLicence.periode;
 import Ministere.database.AccreditationDAO;
 import Util.GetObjectCorba;
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ public class MinistereImpl extends MinisterePOA{
     private HashMap<String,String> lesLiaisons;
     //Liste des rectorats
     private ArrayList<String> lesRectorats = new ArrayList<String>();
+    
+    // Periode en cours
+    private periode periodeEnCours;
 
     public void setLesLiaisons(HashMap<String, String> lesLiaisons) {
         this.lesLiaisons = lesLiaisons;
@@ -113,6 +117,16 @@ public class MinistereImpl extends MinisterePOA{
         System.out.println("Méthode MinistereImpl.enregistrerRectorat : Début");
         lesRectorats.add(ior);
         System.out.println("Méthode MinistereImpl.enregistrerRectorat : Fin");
+    }
+
+    @Override
+    public periode periodeEnCours() {
+        return periodeEnCours;
+    }
+
+    @Override
+    public void periodeEnCours(periode value) {
+        periodeEnCours = value;
     }
     
 }

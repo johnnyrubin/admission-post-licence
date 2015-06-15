@@ -4,7 +4,6 @@ import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Ministere;
-import AdmissionPostLicence.MinistereHelper;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
@@ -35,11 +34,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private final Ministere m;
     private final Rectorat r;
     private final identite moi;
-    private boolean panelChoixVisible = false;
-    private List<Candidature> mesCandidatures = new ArrayList<>();
+    private final boolean panelChoixVisible = false;
+    private final List<Candidature> mesCandidatures = new ArrayList<>();
     HashMap<String, Accreditation> lesAccreditations = new HashMap<>();
     private int nombreDeVoeux=0;
-    private List<Integer> ordreDejaSaisies = new ArrayList<>();
+    private final List<Integer> ordreDejaSaisies = new ArrayList<>();
     
     /**
      * Creates new form MenuPrincipal
@@ -399,7 +398,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
     private void jTextFieldEtatCandidatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEtatCandidatureActionPerformed

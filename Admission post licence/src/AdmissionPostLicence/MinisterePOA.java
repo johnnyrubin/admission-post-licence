@@ -33,7 +33,11 @@ public abstract class MinisterePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler)
     {
 
-        if (opName.equals("enregistrerRectorat")) {
+        if (opName.equals("_get_periodeEnCours")) {
+                return _invoke__get_periodeEnCours(_is, handler);
+        } else if (opName.equals("_set_periodeEnCours")) {
+                return _invoke__set_periodeEnCours(_is, handler);
+        } else if (opName.equals("enregistrerRectorat")) {
                 return _invoke_enregistrerRectorat(_is, handler);
         } else if (opName.equals("getListeRectorat")) {
                 return _invoke_getListeRectorat(_is, handler);
@@ -49,6 +53,27 @@ public abstract class MinisterePOA extends org.omg.PortableServer.Servant
     }
 
     // helper methods
+    private org.omg.CORBA.portable.OutputStream _invoke__get_periodeEnCours(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        AdmissionPostLicence.periode arg = periodeEnCours();
+        _output = handler.createReply();
+        AdmissionPostLicence.periodeHelper.write(_output,arg);
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke__set_periodeEnCours(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        AdmissionPostLicence.periode result = AdmissionPostLicence.periodeHelper.read(_is);
+
+        periodeEnCours(result);
+        _output = handler.createReply();
+        return _output;
+    }
+
     private org.omg.CORBA.portable.OutputStream _invoke_recupererAccreditations(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {

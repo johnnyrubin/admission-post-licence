@@ -8,6 +8,18 @@ package AdmissionPostLicence;
 public interface MinistereOperations
 {
     /**
+     * Read accessor for periodeEnCours attribute
+     * @return the attribute value
+     */
+    public AdmissionPostLicence.periode periodeEnCours();
+
+    /**
+     * Write accessor for periodeEnCours attribute
+     * @param value the attribute value
+     */
+    public void periodeEnCours(AdmissionPostLicence.periode value);
+
+    /**
      * Operation recupererAccreditations
      */
     public AdmissionPostLicence.accreditation[] recupererAccreditations();

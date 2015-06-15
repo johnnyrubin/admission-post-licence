@@ -7,6 +7,7 @@ module AdmissionPostLicence
     enum etatCandidature { nonTraite, nonValide, valide, cloture };
     enum decisionCandidat { nonTraite, ouiDefinitif, ouiMais, nonMais, nonDefinitif };
     enum decisionMaster { nonTraite, admis, listeAttente, refuser };
+    enum periode { periode1, periode2, periode3, periode4 };
 
     // Structure contenant les résultats d'un semestre
     struct resultat {
@@ -159,6 +160,9 @@ module AdmissionPostLicence
 
     interface Ministere
     {
+    	// La période en cours pour le processus de candidature
+    	attribute periode periodeEnCours;
+    	
         // Fourni la liste des accréditations (sert de référentiel aux étudiants)
         accreditations recupererAccreditations();
 
@@ -173,6 +177,7 @@ module AdmissionPostLicence
 
         // Fonction qui permet d'enregistrer un rectorat auprès du ministère
         void enregistrerRectorat(in string ior);
+
     };
 };
 

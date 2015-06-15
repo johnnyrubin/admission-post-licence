@@ -21,6 +21,92 @@ public class _MinistereStub extends org.omg.CORBA.portable.ObjectImpl
     private final static Class _opsClass = AdmissionPostLicence.MinistereOperations.class;
 
     /**
+     * Read accessor for periodeEnCours attribute
+     * @return the attribute value
+     */
+    public AdmissionPostLicence.periode periodeEnCours()
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("_get_periodeEnCours",true);
+                    _input = this._invoke(_output);
+                    return AdmissionPostLicence.periodeHelper.read(_input);
+                } catch (final org.omg.CORBA.portable.RemarshalException _exception) {
+                    continue;
+                } catch (final org.omg.CORBA.portable.ApplicationException _exception) {
+                    final String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                } finally {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("_get_periodeEnCours",_opsClass);
+                if (_so == null)
+                   continue;
+                AdmissionPostLicence.MinistereOperations _self = (AdmissionPostLicence.MinistereOperations) _so.servant;
+                try
+                {
+                    return _self.periodeEnCours();
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Write accessor for periodeEnCours attribute
+     * @param value the attribute value
+     */
+    public void periodeEnCours(AdmissionPostLicence.periode value)
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                    org.omg.CORBA.portable.InputStream _input = null;
+                try {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("_set_periodeEnCours",true);
+                    AdmissionPostLicence.periodeHelper.write(_output,value);
+                    _input = this._invoke(_output);
+                    return;
+                } catch (final org.omg.CORBA.portable.RemarshalException _exception) {
+                    continue;
+                } catch (final org.omg.CORBA.portable.ApplicationException _exception) {
+                    String _exception_id = _exception.getId();
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                } finally {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("_set_periodeEnCours",_opsClass);
+                if (_so == null)
+                   continue;
+                AdmissionPostLicence.MinistereOperations _self = (AdmissionPostLicence.MinistereOperations) _so.servant;
+                try
+                {
+                    _self.periodeEnCours(value);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
      * Operation recupererAccreditations
      */
     public AdmissionPostLicence.accreditation[] recupererAccreditations()

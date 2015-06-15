@@ -63,6 +63,22 @@ public class MinisterePOATie extends MinisterePOA
     }
 
     /**
+     * Read accessor for periodeEnCours attribute
+     */
+    public AdmissionPostLicence.periode periodeEnCours()
+    {
+        return _tie.periodeEnCours();
+    }
+
+    /**
+     * Write accessor for periodeEnCours attribute
+     */
+    public void periodeEnCours(AdmissionPostLicence.periode value)
+    {
+        _tie.periodeEnCours(value);
+    }
+
+    /**
      * Operation recupererAccreditations
      */
     public AdmissionPostLicence.accreditation[] recupererAccreditations()
