@@ -105,7 +105,7 @@ module AdmissionPostLicence
         candidatures consulterEtatCandidatures();
 
         // Modifie la décision d’une formation sur une candidature
-        void modifierDecision(in candidature c, in decisionMaster dm) raises (CandidatureInconnu);
+        void modifierDecision(in candidature c) raises (CandidatureInconnu);
 
         // Vérifie que la licence soit compatible avec le master
         boolean verifierPrerequis(in string licence) raises (MasterInconnu);

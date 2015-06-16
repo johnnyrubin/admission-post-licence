@@ -5,7 +5,6 @@ import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.MasterPOA;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.candidature;
-import AdmissionPostLicence.decisionMaster;
 import Universite.ServerUniversite;
 import Universite.database.MasterDAO;
 import Universite.pojo.Master;
@@ -40,7 +39,7 @@ public class MasterImpl extends MasterPOA {
     }
 
     @Override
-    public void modifierDecision(candidature c, decisionMaster dm) {
+    public void modifierDecision(candidature c) {
         
         System.out.println("Appel de la méthode MasterImpl.modifierDecision");
         
@@ -49,7 +48,7 @@ public class MasterImpl extends MasterPOA {
         
         if(r != null) {
             // Création de l'obet resultatCandidature
-            candidature res = new candidature(c.etudiant, c.master, c.universite, c.ordre, c.etat, c.decisionC, dm);
+            candidature res = new candidature(c.etudiant, c.master, c.universite, c.ordre, c.etat, c.decisionC, c.decisionM);
             
             try {
                 // On transmet la décision du responsable au rectorat

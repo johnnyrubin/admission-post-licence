@@ -4,7 +4,6 @@ import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Master;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.candidature;
-import AdmissionPostLicence.identite;
 import Util.GetObjectCorba;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -72,9 +71,6 @@ public class MainWindow extends javax.swing.JFrame {
         masterComboBox = new javax.swing.JComboBox();
         afficherButton = new javax.swing.JButton();
         errorLabel = new javax.swing.JLabel();
-        bottomPanel = new javax.swing.JPanel();
-        validerButton = new javax.swing.JButton();
-        annulerButton = new javax.swing.JButton();
         centerScrollPane = new javax.swing.JScrollPane();
         candidaturesPanel = new javax.swing.JPanel();
 
@@ -126,33 +122,6 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        bottomPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        validerButton.setText("Valider");
-
-        annulerButton.setText("Annuler");
-
-        javax.swing.GroupLayout bottomPanelLayout = new javax.swing.GroupLayout(bottomPanel);
-        bottomPanel.setLayout(bottomPanelLayout);
-        bottomPanelLayout.setHorizontalGroup(
-            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(annulerButton)
-                .addGap(18, 18, 18)
-                .addComponent(validerButton)
-                .addContainerGap())
-        );
-        bottomPanelLayout.setVerticalGroup(
-            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bottomPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(validerButton)
-                    .addComponent(annulerButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         candidaturesPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         candidaturesPanel.setLayout(new java.awt.GridLayout(0, 1));
         centerScrollPane.setViewportView(candidaturesPanel);
@@ -165,7 +134,6 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bottomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(centerScrollPane))
                 .addContainerGap())
         );
@@ -176,8 +144,6 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(centerScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(bottomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -207,17 +173,13 @@ public class MainWindow extends javax.swing.JFrame {
                 } else {
                     // Affichage des candidatures
                     for(candidature c : candidatures) {
-                        candidaturesPanel.add(new CandidaturePanel(c, gestionEtudiant));
+                        candidaturesPanel.add(new CandidaturePanel(c, m, gestionEtudiant));
                     }
                 }
             }
         }
     }//GEN-LAST:event_afficherButtonActionPerformed
-
-    public void afficherNotesEtudiant(identite etudiant) {
-        
-    }
-    
+   
     /**
      * @param args the command line arguments
      */
@@ -227,14 +189,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton afficherButton;
-    private javax.swing.JButton annulerButton;
-    private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel candidaturesPanel;
     private javax.swing.JScrollPane centerScrollPane;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JComboBox masterComboBox;
     private javax.swing.JPanel topPanel;
-    private javax.swing.JButton validerButton;
     // End of variables declaration//GEN-END:variables
 }

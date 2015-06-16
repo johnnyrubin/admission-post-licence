@@ -97,10 +97,10 @@ public class MasterPOATie extends MasterPOA
     /**
      * Operation modifierDecision
      */
-    public void modifierDecision(AdmissionPostLicence.candidature c, AdmissionPostLicence.decisionMaster dm)
+    public void modifierDecision(AdmissionPostLicence.candidature c)
         throws AdmissionPostLicence.CandidatureInconnu
     {
-        _tie.modifierDecision( c,  dm);
+        _tie.modifierDecision( c);
     }
 
     /**

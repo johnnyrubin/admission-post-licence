@@ -33,7 +33,7 @@ public interface MasterOperations
     /**
      * Operation modifierDecision
      */
-    public void modifierDecision(AdmissionPostLicence.candidature c, AdmissionPostLicence.decisionMaster dm)
+    public void modifierDecision(AdmissionPostLicence.candidature c)
         throws AdmissionPostLicence.CandidatureInconnu;
 
     /**

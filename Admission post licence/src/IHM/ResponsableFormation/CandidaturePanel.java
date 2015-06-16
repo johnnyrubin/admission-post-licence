@@ -1,7 +1,9 @@
 package IHM.ResponsableFormation;
 
+import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
+import AdmissionPostLicence.Master;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.decisionMaster;
 import AdmissionPostLicence.resultatsEtudiant;
@@ -15,17 +17,20 @@ import javax.swing.JOptionPane;
 public class CandidaturePanel extends javax.swing.JPanel {
 
     private final candidature candidature;
+    private final Master master;
     private final GestionEtudiant gestionEtudiant;
     
     /**
      * Creates new form CandidaturePanel
      * @param uneCandidature
+     * @param unMaster
      * @param uneGestionEtudiant
      */
-    public CandidaturePanel(candidature uneCandidature, GestionEtudiant uneGestionEtudiant) {
+    public CandidaturePanel(candidature uneCandidature, Master unMaster, GestionEtudiant uneGestionEtudiant) {
         initComponents();
         
         candidature = uneCandidature;
+        master = unMaster;
         gestionEtudiant = uneGestionEtudiant;
         
         ineLabel.setText(candidature.etudiant.ine);
@@ -50,13 +55,37 @@ public class CandidaturePanel extends javax.swing.JPanel {
             case "refuser":
                 retour = "Refus";
                 break;
+            case "nonTraite":
+                retour = "Non traité";
+                break;
             default:
                 retour = "";
                 break;
         }
         
         return retour;
-    }   
+    }
+    
+    /**
+     * 
+     * @param decision
+     * @return {@link decisionMaster}
+     */
+    private decisionMaster convertStringToDecisionMaster(String decision) {
+        decisionMaster retour = null;
+        
+        if(convertDecisionMasterToString(decisionMaster.admis).equals(decision)) {
+            retour = decisionMaster.admis;
+        } else if(convertDecisionMasterToString(decisionMaster.listeAttente).equals(decision)) {
+            retour = decisionMaster.listeAttente;
+        } else if(convertDecisionMasterToString(decisionMaster.refuser).equals(decision)) {
+            retour = decisionMaster.refuser;
+        } else if(convertDecisionMasterToString(decisionMaster.nonTraite).equals(decision)) {
+            retour = decisionMaster.nonTraite;
+        }
+        
+        return retour;
+    }
     
 
     /**
@@ -82,13 +111,14 @@ public class CandidaturePanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         ineLabel = new javax.swing.JLabel();
         notesButton = new javax.swing.JButton();
+        enregistrerButton = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         etudiantLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         etudiantLabel.setText("Informations de l'étudiant");
 
-        decisionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez", "Admis", "Attente", "Refus" }));
+        decisionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez", "Non traité", "Admis", "Attente", "Refus" }));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Décision :");
@@ -125,6 +155,13 @@ public class CandidaturePanel extends javax.swing.JPanel {
             }
         });
 
+        enregistrerButton.setText("Enregistrer");
+        enregistrerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enregistrerButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,7 +173,9 @@ public class CandidaturePanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(decisionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(decisionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(enregistrerButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(22, 22, 22)
@@ -159,7 +198,7 @@ public class CandidaturePanel extends javax.swing.JPanel {
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addComponent(licenceLabel)))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +225,8 @@ public class CandidaturePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(decisionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(decisionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(enregistrerButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -207,9 +247,28 @@ public class CandidaturePanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_notesButtonActionPerformed
 
+    private void enregistrerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerButtonActionPerformed
+        // On récupère la décision du responsable
+        String decisionSel = (String) decisionComboBox.getSelectedItem();
+        decisionMaster decision = convertStringToDecisionMaster(decisionSel);
+        
+        if(decision != null) {
+            candidature.decisionM = decision;
+            try {
+                // On transmet la décision à l'université
+                master.modifierDecision(candidature);
+            } catch (CandidatureInconnu ex) {
+                // Affichage d'une pop-up
+                JOptionPane.showMessageDialog(this, "Une erreur est survenue lors de l'enregistrement de la décision",
+                    "Gestion des candidatures", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_enregistrerButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox decisionComboBox;
+    private javax.swing.JButton enregistrerButton;
     private javax.swing.JLabel etudiantLabel;
     private javax.swing.JLabel ineLabel;
     private javax.swing.JLabel jLabel1;

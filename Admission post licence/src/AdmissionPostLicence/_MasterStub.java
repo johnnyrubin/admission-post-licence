@@ -198,7 +198,7 @@ public class _MasterStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierDecision
      */
-    public void modifierDecision(AdmissionPostLicence.candidature c, AdmissionPostLicence.decisionMaster dm)
+    public void modifierDecision(AdmissionPostLicence.candidature c)
         throws AdmissionPostLicence.CandidatureInconnu
     {
         while(true)
@@ -210,7 +210,6 @@ public class _MasterStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("modifierDecision",true);
                     AdmissionPostLicence.candidatureHelper.write(_output,c);
-                    AdmissionPostLicence.decisionMasterHelper.write(_output,dm);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -241,7 +240,7 @@ public class _MasterStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.MasterOperations _self = (AdmissionPostLicence.MasterOperations) _so.servant;
                 try
                 {
-                    _self.modifierDecision( c,  dm);
+                    _self.modifierDecision( c);
                     return;
                 }
                 finally
