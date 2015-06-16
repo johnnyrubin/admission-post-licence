@@ -96,7 +96,7 @@ public class MasterImpl extends MasterPOA {
         try {
             if(r != null) {
                 // Récupération des candidatures
-                resultats = r.recupererCandidaturesMaster(nom);
+                resultats = r.recupererCandidaturesMaster(universite, nom);
             }
         } catch (MasterInconnu ex) {
             Logger.getLogger(MasterImpl.class.getName()).log(Level.SEVERE, null, ex);

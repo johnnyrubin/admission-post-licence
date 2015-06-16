@@ -73,24 +73,24 @@ public class CandidatureDAO {
             conn.connect();
             
             // Exécution de la requête
-                String sql = "SELECT E.INE as INE, NOM, PRENOM, LICENCE,E.UNIVERSITE as UNIVERSITEETU, "
-                        + "IDMASTER, C.UNIVERSITE as UNIVERSITE, ORDRE, ETAT, DECISIONCANDIDAT,"
-                        + "DECISIONMASTER FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "';";
-                ResultSet rs = conn.statement.executeQuery(sql);
+            String sql = "SELECT E.INE as INE, NOM, PRENOM, LICENCE,E.UNIVERSITE as UNIVERSITEETU, "
+                    + "IDMASTER, C.UNIVERSITE as UNIVERSITE, ORDRE, ETAT, DECISIONCANDIDAT,"
+                    + "DECISIONMASTER FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "';";
+            ResultSet rs = conn.statement.executeQuery(sql);
 
-                while(rs.next()) {
-                    // Traitement du résultat
-                    e = new Etudiant();
-                    e.setIne(rs.getString("INE"));
-                    e.setNom(rs.getString("NOM"));
-                    e.setPrenom(rs.getString("PRENOM"));
-                    e.setLicence(rs.getString("LICENCE"));
-                    e.setUniversite(rs.getString("UNIVERSITEETU"));
-                    c = new Candidature(e,rs.getString("IDMASTER"),rs.getString("UNIVERSITE"),
-                            rs.getInt("ORDRE"),rs.getInt("ETAT"),rs.getInt("DECISIONCANDIDAT"),rs.getInt("DECISIONMASTER"));
-                    System.out.println("CandidatureDAO.getCandidatureEtudiant Candidature => "+c);
-                    lesCandidatures.add(c);
-                }
+            while(rs.next()) {
+                // Traitement du résultat
+                e = new Etudiant();
+                e.setIne(rs.getString("INE"));
+                e.setNom(rs.getString("NOM"));
+                e.setPrenom(rs.getString("PRENOM"));
+                e.setLicence(rs.getString("LICENCE"));
+                e.setUniversite(rs.getString("UNIVERSITEETU"));
+                c = new Candidature(e,rs.getString("IDMASTER"),rs.getString("UNIVERSITE"),
+                        rs.getInt("ORDRE"),rs.getInt("ETAT"),rs.getInt("DECISIONCANDIDAT"),rs.getInt("DECISIONMASTER"));
+                System.out.println("CandidatureDAO.getCandidatureEtudiant Candidature => "+c);
+                lesCandidatures.add(c);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -131,5 +131,49 @@ public class CandidatureDAO {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
             
+    }
+    
+    public static List<Candidature> getCandidaturesMaster(String universite, String master, String nomRectorat) {
+        List<Candidature> lesCandidatures = new ArrayList<>();
+        Candidature c;
+        Etudiant e;
+        
+        try {
+            // Connexion à la base de données
+            conn = new ConnexionRectorat(nomRectorat+".db");
+            conn.connect();
+            
+            // Exécution de la requête
+            String sql = "SELECT E.INE as INE, NOM, PRENOM, LICENCE,E.UNIVERSITE as UNIVERSITEETU, "
+                    + "IDMASTER, C.UNIVERSITE as UNIVERSITE, ORDRE, ETAT, DECISIONCANDIDAT,"
+                    + "DECISIONMASTER FROM CANDIDATURES C, ETUDIANT E WHERE C.INE = E.INE "
+                    + "AND C.UNIVERSITE = '" + universite + "' AND IDMASTER = '" + master + "';";
+
+            ResultSet rs = conn.statement.executeQuery(sql);
+
+            while(rs.next()) {
+                // Traitement du résultat
+                e = new Etudiant();
+                e.setIne(rs.getString("INE"));
+                e.setNom(rs.getString("NOM"));
+                e.setPrenom(rs.getString("PRENOM"));
+                e.setLicence(rs.getString("LICENCE"));
+                e.setUniversite(rs.getString("UNIVERSITEETU"));
+
+                c = new Candidature(e,rs.getString("IDMASTER"), rs.getString("UNIVERSITE"),
+                        rs.getInt("ORDRE"), rs.getInt("ETAT"), rs.getInt("DECISIONCANDIDAT"), rs.getInt("DECISIONMASTER"));
+
+                System.out.println("CandidatureDAO.getCandidaturesMaster Candidature => " + c);
+
+                lesCandidatures.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // Fermeture de la connexion
+            conn.close();  
+        }
+        
+        return lesCandidatures;
     }
 }

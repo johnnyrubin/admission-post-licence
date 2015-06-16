@@ -54,7 +54,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     @Override
     public resultatsEtudiant recupererResultats(identite etudiant) throws EtudiantInconnu {
         
-        System.out.println("Appel de la méthode GestionEtudiantImpl.recupererResultats");
+        System.out.println("Appel de la méthode GestionEtudiantImpl.recupererResultats : Début");
         
         // Initialisation de la variable de retour
         resultatsEtudiant resultats = null;        
@@ -68,6 +68,8 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         } else {
             throw new EtudiantInconnu();
         }
+        
+        System.out.println("Appel de la méthode GestionEtudiantImpl.recupererResultats : Fin");
         
         return resultats;
     }

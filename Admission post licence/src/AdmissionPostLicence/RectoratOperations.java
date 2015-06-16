@@ -27,7 +27,7 @@ public interface RectoratOperations
     /**
      * Operation recupererCandidaturesMaster
      */
-    public AdmissionPostLicence.candidature[] recupererCandidaturesMaster(String master)
+    public AdmissionPostLicence.candidature[] recupererCandidaturesMaster(String universite, String master)
         throws AdmissionPostLicence.MasterInconnu;
 
     /**

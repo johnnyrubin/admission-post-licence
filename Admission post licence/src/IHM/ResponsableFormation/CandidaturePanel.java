@@ -1,7 +1,12 @@
 package IHM.ResponsableFormation;
 
+import AdmissionPostLicence.EtudiantInconnu;
+import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.decisionMaster;
+import AdmissionPostLicence.resultatsEtudiant;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -10,15 +15,18 @@ import AdmissionPostLicence.decisionMaster;
 public class CandidaturePanel extends javax.swing.JPanel {
 
     private final candidature candidature;
+    private final GestionEtudiant gestionEtudiant;
     
     /**
      * Creates new form CandidaturePanel
      * @param uneCandidature
+     * @param uneGestionEtudiant
      */
-    public CandidaturePanel(candidature uneCandidature) {
+    public CandidaturePanel(candidature uneCandidature, GestionEtudiant uneGestionEtudiant) {
         initComponents();
         
         candidature = uneCandidature;
+        gestionEtudiant = uneGestionEtudiant;
         
         ineLabel.setText(candidature.etudiant.ine);
         nomLabel.setText(candidature.etudiant.nom);
@@ -35,17 +43,21 @@ public class CandidaturePanel extends javax.swing.JPanel {
         switch(decision.toString()) {
             case "admis":
                 retour = "Admis";
+                break;
             case "listeAttente":
                 retour = "Attente";
+                break;
             case "refuser":
                 retour = "Refus";
+                break;
             default:
                 retour = "";
                 break;
         }
         
         return retour;
-    }
+    }   
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,6 +82,8 @@ public class CandidaturePanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         ineLabel = new javax.swing.JLabel();
         notesButton = new javax.swing.JButton();
+
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         etudiantLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         etudiantLabel.setText("Informations de l'étudiant");
@@ -145,7 +159,7 @@ public class CandidaturePanel extends javax.swing.JPanel {
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addComponent(licenceLabel)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +192,19 @@ public class CandidaturePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void notesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notesButtonActionPerformed
-        // Affichage des notes de l'étudiant
+        try {
+            // Récupération des résultats de l'étudiant
+            resultatsEtudiant resultats = gestionEtudiant.recupererResultats(candidature.etudiant);
+            // Affichage des notes
+            JFrame fenetreNotes = new JFrame("Notes étudiant");
+            fenetreNotes.setContentPane(new NotesEtudiantPanel(resultats));
+            fenetreNotes.pack();
+            fenetreNotes.setVisible(true);
+        } catch (EtudiantInconnu ex) {
+            // Affichage d'une pop-up
+            JOptionPane.showMessageDialog(this, "Une erreur est survenue lors de la récupération des notes",
+                    "Gestion des candidatures", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_notesButtonActionPerformed
 
 

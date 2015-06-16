@@ -128,7 +128,7 @@ module AdmissionPostLicence
         void supprimerCandidature(in candidature c) raises (CandidatureInconnu);
 
         // Retourne la liste des candidatures à un master
-        candidatures recupererCandidaturesMaster(in string master) raises (MasterInconnu);
+        candidatures recupererCandidaturesMaster(in string universite, in string master) raises (MasterInconnu);
 
         // Retourne la liste des candidatures d’un étudiant
         candidatures recupererCandidaturesEtudiant(in identite etudiant) raises (EtudiantInconnu);

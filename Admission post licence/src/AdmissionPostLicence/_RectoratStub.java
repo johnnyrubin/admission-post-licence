@@ -171,7 +171,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation recupererCandidaturesMaster
      */
-    public AdmissionPostLicence.candidature[] recupererCandidaturesMaster(String master)
+    public AdmissionPostLicence.candidature[] recupererCandidaturesMaster(String universite, String master)
         throws AdmissionPostLicence.MasterInconnu
     {
         while(true)
@@ -182,6 +182,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("recupererCandidaturesMaster",true);
+                    _output.write_string(universite);
                     _output.write_string(master);
                     _input = this._invoke(_output);
                     AdmissionPostLicence.candidature[] _arg_ret = AdmissionPostLicence.candidaturesHelper.read(_input);
@@ -214,7 +215,7 @@ public class _RectoratStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.RectoratOperations _self = (AdmissionPostLicence.RectoratOperations) _so.servant;
                 try
                 {
-                    return _self.recupererCandidaturesMaster( master);
+                    return _self.recupererCandidaturesMaster( universite,  master);
                 }
                 finally
                 {

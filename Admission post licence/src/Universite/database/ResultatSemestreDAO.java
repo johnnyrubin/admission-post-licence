@@ -39,7 +39,7 @@ public class ResultatSemestreDAO {
             
             while(rs.next()) {
                 resultat = new ResultatSemestre();
-                resultat.setCode(rs.getString("CODE"));
+                resultat.setCode(rs.getString("SEMESTRE"));
                 resultat.setMoyenne(rs.getDouble("MOYENNE"));
                 resultat.setPosition(rs.getInt("POSITION"));
                 

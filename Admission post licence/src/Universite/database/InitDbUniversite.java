@@ -55,6 +55,7 @@ public class InitDbUniversite {
 
         conn.statement.executeUpdate(sql);
 
+        // Création de la table ETUDIANT
         sql = "CREATE TABLE ETUDIANT " +
                 "(INE TEXT PRIMARY KEY," +
                 "NOM TEXT NOT NULL," +
@@ -63,14 +64,18 @@ public class InitDbUniversite {
                 "UNIVERSITE TEXT NOT NULL,"+
                 "LICENCE TEXT NOT NULL)";
 
-        // Création de la table ETUDIANT
         conn.statement.executeUpdate(sql);
         
-        // Insertion des étudiants dans la table
-        // TODO voir avec Vincent pour les données
+        // Insertion des étudiants
+        String[] jeuxDonnees = {
+            "INSERT INTO ETUDIANT values ('123456E','dupond','jean','toto','Paul sabatier','info');",
+            "INSERT INTO ETUDIANT values ('E001','RUBIN','Johnny','batman','Paul sabatier','info');",
+            "INSERT INTO ETUDIANT values ('E002','VIGNEAUX','Vincent','bcp','Paul sabatier','info');"
+        };
         
-        sql = "INSERT INTO ETUDIANT VALUES ('123456E', 'dupond', 'jean', 'toto','Paul sabatier','info');";
-        conn.statement.executeUpdate(sql);
+        for(String req : jeuxDonnees) {
+            conn.statement.executeUpdate(req);
+        }
     }
     
     /**
@@ -84,6 +89,7 @@ public class InitDbUniversite {
 
         conn.statement.executeUpdate(sql);
 
+        // Création de la table RESULTATSEMESTRE
         sql = "CREATE TABLE RESULTATSEMESTRE " +
                 "(CODE TEXT PRIMARY KEY," +
                 "SEMESTRE TEXT NOT NULL," +
@@ -91,8 +97,33 @@ public class InitDbUniversite {
                 "POSITION INTEGER NOT NULL," +
                 "INE_ETUDIANT TEXT NOT NULL)";
 
-        // Création de la table MASTER
         conn.statement.executeUpdate(sql);
+        
+        // Insertion des résultats
+        String[] jeuxDonnees = {
+            "INSERT INTO ResultatSemestre values ('N1','S1',15,5,'E001');",
+            "INSERT INTO ResultatSemestre values ('N2','S2',16,4,'E001');",
+            "INSERT INTO ResultatSemestre values ('N3','S3',17,3,'E001');",
+            "INSERT INTO ResultatSemestre values ('N4','S4',18,2,'E001');",
+            "INSERT INTO ResultatSemestre values ('N5','S5',12,20,'E001');",
+            "INSERT INTO ResultatSemestre values ('N6','S6',18,1,'E001');",
+            "INSERT INTO ResultatSemestre values ('N7','S1',10,50,'E002');",
+            "INSERT INTO ResultatSemestre values ('N8','S2',11,30,'E002');",
+            "INSERT INTO ResultatSemestre values ('N9','S3',12,25,'E002');",
+            "INSERT INTO ResultatSemestre values ('N10','S4',13,21,'E002');",
+            "INSERT INTO ResultatSemestre values ('N11','S5',14,19,'E002');",
+            "INSERT INTO ResultatSemestre values ('N12','S6',10,50,'E002');",
+            "INSERT INTO ResultatSemestre values ('N13','S1',15,5,'123456E');",
+            "INSERT INTO ResultatSemestre values ('N14','S2',16,4,'123456E');",
+            "INSERT INTO ResultatSemestre values ('N15','S3',17,3,'123456E');",
+            "INSERT INTO ResultatSemestre values ('N16','S4',18,2,'123456E');",
+            "INSERT INTO ResultatSemestre values ('N17','S5',12,20,'123456E');",
+            "INSERT INTO ResultatSemestre values ('N18','S6',18,1,'123456E');"
+        };
+        
+        for(String req : jeuxDonnees) {
+            conn.statement.executeUpdate(req);
+        }
     }
     
     /**
@@ -106,18 +137,23 @@ public class InitDbUniversite {
 
         conn.statement.executeUpdate(sql);
 
+        // Création de la table MASTER
         sql = "CREATE TABLE MASTER " +
                 "(ID INTEGER PRIMARY KEY," +
                 "NOM TEXT NOT NULL)";
 
-        // Création de la table MASTER
         conn.statement.executeUpdate(sql);
-        sql="INSERT INTO MASTER values (1,'MIAGE');";
-        conn.statement.executeUpdate(sql);      
-        sql="INSERT INTO MASTER values (2,'Fonda');";
-        conn.statement.executeUpdate(sql);      
-        sql="INSERT INTO MASTER values (3,'Droits');";
-        conn.statement.executeUpdate(sql);     
+        
+        // Insertion des masters
+        String[] jeuxDonnees = {
+            "INSERT INTO MASTER values (1, 'MIAGE');",
+            "INSERT INTO MASTER values (2, 'Fonda');",
+            "INSERT INTO MASTER values (3, 'Droits');"
+        };
+        
+        for(String req : jeuxDonnees) {
+            conn.statement.executeUpdate(req);
+        }
     }
     
     /**
@@ -131,17 +167,23 @@ public class InitDbUniversite {
 
         conn.statement.executeUpdate(sql);
 
+        // Création de la table LICENCE
         sql = "CREATE TABLE LICENCE " +
                 "(ID INTEGER PRIMARY KEY," +
                 "NOM TEXT NOT NULL)";
 
-        // Création de la table LICENCE
         conn.statement.executeUpdate(sql);
-        sql = "INSERT INTO Licence values (1,'MIAGE');";
-        conn.statement.executeUpdate(sql);
-        sql = "INSERT INTO Licence values (2,'info');";
-        conn.statement.executeUpdate(sql);
-
+        
+        // Insertion des licences
+        String[] jeuxDonnees = {
+            "INSERT INTO Licence values (1,'MIAGE');",
+            "INSERT INTO Licence values (2,'info');",
+            "INSERT INTO Licence values (3,'MUSICOLOGIE');"
+        };
+        
+        for(String req : jeuxDonnees) {
+            conn.statement.executeUpdate(req);
+        }
     }
     
     /**
@@ -155,21 +197,25 @@ public class InitDbUniversite {
 
         conn.statement.executeUpdate(sql);
 
+        // Création de la table PREREQUIS
         sql = "CREATE TABLE PREREQUIS " +
                 "(ID_MASTER INTEGER NOT NULL," +
                 "ID_LICENCE INTEGER NOT NULL," +
                 "PRIMARY KEY (ID_MASTER, ID_LICENCE))";
 
-        // Création de la table PREREQUIS
         conn.statement.executeUpdate(sql);
-        sql = "INSERT INTO PREREQUIS values (1,1);";
-        conn.statement.executeUpdate(sql);
-        sql = "INSERT INTO PREREQUIS values (1,2);";
-        conn.statement.executeUpdate(sql);
-        sql = "INSERT INTO PREREQUIS values (2,1);";
-        conn.statement.executeUpdate(sql);
-        sql = "INSERT INTO PREREQUIS values (2,2);";
-        conn.statement.executeUpdate(sql);
+        
+        // Insertion des licences
+        String[] jeuxDonnees = {
+            "INSERT INTO PREREQUIS values (1,1);",
+            "INSERT INTO PREREQUIS values (1,2);",
+            "INSERT INTO PREREQUIS values (2,1);",
+            "INSERT INTO PREREQUIS values (2,2);"
+        };
+        
+        for(String req : jeuxDonnees) {
+            conn.statement.executeUpdate(req);
+        }
     }
     
 }

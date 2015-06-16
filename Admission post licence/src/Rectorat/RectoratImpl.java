@@ -11,7 +11,6 @@ import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.identite;
 import Rectorat.database.CandidatureDAO;
 import Rectorat.pojo.Candidature;
-import Universite.ServerUniversite;
 import Util.GetObjectCorba;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +22,12 @@ import java.util.logging.Logger;
  * @author Teddy
  */
 public class RectoratImpl extends RectoratPOA{
-
-    //La liste des candidatures du rectorat
-    private List<Candidature> lesCandidatures = new ArrayList<>();
     
     //La liste des gestions étudiants
-    private List<String> lesGestionEtu = new ArrayList<>();
+    private final List<String> lesGestionEtu = new ArrayList<>();
     
     //La liste des masters
-    private List<String> lesMasters = new ArrayList<>();
+    private final List<String> lesMasters = new ArrayList<>();
     
     // La liste des universités
     private final List<String> lesUniversites = new ArrayList<>();
@@ -43,10 +39,6 @@ public class RectoratImpl extends RectoratPOA{
         this.nom = aNom;
         
         enregistrerSurMinistere();
-    }
-
-    public List<Candidature> getLesCandidatures() {
-        return lesCandidatures;
     }
     
     @Override
@@ -90,25 +82,12 @@ public class RectoratImpl extends RectoratPOA{
     }
 
     @Override
-    public candidature[] recupererCandidaturesMaster(String master) throws MasterInconnu {
-        candidature[] candidatures={};
-
-        for (Candidature lesCandidature : lesCandidatures) {
-            if (lesCandidature.getMaster().equals(master)) {
-                candidatures = addCandidature(candidatures, CandidatureMapper.candidatureToCandidatureCorba(lesCandidature));
-            }
-        }
-        return candidatures;
+    public candidature[] recupererCandidaturesMaster(String universite, String master) throws MasterInconnu {
+        return CandidatureMapper.candidaturesCorbaToListCandidature(CandidatureDAO.getCandidaturesMaster(universite, master, nom));
     }
 
     @Override
     public candidature[] recupererCandidaturesEtudiant(identite etudiant) throws EtudiantInconnu {
-        /*candidature[] candidatures={};
-        for (Candidature lesCandidature : lesCandidatures) {
-            if (lesCandidature.getEtu().getIne().equals(etudiant.ine)) {
-                candidatures = addCandidature(candidatures, CandidatureMapper.candidatureToCandidatureCorba(lesCandidature));
-            }
-        }*/
         return CandidatureMapper.candidaturesCorbaToListCandidature(CandidatureDAO.getCandidaturesEtudiant(etudiant.ine, nom));
     }
 

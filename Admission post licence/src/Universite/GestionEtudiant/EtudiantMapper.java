@@ -52,8 +52,6 @@ public class EtudiantMapper {
      * @return {@link resultatsEtudiant}
      */
     public static resultatsEtudiant etudiantToResultatsEtudiantCorba(Etudiant etudiant) {
-        
-        resultat[] resultatsSemestres = null;
         List<resultat> resTemp = new ArrayList<>();
         
         if(etudiant.getResultats() != null) {
@@ -65,9 +63,25 @@ public class EtudiantMapper {
         
         identite identite = EtudiantMapper.etudiantToIdentiteCorba(etudiant);
         
-        resultatsEtudiant resultatsEtudiant = new resultatsEtudiant(identite, resTemp.toArray(resultatsSemestres));
+        resultatsEtudiant resultatsEtudiant = new resultatsEtudiant(identite, listResultatsToArray(resTemp));
         
         return resultatsEtudiant;
+    }
+    
+    /**
+     * Transforme une liste de résultats en tableau
+     * 
+     * @param desResultats
+     * @return resultat[]
+     */
+    public static resultat[] listResultatsToArray(List<resultat> desResultats) {
+        resultat[] resulats = new resultat[desResultats.size()];
+        if(!desResultats.isEmpty()){
+            for (int i = 0; i < desResultats.size(); i++) {
+                resulats[i] = desResultats.get(i);
+            }
+        }
+        return resulats;
     }
     
 }

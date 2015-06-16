@@ -74,7 +74,7 @@ public class CandidatureMapper {
      * Convertit les infos de la liste des candidatures vers candidature[] de corba
      * 
      * @param c
-     * @return {@link List<Candidature>}
+     * @return {@link <candidature>[]}
      */
     public static candidature[] candidaturesCorbaToListCandidature(List<Candidature> c) {
         candidature[] cs = new candidature[c.size()];
