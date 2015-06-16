@@ -8,6 +8,7 @@ import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.RectoratPOA;
 import AdmissionPostLicence.candidature;
+import AdmissionPostLicence.etatCandidature;
 import AdmissionPostLicence.identite;
 import Rectorat.database.CandidatureDAO;
 import Rectorat.pojo.Candidature;
@@ -44,6 +45,7 @@ public class RectoratImpl extends RectoratPOA{
     @Override
     public void creerCandidature(candidature c) {
         Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
+        System.out.println("RectoratImpl.creerCandidature candidature => " + candidature);
         // Récupération du master
         //Master m = GetObjectCorba.getMasterCorba(candidature.getMaster(),candidature.getUniversite(),ServerRectorat.orb);
         
@@ -62,13 +64,18 @@ public class RectoratImpl extends RectoratPOA{
                     }
                 }
                 try {
-                    if(m != null) {
+                    if(m != null && trouve) {
                         //Vérification des pré requis
                         if(m.verifierPrerequis(candidature.getEtu().getLicence())){
                             //Enregistrer candidature
-                            //lesCandidatures.add(candidature);
+                            candidature.setEtatCandidature(etatCandidature._valide);
                             CandidatureDAO.ajoutCandidature(candidature, this.nom);
                         }  
+                        else{
+                            // 0 correspond à une candidature non valide
+                            candidature.setEtatCandidature(etatCandidature._nonValide);
+                            CandidatureDAO.ajoutCandidature(candidature, this.nom);
+                        }
                     }
                 } catch (MasterInconnu ex) {
                     Logger.getLogger(RectoratImpl.class.getName()).log(Level.SEVERE, null, ex);

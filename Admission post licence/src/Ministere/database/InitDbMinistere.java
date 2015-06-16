@@ -110,6 +110,8 @@ public class InitDbMinistere {
         conn.statement.executeUpdate(sql);
         sql = "Insert into DIPLOME values ( 3, 'Droits')";
         conn.statement.executeUpdate(sql);
+        sql = "Insert into DIPLOME values ( 4, 'Bio')";
+        conn.statement.executeUpdate(sql);
     }
     
     /**
@@ -159,6 +161,8 @@ public class InitDbMinistere {
         sql = "Insert into ACCREDITATIONS values (2, 3)";
         conn.statement.executeUpdate(sql);
         sql = "Insert into ACCREDITATIONS values (1, 2)";
+        conn.statement.executeUpdate(sql);
+        sql = "Insert into ACCREDITATIONS values (1, 4)";
         conn.statement.executeUpdate(sql);
     }
 }

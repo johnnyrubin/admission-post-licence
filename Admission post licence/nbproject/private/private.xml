@@ -3,17 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/Rectorat/ServerRectorat.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/Universite/GestionEtudiant/GestionEtudiantImpl.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/Universite/Master/MasterImpl.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/Ministere/MinistereImpl.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/IHM/ResponsableFormation/Login.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/IHM/Etudiant/Login.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/Util/GetObjectCorba.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/AdmissionPostLicence/candidature.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/Universite/database/InitDbUniversite.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/Rectorat/RectoratImpl.java</file>
-            <file>file:/C:/Users/Teddy/Documents/NetBeansProjects/admission-post-licence/Admission%20post%20licence/src/Universite/ServerUniversite.java</file>
+            <file>file:/Users/johnny/Desktop/admission-post-licence/Admission%20post%20licence/src/Universite/ServerUniversite.java</file>
         </group>
     </open-files>
 </project-private>

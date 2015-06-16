@@ -31,6 +31,7 @@ public class LicenceDAO {
         conn.connect();
         
         try {
+            System.out.println("LicenceDAO.getPrerequisFromMaster master =>" + master);
             // Récupération de la liste des licence prérequise
             String sql = "SELECT L.* FROM LICENCE L, PREREQUIS P WHERE L.ID = P.ID_LICENCE AND P.ID_MASTER = " + master.getId() + ";";
             ResultSet rs = conn.statement.executeQuery(sql);

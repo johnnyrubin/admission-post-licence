@@ -6,6 +6,7 @@
 
 package Rectorat.database;
 
+import AdmissionPostLicence.etatCandidature;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -93,7 +94,7 @@ public class InitDbRectorat {
         
         // Insertion des candidatures dans la table
         // TODO voir avec Vincent pour les données
-        sql = "Insert into CANDIDATURES values ( '123456E', 'MIAGE', 'Paul Sabatier', 1, 0 , 0 , 0 )";
+        sql = "Insert into CANDIDATURES values ( '123456E', 'MIAGE', 'Paul Sabatier', 1, "+etatCandidature._valide+" , 0 , 0 )";
         conn.statement.executeUpdate(sql);
     }
     

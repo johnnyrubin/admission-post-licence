@@ -4,7 +4,7 @@
 module AdmissionPostLicence
 {
     //Enumération utiles pour les différents choix
-    enum etatCandidature { nonTraite, nonValide, valide, cloture };
+    enum etatCandidature { nonValide, valide, cloture };
     enum decisionCandidat { nonTraite, ouiDefinitif, ouiMais, nonMais, nonDefinitif };
     enum decisionMaster { nonTraite, admis, listeAttente, refuser };
     enum periode { periode1, periode2, periode3, periode4 };

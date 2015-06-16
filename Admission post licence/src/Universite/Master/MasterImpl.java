@@ -72,12 +72,13 @@ public class MasterImpl extends MasterPOA {
         boolean isPrerequisOk = false;
         
         for(Licence l : master.getPrerequis()) {
+            System.out.println(l.getNom() +" = " +licence);
             if(l.getNom().equals(licence)) {
                 isPrerequisOk = true;
                 break;
             }
         }
-        
+        System.out.println("méthode MasterImpl.verifierPrerequis isPrerequisOk => " + isPrerequisOk);
         return isPrerequisOk;
     }
 

@@ -8,19 +8,9 @@ package AdmissionPostLicence;
 public final class etatCandidature implements org.omg.CORBA.portable.IDLEntity
 {
     /**
-     * Enum member nonTraite value 
-     */
-    public static final int _nonTraite = 0;
-
-    /**
-     * Enum member nonTraite
-     */
-    public static final etatCandidature nonTraite = new etatCandidature(_nonTraite);
-
-    /**
      * Enum member nonValide value 
      */
-    public static final int _nonValide = 1;
+    public static final int _nonValide = 0;
 
     /**
      * Enum member nonValide
@@ -30,7 +20,7 @@ public final class etatCandidature implements org.omg.CORBA.portable.IDLEntity
     /**
      * Enum member valide value 
      */
-    public static final int _valide = 2;
+    public static final int _valide = 1;
 
     /**
      * Enum member valide
@@ -40,7 +30,7 @@ public final class etatCandidature implements org.omg.CORBA.portable.IDLEntity
     /**
      * Enum member cloture value 
      */
-    public static final int _cloture = 3;
+    public static final int _cloture = 2;
 
     /**
      * Enum member cloture
@@ -89,12 +79,10 @@ public final class etatCandidature implements org.omg.CORBA.portable.IDLEntity
         switch (value)
         {
         case 0 :
-            return nonTraite;
-        case 1 :
             return nonValide;
-        case 2 :
+        case 1 :
             return valide;
-        case 3 :
+        case 2 :
             return cloture;
         }
         throw new org.omg.CORBA.BAD_OPERATION();
@@ -109,12 +97,10 @@ public final class etatCandidature implements org.omg.CORBA.portable.IDLEntity
         switch (_etatCandidature_value)
         {
         case 0 :
-            return "nonTraite";
-        case 1 :
             return "nonValide";
-        case 2 :
+        case 1 :
             return "valide";
-        case 3 :
+        case 2 :
             return "cloture";
         }
         throw new org.omg.CORBA.BAD_OPERATION();

@@ -80,5 +80,12 @@ public class Master {
     public void setPrerequis(List<Licence> aPrerequis) {
         prerequis = aPrerequis;
     }
+
+    @Override
+    public String toString() {
+        return "Master{" + "id=" + id + ", nom=" + nom + ", prerequis=" + prerequis + '}';
+    }
+    
+    
     
 }

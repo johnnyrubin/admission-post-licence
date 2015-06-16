@@ -7,6 +7,7 @@ package Rectorat;
 
 import Rectorat.database.InitDbRectorat;
 import Universite.ServerUniversite;
+import Util.GetObjectCorba;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -43,7 +44,7 @@ public class ServerRectorat {
             // Création du servant pour la gestion des étudiants
             RectoratImpl rectorat = new RectoratImpl("RectoratToulouse");
             
-            orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService");
+            orb.string_to_object("corbaloc:iiop:1.2@"+GetObjectCorba.ipServeur+":2001/NameService");
 
             InitDbRectorat.main(args);
             //Import des données de la base

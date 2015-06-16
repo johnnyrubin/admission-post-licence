@@ -2,6 +2,9 @@ package Universite;
 
 import Universite.GestionEtudiant.GestionEtudiantImpl;
 import Universite.Master.MasterImpl;
+import Util.GetObjectCorba;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.ORBPackage.InvalidName;
@@ -53,7 +56,7 @@ public class ServerUniversite {
             // Création du servant pour la gestion des étudiants
             GestionEtudiantImpl gestEtu = new GestionEtudiantImpl(nameUniversite, nameRectorat);
             
-            orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService");
+            orb.string_to_object("corbaloc:iiop:1.2@"+GetObjectCorba.ipServeur+":2001/NameService");
             
             // Activer le POA manager
             rootPOA.the_POAManager().activate();
@@ -78,20 +81,27 @@ public class ServerUniversite {
             
             // Création du servant pour le master
             // (du coup il peut y en avoir plusieurs ici)
+            List<MasterImpl> lesMasters=new ArrayList<>();
             MasterImpl unMaster = new MasterImpl("MIAGE", nameRectorat, nameUniversite);
+            lesMasters.add(unMaster);
+            MasterImpl Bio = new MasterImpl("Bio", nameRectorat, nameUniversite);
+            lesMasters.add(Bio);
+            MasterImpl Fonda = new MasterImpl("Fonda", nameRectorat, nameUniversite);
+            lesMasters.add(Fonda);
             
             // Activer le servant au sein du POA et récupérer son ID
             //rootPOA.activate_object(unMaster);
-            
-            nameToRegister[0] = new org.omg.CosNaming.NameComponent("MIAGE", "");
-            
-            // Enregistrement de l'objet CORBA dans le service de noms
-            nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(unMaster));
-            System.out.println("==> Nom \"MIAGE\" est enregistré dans l'espace de noms");
-            
-            IORServant = orb.object_to_string(rootPOA.servant_to_reference(unMaster));
-            System.out.println("L'objet possède la référence suivante : ");
-            System.out.println(IORServant);
+            for(MasterImpl master : lesMasters){
+                nameToRegister[0] = new org.omg.CosNaming.NameComponent(master.nom(), "");
+
+                // Enregistrement de l'objet CORBA dans le service de noms
+                nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(master));
+                System.out.println("==> Nom \""+master.nom()+"\" est enregistré dans l'espace de noms");
+
+                IORServant = orb.object_to_string(rootPOA.servant_to_reference(master));
+                System.out.println("L'objet possède la référence suivante : ");
+                System.out.println(IORServant);
+            }
             
             // Lancement de l'ORB et mise en attente de la requête
             orb.run();

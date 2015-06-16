@@ -38,7 +38,7 @@ public class LoginWindow extends javax.swing.JFrame {
         // Initialisation de l'orb
         String[] argsOrb = {};
         orb = org.omg.CORBA.ORB.init(argsOrb, null);
-        orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService");
+        orb.string_to_object("corbaloc:iiop:1.2@"+GetObjectCorba.ipServeur+":2001/NameService");
         
         // Récupération du ministère
         ministere = GetObjectCorba.getMinistereCorba(orb);

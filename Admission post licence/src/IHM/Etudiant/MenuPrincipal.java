@@ -96,7 +96,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButtonModifier = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldUniversite = new javax.swing.JTextField();
         jTextFieldMaster = new javax.swing.JTextField();
@@ -126,13 +125,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel2.setText("Selectionner une candidature :");
 
         jLabel3.setText("Formation : ");
-
-        jButtonModifier.setText("Modifier");
-        jButtonModifier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonModifierActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("Université :");
 
@@ -175,9 +167,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel5)
                                             .addGap(47, 47, 47))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel3)
-                                            .addGap(18, 18, 18)))
+                                        .addComponent(jLabel3))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4)
@@ -191,9 +181,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                                     .addComponent(jTextFieldEtatCandidature)
                                     .addComponent(jTextFieldDecisionMaster)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(jButtonModifier)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(175, 175, 175)
                         .addComponent(jButtonSupprimer)))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
@@ -222,11 +210,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(jTextFieldDecisionMaster, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonModifier)
-                    .addComponent(jButtonSupprimer))
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSupprimer)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         jLabel7.setText("Nouvelle candidature");
@@ -352,7 +338,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 jLabelErrorNewCandidature.setText(" ");
                 candidature c = new candidature(moi, jComboBoxFormationNouvelleCandidature.getSelectedItem().toString(), 
                         jComboBoxUniversiteNouvelleCandidature.getSelectedItem().toString(), Short.parseShort(jTextFieldOrdreNouvelleCandidature.getText()), 
-                        etatCandidature.nonTraite, decisionCandidat.nonTraite, decisionMaster.nonTraite);
+                        etatCandidature.nonValide, decisionCandidat.nonTraite, decisionMaster.nonTraite);
                 if(!existCandidature(CandidatureMapper.candidatureCorbaToCandidature(c))){
                     r.creerCandidature(c);
                     initialiserMenu();
@@ -397,22 +383,31 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
-    private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
-        
-    }//GEN-LAST:event_jButtonModifierActionPerformed
-
     private void jTextFieldEtatCandidatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEtatCandidatureActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldEtatCandidatureActionPerformed
 
-    private void initialiserMenu(){
-        this.nombreDeVoeux = 0;
+    private void viderChamps(){
+        jComboBoxCandidatures.removeActionListener(jComboBoxCandidatures);
         mesCandidatures.removeAll(mesCandidatures);
         ordreDejaSaisies.removeAll(ordreDejaSaisies);
         jTextFieldUniversite.setEnabled(false);
         jTextFieldMaster.setEnabled(false);
         jTextFieldDecisionMaster.setEnabled(false);
         jTextFieldEtatCandidature.setEnabled(false);
+        jTextFieldMaster.setText("");
+        jTextFieldDecisionMaster.setText("");
+        jTextFieldOrdre.setText("");
+        jTextFieldDecisionMaster.setText("");
+        jTextFieldEtatCandidature.setText("");
+        jTextFieldUniversite.setText("");
+    }
+    
+    private void initialiserMenu(){
+        this.nombreDeVoeux = 0;
+        
+        viderChamps();
+        
         // Traitrement des candidatures
         String[] iorRectorats;
         iorRectorats = m.getListeRectorat();
@@ -441,7 +436,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 jButtonCandidater.setEnabled(false);
             }
         }
-        jComboBoxCandidatures.setSelectedIndex(-1);
+        if(jComboBoxCandidatures.getItemCount()==0){
+            jComboBoxCandidatures.setSelectedIndex(-1);
+        }
+        else{
+            jComboBoxCandidatures.setSelectedIndex(0);
+        }
         
         jComboBoxCandidatures.addActionListener (new ActionListener () {
             @Override
@@ -482,7 +482,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCandidater;
-    private javax.swing.JButton jButtonModifier;
     private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JComboBox jComboBoxCandidatures;
     private javax.swing.JComboBox jComboBoxFormationNouvelleCandidature;

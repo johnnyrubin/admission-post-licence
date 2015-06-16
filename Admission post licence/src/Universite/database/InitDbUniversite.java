@@ -148,7 +148,8 @@ public class InitDbUniversite {
         String[] jeuxDonnees = {
             "INSERT INTO MASTER values (1, 'MIAGE');",
             "INSERT INTO MASTER values (2, 'Fonda');",
-            "INSERT INTO MASTER values (3, 'Droits');"
+            "INSERT INTO MASTER values (3, 'Droits');",
+            "INSERT INTO MASTER values (4, 'Bio');"
         };
         
         for(String req : jeuxDonnees) {

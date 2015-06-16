@@ -30,6 +30,7 @@ public class MasterDAO {
         conn.connect();
             
         try {
+            System.out.println("MasterDAO.getFromNom aNom => "+aNom);
             // Exécution de la requête de récupération du master
             String sql = "SELECT * FROM MASTER WHERE NOM = '" + aNom + "';";
             ResultSet rs = conn.statement.executeQuery(sql);

@@ -21,6 +21,8 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  */
 public class GetObjectCorba {
     
+    public static String ipServeur="macbook-pro-de-johnny.home";
+    
     /**
      * Permet de récupérer l'objet CORBA du rectorat de l'université de ce master
      * 
@@ -87,7 +89,7 @@ public class GetObjectCorba {
         Ministere m = null;
         
         try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@192.168.0.13:2001/NameService"));
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@"+ipServeur+":2001/NameService"));
             org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
             
             // On récupère le ministère
