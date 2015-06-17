@@ -39,6 +39,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     HashMap<String, Accreditation> lesAccreditations = new HashMap<>();
     private int nombreDeVoeux=0;
     private final List<Integer> ordreDejaSaisies = new ArrayList<>();
+    private final String periodeEnCours;
     
     /**
      * Creates new form MenuPrincipal
@@ -56,28 +57,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.r = r;
         this.moi = id;
         
-        // Traitement des accreditations
-        accreditation[] accreditations = this.m.recupererAccreditations();
+        // On récupère la période en cours afin de modifier l'IHM en conséquence
+        periodeEnCours = m.periodeEnCours().toString();
         
-        for(accreditation a : accreditations) {
-            lesAccreditations.put(a.universite, AccreditationMapper.accreditationCorbaToAccredidation(a));
-            jComboBoxUniversiteNouvelleCandidature.addItem(a.universite);
+        switch(periodeEnCours){
+            case "periode1":
+            case "periode2":
+                initPeriode1et2();
+                break;
+            case "periode3":
+                ChoixVoeux choixVoeux = new ChoixVoeux(m,r,g,orb,id);
+                choixVoeux.setVisible(true);
+                this.setVisible(false);
+                break;
         }
-        
-        jComboBoxUniversiteNouvelleCandidature.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {    
-                if(!jComboBoxUniversiteNouvelleCandidature.getSelectedItem().equals("Selectionner")){
-                    jComboBoxFormationNouvelleCandidature.removeAllItems();
-                    List<String> diplomes = lesAccreditations.get(jComboBoxUniversiteNouvelleCandidature.getSelectedItem()).getDiplome();
-                    for(String diplome : diplomes){
-                        jComboBoxFormationNouvelleCandidature.addItem(diplome);
-                    }
-                }
-            }
-        });
-        
-        initialiserMenu();
         
 
     }
@@ -163,17 +156,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
                                 .addGap(64, 64, 64))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addGap(47, 47, 47))
-                                        .addComponent(jLabel3))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel11)
-                                            .addComponent(jLabel12))
-                                        .addGap(23, 23, 23)))
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel3))
+                                .addGap(23, 23, 23)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextFieldUniversite, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                                     .addComponent(jTextFieldOrdre, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
@@ -401,6 +389,31 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jTextFieldDecisionMaster.setText("");
         jTextFieldEtatCandidature.setText("");
         jTextFieldUniversite.setText("");
+    }
+    
+    private void initPeriode1et2(){
+        // Traitement des accreditations
+        accreditation[] accreditations = this.m.recupererAccreditations();
+        
+        for(accreditation a : accreditations) {
+            lesAccreditations.put(a.universite, AccreditationMapper.accreditationCorbaToAccredidation(a));
+            jComboBoxUniversiteNouvelleCandidature.addItem(a.universite);
+        }
+        
+        jComboBoxUniversiteNouvelleCandidature.addActionListener (new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent e) {    
+                if(!jComboBoxUniversiteNouvelleCandidature.getSelectedItem().equals("Selectionner")){
+                    jComboBoxFormationNouvelleCandidature.removeAllItems();
+                    List<String> diplomes = lesAccreditations.get(jComboBoxUniversiteNouvelleCandidature.getSelectedItem()).getDiplome();
+                    for(String diplome : diplomes){
+                        jComboBoxFormationNouvelleCandidature.addItem(diplome);
+                    }
+                }
+            }
+        });
+        
+        initialiserMenu();
     }
     
     private void initialiserMenu(){

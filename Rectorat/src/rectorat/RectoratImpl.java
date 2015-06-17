@@ -81,11 +81,11 @@ public class RectoratImpl extends RectoratPOA {
                         //Vérification des pré requis
                         if(m.verifierPrerequis(candidature.getEtu().getLicence())) {
                             //Enregistrer candidature
-                            candidature.setEtatCandidature(etatCandidature._valide);
+                            candidature.setEtatCandidature(etatCandidature.valide.value());
                             CandidatureDAO.ajoutCandidature(candidature, this.nom);
                         } else {
                             // 0 correspond à une candidature non valide
-                            candidature.setEtatCandidature(etatCandidature._nonValide);
+                            candidature.setEtatCandidature(etatCandidature.nonValide.value());
                             CandidatureDAO.ajoutCandidature(candidature, this.nom);
                         }
                     }
