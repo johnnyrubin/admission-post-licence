@@ -2,8 +2,9 @@ package Universite;
 
 import Universite.GestionEtudiant.GestionEtudiantImpl;
 import Universite.Master.MasterImpl;
+import Universite.database.MasterDAO;
+import Universite.pojo.Master;
 import Util.GetObjectCorba;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ import org.omg.PortableServer.Servant;
 /**
  * Classe principale d'un serveur universitaire
  * 
- * @author Teddy
+ * 
  */
 public class ServerUniversite {
     
@@ -39,7 +40,7 @@ public class ServerUniversite {
     }
     
     public static void main(String[] args) {
-        //TODO remplacer le nom en dur par args[0] ou args[1] je sais plus lequel contient la donnée
+        // TODO remplacer le nom en dur par args[0] ou args[1] je sais plus lequel contient la donnée
         String nameUniversite = "Paul Sabatier";
         
         // TODO remplacer par args
@@ -56,7 +57,7 @@ public class ServerUniversite {
             // Création du servant pour la gestion des étudiants
             GestionEtudiantImpl gestEtu = new GestionEtudiantImpl(nameUniversite, nameRectorat);
             
-            orb.string_to_object("corbaloc:iiop:1.2@"+GetObjectCorba.ipServeur+":2001/NameService");
+            orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService");
             
             // Activer le POA manager
             rootPOA.the_POAManager().activate();
@@ -73,32 +74,27 @@ public class ServerUniversite {
             
             // Enregistrement de l'objet CORBA dans le service de noms
             nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(gestEtu));
-            System.out.println("==> Nom \""+nameUniversite+"\" est enregistré dans l'espace de noms");
+            System.out.println("==> Université \"" + nameUniversite + "\" est enregistré dans l'espace de noms");
             
             String IORServant = orb.object_to_string(rootPOA.servant_to_reference(gestEtu));
             System.out.println("L'objet possède la référence suivante : ");
             System.out.println(IORServant);
+                        
+            // Récupération de la liste des masters de l'université
+            List<Master> masters = MasterDAO.getFromUniversite(nameUniversite);
             
-            // Création du servant pour le master
-            // (du coup il peut y en avoir plusieurs ici)
-            List<MasterImpl> lesMasters=new ArrayList<>();
-            MasterImpl unMaster = new MasterImpl("MIAGE", nameRectorat, nameUniversite);
-            lesMasters.add(unMaster);
-            MasterImpl Bio = new MasterImpl("Bio", nameRectorat, nameUniversite);
-            lesMasters.add(Bio);
-            MasterImpl Fonda = new MasterImpl("Fonda", nameRectorat, nameUniversite);
-            lesMasters.add(Fonda);
+            // Enregistrement des masters dans le service de nom
+            MasterImpl m;
             
-            // Activer le servant au sein du POA et récupérer son ID
-            //rootPOA.activate_object(unMaster);
-            for(MasterImpl master : lesMasters){
-                nameToRegister[0] = new org.omg.CosNaming.NameComponent(master.nom(), "");
+            for(Master master : masters) {
+                m = new MasterImpl(master.getNom(), nameRectorat, nameUniversite);
+                
+                nameToRegister[0] = new org.omg.CosNaming.NameComponent(m.nom(), "");
 
-                // Enregistrement de l'objet CORBA dans le service de noms
-                nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(master));
-                System.out.println("==> Nom \""+master.nom()+"\" est enregistré dans l'espace de noms");
+                nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(m));
+                System.out.println("==> Master \"" + m.nom() + "\" est enregistré dans l'espace de noms");
 
-                IORServant = orb.object_to_string(rootPOA.servant_to_reference(master));
+                IORServant = orb.object_to_string(rootPOA.servant_to_reference(m));
                 System.out.println("L'objet possède la référence suivante : ");
                 System.out.println(IORServant);
             }

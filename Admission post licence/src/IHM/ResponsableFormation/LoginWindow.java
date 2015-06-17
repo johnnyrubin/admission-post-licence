@@ -38,7 +38,7 @@ public class LoginWindow extends javax.swing.JFrame {
         // Initialisation de l'orb
         String[] argsOrb = {};
         orb = org.omg.CORBA.ORB.init(argsOrb, null);
-        orb.string_to_object("corbaloc:iiop:1.2@"+GetObjectCorba.ipServeur+":2001/NameService");
+        orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService");
         
         // Récupération du ministère
         ministere = GetObjectCorba.getMinistereCorba(orb);
@@ -50,6 +50,7 @@ public class LoginWindow extends javax.swing.JFrame {
         // Remplissage de la liste déroulante
         for(String ior : iorRectorats) {
             r = GetObjectCorba.getRectoratCorba(orb, ior);
+            
             if( r != null) {
                 rectorats.put(r.nom(), r);
                 rectoratComboBox.addItem(r.nom());

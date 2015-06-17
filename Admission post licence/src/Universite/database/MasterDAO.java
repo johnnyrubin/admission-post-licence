@@ -4,6 +4,7 @@ import Universite.pojo.Master;
 import Universite.pojo.Licence;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * Classe d'accès aux données des master dans la BD
  * 
- * @author Teddy
+ * 
  */
 public class MasterDAO {
     
@@ -54,6 +55,50 @@ public class MasterDAO {
         }
         
         return master;
+    }
+    
+    /**
+     * Retourne la liste des masters d'une université
+     * 
+     * @param uneUniversite
+     * @return List<{@link Master}>
+     */
+    public static List<Master> getFromUniversite(String aUniversite) {
+        
+        System.out.println("MasterDAO.getFromUniversite aUniversite => " + aUniversite);
+        
+        // Initialisation de la variable de retour
+        List<Master> masters = new ArrayList<>();
+        
+        // Connexion à la base de données
+        ConnexionUniversite conn = new ConnexionUniversite("default.db");
+        conn.connect();
+        
+        try {
+            // Exécution de la requête de récupération du master
+            String sql = "SELECT * FROM MASTER;";
+            ResultSet rs = conn.statement.executeQuery(sql);
+            
+            while(rs.next()) {
+                // Traitement du résultat
+                Master m = new Master();
+                m.setId(rs.getInt("ID"));
+                m.setNom(rs.getString("NOM"));
+                
+                // Récupération de la liste des licence prérequise
+                List<Licence> licences = LicenceDAO.getPrerequisFromMaster(m);
+                m.setPrerequis(licences);
+                
+                masters.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MasterDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // Fermeture de la connexion
+            conn.close();
+        }
+        
+        return masters;
     }
     
 }

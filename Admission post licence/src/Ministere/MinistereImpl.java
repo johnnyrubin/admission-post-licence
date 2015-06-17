@@ -15,80 +15,93 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Teddy
+ * 
  */
-public class MinistereImpl extends MinisterePOA{
+public class MinistereImpl extends MinisterePOA {
+    
     //Liste qui permet de savoir à quel rectorat appartient une université, la clé est l'université
     //et la valeur le rectorat
-    private HashMap<String,String> lesLiaisons;
-    //Liste des rectorats
-    private ArrayList<String> lesRectorats = new ArrayList<String>();
+    private HashMap<String,String> liaisons;
     
-    // Periode en cours
+    //Liste des rectorats
+    private final ArrayList<String> rectorats = new ArrayList<>();
+    
+    // Période en cours
     private periode periodeEnCours;
 
-    public void setLesLiaisons(HashMap<String, String> lesLiaisons) {
-        this.lesLiaisons = lesLiaisons;
+    /**
+     * 
+     * @param desLiaisons 
+     */
+    public void setLesLiaisons(HashMap<String, String> desLiaisons) {
+        this.liaisons = desLiaisons;
     }
     
     @Override
     public accreditation[] recupererAccreditations() {
+        System.out.println("Appel Méthode MinistereImpl.recupererAccreditations");
+        
         return AccreditationMapper.accreditationsCorbaToListAccredidation(AccreditationDAO.getAccreditations());
     }
 
     @Override
     public void transfererCandidature(candidature c, String action) {
-        //L'orientation de transfert se fait à partir des variables universite et master qui se trouvent
-        //dans la candidature
-        //on récupère donc le rectorat
-        //Rectorat r = GetObjectCorba.getRectoratCorba(lesLiaisons.get(c.universite),ServerMinistere.orb);
-        Rectorat r=null;
-        boolean trouve=false;
-        for(int i=0;i<lesRectorats.size()&&trouve==false;i++) {
-            r = GetObjectCorba.getRectoratCorba(ServerMinistere.orb, lesRectorats.get(i));
-            if( r != null) {
-                for(String universite : r.getListeUniversite()){
-                    if(universite.equals(c.universite)){
-                        trouve=true;
+        System.out.println("Appel Méthode MinistereImpl.transfererCandidature");
+        
+        Rectorat r = null;
+        boolean trouve = false;
+        
+        // Récupération du rectorat concerné par la candidature
+        for(int i = 0; i < rectorats.size() && trouve == false; i++) {
+            r = GetObjectCorba.getRectoratCorba(ServerMinistere.orb, rectorats.get(i));
+            
+            if(r != null) {
+                for(String universite : r.getListeUniversite()) {
+                    if(universite.equals(c.universite)) {
+                        trouve = true;
                     }
                 }
             }
         }
-        switch(action){
-            case "creerCandidature":
-                r.creerCandidature(c);
-                break;
-            case "modifierCandidature":
-                try {
-                    r.modifierCandidature(c);
-                } catch (CandidatureInconnu ex) {
-                    Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "supprimerCandidature":
-                try {
-                    r.supprimerCandidature(c);
-                } catch (CandidatureInconnu ex) {
-                    Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            default:
-                break;
-        } 
+        
+        if(r != null) {
+            switch(action){
+                case "creerCandidature":
+                    r.creerCandidature(c);
+                    break;
+                case "modifierCandidature":
+                    try {
+                        r.modifierCandidature(c);
+                    } catch (CandidatureInconnu ex) {
+                        Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+                case "supprimerCandidature":
+                    try {
+                        r.supprimerCandidature(c);
+                    } catch (CandidatureInconnu ex) {
+                        Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+                default:
+                    break;
+            } 
+        }
     }
 
     @Override
     public void transfererDecision(candidature c) throws CandidatureInconnu {
+        System.out.println("Appel Méthode MinistereImpl.transfererDecision");
+        
         try{
             Rectorat r;
-            for (String ior : lesRectorats) {
+            for (String ior : rectorats) {
                 r = GetObjectCorba.getRectoratCorba(ServerMinistere.orb, ior);
                 
-                if (r.nom().equals(lesLiaisons.get(c.universite))) {
+                if (r.nom().equals(liaisons.get(c.universite))) {
                     r.modifierCandidature(c);
                 }
             }
-        
         } catch (CandidatureInconnu ex) {
             Logger.getLogger(MinistereImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -97,26 +110,23 @@ public class MinistereImpl extends MinisterePOA{
 
     @Override
     public String[] getListeRectorat() {
+        System.out.println("Appel méthode MinistereImpl.getListeRectorat");
         
-        System.out.println("Appel méthode MinistereImpl.getListeRectorat : Début");
-        
-        String[] r = new String[0];
-//        int i = 0;lesRectorats.size()
-//        for(Rectorat t : lesRectorats) {
-//            System.out.println("Rectorat : " + t.nom());
-//            r[i] = t;
-//            i++;
-//        }
-        
-        System.out.println("Appel méthode MinistereImpl.getListeRectorat : Fin");
-        return lesRectorats.toArray(r);
+        String[] r = new String[rectorats.size()];
+        for(int i = 0; i < rectorats.size(); i++){
+            r[i] = rectorats.get(i);
+        }
+        return  r;
     }
 
     @Override
     public void enregistrerRectorat(String ior) {
-        System.out.println("Méthode MinistereImpl.enregistrerRectorat : Début");
-        lesRectorats.add(ior);
-        System.out.println("Méthode MinistereImpl.enregistrerRectorat : Fin");
+        System.out.println("Appel méthode MinistereImpl.enregistrerRectorat");
+        System.out.println("Méthode MinistereImpl.enregistrerRectorat : ior => " + ior);
+        
+        if(!rectorats.contains(ior)) {
+            rectorats.add(ior);
+        }
     }
 
     @Override

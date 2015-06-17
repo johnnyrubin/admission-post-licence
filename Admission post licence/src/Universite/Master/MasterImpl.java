@@ -16,23 +16,25 @@ import java.util.logging.Logger;
 /**
  * Classe d'implémentation permettant la gestion d'un master
  * 
- * @author Teddy
+ * 
  */
 public class MasterImpl extends MasterPOA {
     
     /** Le nom du master */
     private final String nom;
     
-    /** Le nom du rectorat auquel appartient l'université de ce master */
-    private final String rectorat;
+    /** Le rectorat auquel appartient l'université de ce master */
+    private final Rectorat rectorat;
     
     /** Le nom de l'université d'appartenance */
     private final String universite;
     
-    public MasterImpl(String aNom, String aRectorat, String aUniversite) {
+    public MasterImpl(String aNom, String aRectoratName, String aUniversite) {
         nom = aNom;
-        rectorat = aRectorat;
         universite = aUniversite;
+        
+        // Récupération de l'objet corba du rectorat
+        rectorat = GetObjectCorba.getRectoratCorba(aRectoratName, ServerUniversite.getOrb());
         
         // Enregistrement auprès du rectorat
         enregistrerSurRectorat();
@@ -43,16 +45,13 @@ public class MasterImpl extends MasterPOA {
         
         System.out.println("Appel de la méthode MasterImpl.modifierDecision");
         
-        // Récupération du rectorat
-        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
-        
-        if(r != null) {
+        if(rectorat != null) {
             // Création de l'obet resultatCandidature
             candidature res = new candidature(c.etudiant, c.master, c.universite, c.ordre, c.etat, c.decisionC, c.decisionM);
             
             try {
                 // On transmet la décision du responsable au rectorat
-                r.modifierCandidature(res);
+                rectorat.modifierCandidature(res);
                 
             } catch (CandidatureInconnu ex) {
                 Logger.getLogger(MasterImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,7 +77,9 @@ public class MasterImpl extends MasterPOA {
                 break;
             }
         }
-        System.out.println("méthode MasterImpl.verifierPrerequis isPrerequisOk => " + isPrerequisOk);
+        
+        System.out.println("Méthode MasterImpl.verifierPrerequis isPrerequisOk => " + isPrerequisOk);
+        
         return isPrerequisOk;
     }
 
@@ -90,13 +91,10 @@ public class MasterImpl extends MasterPOA {
         // Initialisation de la variable de retour
         candidature[] resultats = null;
         
-        // Récupération du rectorat
-        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
-        
         try {
-            if(r != null) {
+            if(rectorat != null) {
                 // Récupération des candidatures
-                resultats = r.recupererCandidaturesMaster(universite, nom);
+                resultats = rectorat.recupererCandidaturesMaster(universite, nom);
             }
         } catch (MasterInconnu ex) {
             Logger.getLogger(MasterImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,19 +112,13 @@ public class MasterImpl extends MasterPOA {
      * Permet d'enregistrer le master auprès du rectorat
      */
     private void enregistrerSurRectorat() {
-        // Récupération du rectorat
-        Rectorat r = GetObjectCorba.getRectoratCorba(rectorat, ServerUniversite.getOrb());
-        
-        r.enregistrerMaster(ServerUniversite.getIorFromObject(this));
+        if(rectorat != null) {
+            rectorat.enregistrerMaster(ServerUniversite.getIorFromObject(this));
+        }
     }
 
     @Override
     public String universite() {
         return universite;
-    }
-
-    @Override
-    public String rectorat() {
-        return rectorat;
     }
 }

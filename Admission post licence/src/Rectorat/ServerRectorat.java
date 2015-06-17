@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Rectorat;
 
 import Rectorat.database.InitDbRectorat;
@@ -17,14 +12,13 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
-import org.omg.PortableServer.POAPackage.ServantAlreadyActive;
 import org.omg.PortableServer.POAPackage.ServantNotActive;
 import org.omg.PortableServer.POAPackage.WrongPolicy;
 import org.omg.PortableServer.Servant;
 
 /**
  *
- * @author johnny
+ * 
  */
 public class ServerRectorat {
     /** Contient l'orb accessible par les autres classes */
@@ -44,7 +38,7 @@ public class ServerRectorat {
             // Création du servant pour la gestion des étudiants
             RectoratImpl rectorat = new RectoratImpl("RectoratToulouse");
             
-            orb.string_to_object("corbaloc:iiop:1.2@"+GetObjectCorba.ipServeur+":2001/NameService");
+            orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService");
 
             InitDbRectorat.main(args);
             //Import des données de la base

@@ -17,11 +17,11 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 /**
  *
- * @author johnny
+ * 
  */
 public class GetObjectCorba {
     
-    public static String ipServeur="macbook-pro-de-johnny.home";
+    private static final String ipServeur = "192.168.0.12";
     
     /**
      * Permet de récupérer l'objet CORBA du rectorat de l'université de ce master
@@ -47,49 +47,18 @@ public class GetObjectCorba {
         return r;
     }
     
-     /**
-     * Permet de récupérer l'objet CORBA du master de l'université
-     * 
-     * @param master
-     * @param universite
-     * @param orb
-     * @return {@link Master}
-     */
-    public static Master getMasterCorba(String master,String universite, org.omg.CORBA.ORB orb) {
-        // Initialisation de la variable de retour
-        Master r = null;
-        
-        try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-            
-            // On récupère le rectorat
-            nameToFind[0] = new org.omg.CosNaming.NameComponent(master+"-"+universite, "");
-            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
-            r = MasterHelper.narrow(remoteRef);
-        
-        } catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
-            Logger.getLogger(GetObjectCorba.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return r;
-    }
-    
     /**
      * Permet de récupérer l'objet CORBA du ministère
      * 
      * @param orb
      * @return {@link Ministere}
      */
-    public static Ministere getMinistereCorba(org.omg.CORBA.ORB orb) {
-        
-        System.out.println("Méthode GetObjectCorba.getMinistereCorba : Début");
-        
+    public static Ministere getMinistereCorba(org.omg.CORBA.ORB orb) {        
         // Initialisation de la variable de retour
         Ministere m = null;
         
         try {
-            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@"+ipServeur+":2001/NameService"));
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@" + ipServeur + ":2001/NameService"));
             org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
             
             // On récupère le ministère
@@ -101,8 +70,6 @@ public class GetObjectCorba {
             Logger.getLogger(GetObjectCorba.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        System.out.println("Méthode GetObjectCorba.getMinistereCorba : Fin");
-        
         return m;
     }
     
@@ -113,7 +80,7 @@ public class GetObjectCorba {
      * @param orb
      * @return {@link Master}
      */
-    public static Master getMasterCorba(String ior, org.omg.CORBA.ORB orb) {
+    public static Master getMasterCorba(String ior, org.omg.CORBA.ORB orb) {        
         return MasterHelper.narrow(orb.string_to_object(ior)); 
     }
     
@@ -130,11 +97,20 @@ public class GetObjectCorba {
     
     /**
      * Permet de récupérer l'objet CORBA de l'ior d'une gestion étudiant
+     * 
      * @param orb
      * @param ior
      * @return 
      */
     public static GestionEtudiant getGestionEtudiantCorba(org.omg.CORBA.ORB orb, String ior) {
         return GestionEtudiantHelper.narrow(orb.string_to_object(ior)); 
+    }
+    
+    /**
+     * 
+     * @return ipServeur
+     */
+    public static String getIpServeur() {
+        return ipServeur;
     }
 }

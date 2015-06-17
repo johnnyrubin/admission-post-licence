@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Teddy
+ * 
  */
 public class MainWindow extends javax.swing.JFrame {
 
@@ -70,7 +70,6 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         masterComboBox = new javax.swing.JComboBox();
         afficherButton = new javax.swing.JButton();
-        errorLabel = new javax.swing.JLabel();
         centerScrollPane = new javax.swing.JScrollPane();
         candidaturesPanel = new javax.swing.JPanel();
 
@@ -89,17 +88,10 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        errorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        errorLabel.setForeground(new java.awt.Color(255, 0, 0));
-
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(269, Short.MAX_VALUE)
-                .addComponent(errorLabel)
-                .addGap(230, 230, 230))
             .addGroup(topPanelLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addComponent(jLabel1)
@@ -117,12 +109,9 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(masterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(afficherButton))
-                .addGap(18, 18, 18)
-                .addComponent(errorLabel)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        candidaturesPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         candidaturesPanel.setLayout(new java.awt.GridLayout(0, 1));
         centerScrollPane.setViewportView(candidaturesPanel);
 
@@ -133,8 +122,8 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(centerScrollPane))
+                    .addComponent(centerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                    .addComponent(topPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -143,8 +132,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(centerScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(centerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -153,28 +142,31 @@ public class MainWindow extends javax.swing.JFrame {
     private void afficherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afficherButtonActionPerformed
         // Récupération de la formation choisie
         String masterSel = (String) masterComboBox.getSelectedItem();
-        
+
         // On vide la grille contenant les candidatures
         candidaturesPanel.removeAll();
-        
+        candidaturesPanel.revalidate();
+        candidaturesPanel.repaint();
+
         if(masterSel.equals(comboDefault)) {
             // Affichage d'un message d'erreur
-            errorLabel.setText("Veuillez sélectionner un master !");
+            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un master", "Gestion des candidatures", JOptionPane.ERROR_MESSAGE);
         } else {
-            errorLabel.setText("");
             // Récupération de l'objet corba du master sélectionné
             Master m = masters.get(masterSel);
-            
+
             if(m != null) {
                 candidature[] candidatures = m.consulterEtatCandidatures();
                 if(candidatures.length == 0) {
                     // Affichage d'une pop-up
-                    JOptionPane.showMessageDialog(this, "Aucune candidature pour le master " + masterSel, "Gestion des candidatures", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Aucune candidature pour le master " + masterSel, "Gestion des candidatures", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // Affichage des candidatures
                     for(candidature c : candidatures) {
                         candidaturesPanel.add(new CandidaturePanel(c, m, gestionEtudiant));
                     }
+                    candidaturesPanel.revalidate();
+                    candidaturesPanel.repaint();
                 }
             }
         }
@@ -191,7 +183,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton afficherButton;
     private javax.swing.JPanel candidaturesPanel;
     private javax.swing.JScrollPane centerScrollPane;
-    private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JComboBox masterComboBox;
     private javax.swing.JPanel topPanel;

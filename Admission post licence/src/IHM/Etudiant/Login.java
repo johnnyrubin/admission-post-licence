@@ -10,7 +10,6 @@ import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.identite;
-import Universite.GestionEtudiant.EtudiantMapper;
 import Util.GetObjectCorba;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +37,7 @@ public class Login extends javax.swing.JFrame {
         String[] test = {};
 
         orb = org.omg.CORBA.ORB.init(test,null);
-        orb.string_to_object("corbaloc:iiop:1.2@"+GetObjectCorba.ipServeur+":2001/NameService");
+        orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService");
         m = GetObjectCorba.getMinistereCorba(orb);
         
         // Récupération de la liste des rectorats

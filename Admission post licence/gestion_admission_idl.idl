@@ -97,9 +97,6 @@ module AdmissionPostLicence
 		
 		// université d'appartenance
 		readonly attribute string universite;
-		
-		// Rectorat d'appartenance
-		readonly attribute string rectorat;
         
         // Retourne les candidatures au master ainsi que leurs états
         candidatures consulterEtatCandidatures();
@@ -120,8 +117,7 @@ module AdmissionPostLicence
         // Nom du rectorat
         readonly attribute string nom;
 
-        // Enregistre une candidature auprès du rectorat, vérifie que l’étudiant puisse
-        // candidater au master grâce à Master
+        // Enregistre une candidature auprès du rectorat, vérifie les prérequis du master
         void creerCandidature(in candidature c);
         
         // Supprime une candidature passé en paramètre

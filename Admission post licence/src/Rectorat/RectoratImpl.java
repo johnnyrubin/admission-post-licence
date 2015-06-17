@@ -20,58 +20,69 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Teddy
+ * 
  */
-public class RectoratImpl extends RectoratPOA{
+public class RectoratImpl extends RectoratPOA {
     
-    //La liste des gestions étudiants
-    private final List<String> lesGestionEtu = new ArrayList<>();
+    /** Liste des gestions étudiants enregistrés sur le rectorat */
+    private final List<String> gestionsEtudiant = new ArrayList<>();
     
-    //La liste des masters
-    private final List<String> lesMasters = new ArrayList<>();
+    /** Liste des masters enregistrés sur le rectorat */
+    private final List<String> masters = new ArrayList<>();
     
-    // La liste des universités
-    private final List<String> lesUniversites = new ArrayList<>();
+    /** Liste des universités enregistrés sur le rectorat */
+    private final List<String> universites = new ArrayList<>();
     
     /** Nom du Rectorat */
     private final String nom;
     
-    public RectoratImpl(String aNom){
+    /** Ministère */
+    private final Ministere ministere;
+    
+    /**
+     * 
+     * @param aNom 
+     */
+    public RectoratImpl(String aNom) {
         this.nom = aNom;
+        
+        // Récupération du ministère
+        ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
         
         enregistrerSurMinistere();
     }
     
     @Override
     public void creerCandidature(candidature c) {
-        Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
-        System.out.println("RectoratImpl.creerCandidature candidature => " + candidature);
-        // Récupération du master
-        //Master m = GetObjectCorba.getMasterCorba(candidature.getMaster(),candidature.getUniversite(),ServerRectorat.orb);
+        System.out.println("Appel méthode RectoratImpl.creerCandidature");
+        
+        Candidature candidature = CandidatureMapper.candidatureCorbaToCandidature(c);
+        System.out.println("Méthode RectoratImpl.creerCandidature : candidature => " + candidature);
         
         //Je regarde si l'université cible fait partit de ma liste d'université
-        for(String universite : lesUniversites){
-            if(universite.equals(c.universite)){
+        for(String universite : universites) {
+            if(universite.equals(c.universite)) {
                 // Récupération de la liste des masters
-                Master m=null;
-                boolean trouve=false;
-                for(int i=0;i<lesMasters.size()&&trouve==false;i++) {
-                    m = GetObjectCorba.getMasterCorba(lesMasters.get(i), ServerRectorat.orb);
+                Master m = null;
+                boolean trouve = false;
+                
+                for(int i = 0; i < masters.size() && trouve == false; i++) {
+                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.orb);
+                    
                     if( m != null) {
-                        if(m.nom().equals(c.master)){
-                            trouve=true;
+                        if(m.nom().equals(c.master)) {
+                            trouve = true;
                         }
                     }
                 }
                 try {
                     if(m != null && trouve) {
                         //Vérification des pré requis
-                        if(m.verifierPrerequis(candidature.getEtu().getLicence())){
+                        if(m.verifierPrerequis(candidature.getEtu().getLicence())) {
                             //Enregistrer candidature
                             candidature.setEtatCandidature(etatCandidature._valide);
                             CandidatureDAO.ajoutCandidature(candidature, this.nom);
-                        }  
-                        else{
+                        } else {
                             // 0 correspond à une candidature non valide
                             candidature.setEtatCandidature(etatCandidature._nonValide);
                             CandidatureDAO.ajoutCandidature(candidature, this.nom);
@@ -80,70 +91,59 @@ public class RectoratImpl extends RectoratPOA{
                 } catch (MasterInconnu ex) {
                     Logger.getLogger(RectoratImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            else{
-                Ministere ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
-                ministere.transfererCandidature(c,"creerCandidature");
+            } else {
+                if(ministere != null) {
+                    ministere.transfererCandidature(c,"creerCandidature");
+                }
             }
         }
     }
 
     @Override
     public candidature[] recupererCandidaturesMaster(String universite, String master) throws MasterInconnu {
+        System.out.println("Appel méthode RectoratImpl.recupererCandidaturesMaster");
+        
         return CandidatureMapper.candidaturesCorbaToListCandidature(CandidatureDAO.getCandidaturesMaster(universite, master, nom));
     }
 
     @Override
     public candidature[] recupererCandidaturesEtudiant(identite etudiant) throws EtudiantInconnu {
+        System.out.println("Appel méthode RectoratImpl.recupererCandidaturesEtudiant");
+        
         return CandidatureMapper.candidaturesCorbaToListCandidature(CandidatureDAO.getCandidaturesEtudiant(etudiant.ine, nom));
     }
 
     @Override
     public void modifierCandidature(candidature c) throws CandidatureInconnu {
+        System.out.println("Appel méthode RectoratImpl.modifierCandidature");
+        
         Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
-        // Récupération du master
-        //Master m = GetObjectCorba.getMasterCorba(candidature.getMaster(),candidature.getUniversite(),ServerRectorat.orb);
         
         //Je regarde si l'université cible fait partit de ma liste d'université
-        for(String universite : lesUniversites){
-            if(universite.equals(c.universite)){
+        for(String universite : universites) {
+            if(universite.equals(c.universite)) {
                 // Récupération de la liste des masters
-                Master m=null;
-                boolean trouve=false;
-                for(int i=0;i<lesMasters.size()&&trouve==false;i++) {
-                    m = GetObjectCorba.getMasterCorba(lesMasters.get(i), ServerRectorat.orb);
+                Master m = null;
+                boolean trouve = false;
+                
+                for(int i = 0; i < masters.size() && trouve == false; i++) {
+                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.orb);
+                    
                     if( m != null) {
-                        if(m.nom().equals(c.master)){
-                            trouve=true;
+                        if(m.nom().equals(c.master)) {
+                            trouve = true;
                         }
                     }
                 }
                 if(m != null) {
                     CandidatureDAO.modifierCandidature(candidature, this.nom);
                 }
-            }
-            else{
-                Ministere ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
-                ministere.transfererCandidature(c,"modifierCandidature");
+            } else {
+                if(ministere != null) {
+                    ministere.transfererCandidature(c,"modifierCandidature");
+                }
             }
         }
-    }
-    
-    /**
-     * Ajoute la nouvelle valeur dans le tableau
-     * @param oldArray
-     * @param newValue
-     * @return 
-     */
-    private candidature[] addCandidature(candidature[] oldArray,candidature newValue){
-        //define the new array
-        candidature[] newArray = new candidature[oldArray.length + 1];
-        //copy values into new array
-        System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
-        //add new value to the new array
-        newArray[newArray.length-1] = newValue;
-        
-        return newArray;
     }
 
     @Override
@@ -153,50 +153,70 @@ public class RectoratImpl extends RectoratPOA{
     
     @Override
     public String[] getListeGestEtu() {
-        String[] ge = new String[lesGestionEtu.size()];
-        for(int i=0;i<lesGestionEtu.size();i++){
-            ge[i]=lesGestionEtu.get(i);
+        System.out.println("Appel méthode RectoratImpl.getListeGestEtu");
+        
+        String[] ge = new String[gestionsEtudiant.size()];
+        
+        for(int i = 0; i < gestionsEtudiant.size(); i++) {
+            ge[i] = gestionsEtudiant.get(i);
         }
+        
         return  ge;
     }
 
     @Override
     public void enregistrerGE(String ior, String universite) {
-        if(!lesGestionEtu.contains(ior)){
-            lesGestionEtu.add(ior);
+        System.out.println("Appel méthode RectoratImpl.enregistrerGE");
+        System.out.println("Méthode RectoratImpl.enregistrerGE : ior => " + ior);
+        
+        if(!gestionsEtudiant.contains(ior)) {
+            gestionsEtudiant.add(ior);
         }
-        if(!lesUniversites.contains(universite)){
-            lesUniversites.add(universite);
+        
+        if(!universites.contains(universite)) {
+            universites.add(universite);
         }
     }
 
     @Override
     public void enregistrerMaster(String ior) {
-        if(!lesMasters.contains(ior)){
-            lesMasters.add(ior);
+        System.out.println("Appel méthode RectoratImpl.enregistrerMaster");
+        System.out.println("Méthode RectoratImpl.enregistrerMaster : ior => " + ior);
+        
+        if(!masters.contains(ior)) {
+            masters.add(ior);
         }
     }
 
     @Override
     public String[] getListeMaster(String u) {
-        String[] m = new String[lesMasters.size()];
+        System.out.println("Appel méthode RectoratImpl.getListeMaster");
+        
+        String[] m = new String[masters.size()];
         int i = 0;
-        for (String ior : lesMasters) {
+        
+        for (String ior : masters) {
             Master master = GetObjectCorba.getMasterCorba(ior, ServerRectorat.orb);
+            
             if(master.universite().equals(u)) {
                 m[i] = ior;
                 i++;
             }
         }
+        
         return m;
     }
 
     @Override
     public String[] getListeUniversite() {
-        String[] u = new String[lesUniversites.size()];
-        for(int i=0;i<lesUniversites.size();i++){
-            u[i]=lesUniversites.get(i);
+        System.out.println("Appel méthode RectoratImpl.getListeUniversite");
+        
+        String[] u = new String[universites.size()];
+        
+        for(int i = 0; i < universites.size(); i++) {
+            u[i] = universites.get(i);
         }
+        
         return  u;
     }
     
@@ -204,54 +224,62 @@ public class RectoratImpl extends RectoratPOA{
      * Permet d'enregistrer le rectorat auprès du ministère
      */
     private void enregistrerSurMinistere() {
-        System.out.println("Méthode RectoratImpl.enregistrerSurMinistere : Début");
+        System.out.println("Appel Méthode RectoratImpl.enregistrerSurMinistere");
         
-        // Récupération du ministère
-        Ministere m = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
-        
-        m.enregistrerRectorat(ServerRectorat.getIorFromObject(this));
-        
-        System.out.println("Méthode RectoratImpl.enregistrerSurMinistere : Fin");
+        if(ministere != null) {
+            ministere.enregistrerRectorat(ServerRectorat.getIorFromObject(this));
+        }
     }
 
     @Override
     public String getGestEtu(String universite) {
+        System.out.println("Appel méthode RectoratImpl.getGestEtu");
+        
         String gestEtu = null;
-        for (String ior : lesGestionEtu) {
+        
+        for (String ior : gestionsEtudiant) {
             GestionEtudiant g = GetObjectCorba.getGestionEtudiantCorba(ServerRectorat.orb, ior);
+            
             if(g.nom().equals(universite)) {
                 gestEtu = ior;
             }
         }
+        
         return gestEtu;
     }
 
     @Override
     public void supprimerCandidature(candidature c) throws CandidatureInconnu {
+        System.out.println("Appel méthode RectoratImpl.supprimerCandidature");
+        
         Candidature candidature= CandidatureMapper.candidatureCorbaToCandidature(c);
 
         //Je regarde si l'université cible fait partit de ma liste d'université
-        for(String universite : lesUniversites){
-            if(universite.equals(c.universite)){
+        for(String universite : universites) {
+            if(universite.equals(c.universite)) {
                 // Récupération de la liste des masters
-                Master m=null;
-                boolean trouve=false;
-                for(int i=0;i<lesMasters.size()&&trouve==false;i++) {
-                    m = GetObjectCorba.getMasterCorba(lesMasters.get(i), ServerRectorat.orb);
+                Master m = null;
+                boolean trouve = false;
+                
+                for(int i = 0; i < masters.size() && trouve == false; i++) {
+                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.orb);
+                    
                     if( m != null) {
                         if(m.nom().equals(c.master)){
-                            trouve=true;
+                            trouve = true;
                         }
                     }
                 }
+                
                 if(m != null) {
                     CandidatureDAO.supprimerCandidature(candidature, this.nom);
                 }
+            } else {
+                if(ministere != null) {
+                    ministere.transfererCandidature(c,"supprimerCandidature");
+                }
             }
-            else{
-                Ministere ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
-                ministere.transfererCandidature(c,"supprimerCandidature");
-            }
-        }    }
+        }    
+    }
     
 }

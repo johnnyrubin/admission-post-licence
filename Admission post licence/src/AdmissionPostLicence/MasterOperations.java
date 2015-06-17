@@ -20,12 +20,6 @@ public interface MasterOperations
     public String universite();
 
     /**
-     * Read accessor for rectorat attribute
-     * @return the attribute value
-     */
-    public String rectorat();
-
-    /**
      * Operation consulterEtatCandidatures
      */
     public AdmissionPostLicence.candidature[] consulterEtatCandidatures();
