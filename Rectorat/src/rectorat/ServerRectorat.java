@@ -29,15 +29,15 @@ public class ServerRectorat {
         try {
             
             // Intialisation de l'ORB
+            String[] argsOrb = {};
             orb = org.omg.CORBA.ORB.init(args, null);
+            orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService");
             
             // Récupération du POA
             rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             
             // Création du servant pour la gestion des étudiants
             RectoratImpl rectorat = new RectoratImpl("RectoratToulouse");
-            
-            orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService");
 
             InitDbRectorat.main(args);
             //Import des données de la base
@@ -50,7 +50,8 @@ public class ServerRectorat {
             rootPOA.the_POAManager().activate();
             
             // Récupération du naming service
-            NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService"));
+            //NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
             
             // Construction du nom à enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];

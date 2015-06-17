@@ -1,5 +1,6 @@
 package Ministere;
 
+import Util.GetObjectCorba;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -24,7 +25,10 @@ public class ServerMinistere {
         try {
 
             // Intialisation de l'ORB
-            orb = org.omg.CORBA.ORB.init(args, null);
+            String[] argsOrb = {};
+            orb = org.omg.CORBA.ORB.init(argsOrb, null);
+            orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService");
+            //orb = org.omg.CORBA.ORB.init(args, null);
 
             // Récupération du POA
             POA rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
@@ -33,16 +37,14 @@ public class ServerMinistere {
             rootPOA.the_POAManager().activate();
 
             // Récupération du naming service
-            NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@" + GetObjectCorba.getIpServeur() + ":2001/NameService"));
+            // NamingContext nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
 
             // Construction du nom à enregistrer
             org.omg.CosNaming.NameComponent[] nameToRegister = new org.omg.CosNaming.NameComponent[1];
 
             // Création du servant pour le ministere
             MinistereImpl ministere = new MinistereImpl();
-
-            // Activer le servant au sein du POA et récupérer son ID
-            // byte[] ToulouseId = rootPOA.activate_object(Toulouse);
 
             nameToRegister[0] = new org.omg.CosNaming.NameComponent("Ministere", "");
 
