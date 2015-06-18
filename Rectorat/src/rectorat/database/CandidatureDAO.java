@@ -1,4 +1,4 @@
-package Rectorat.database;
+package rectorat.database;
 
 import Pojo.Candidature;
 import Pojo.Etudiant;
@@ -70,9 +70,9 @@ public class CandidatureDAO {
             // Exécution de la requête
             String sql = "SELECT E.INE as INE, NOM, PRENOM, LICENCE,E.UNIVERSITE as UNIVERSITEETU, "
                     + "IDMASTER, C.UNIVERSITE as UNIVERSITE, ORDRE, ETAT, DECISIONCANDIDAT,"
-                    + "DECISIONMASTER FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "';";
+                    + "DECISIONMASTER FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "' ORDER BY ORDRE;";
             ResultSet rs = conn.statement.executeQuery(sql);
-
+            System.out.println(sql);
             while(rs.next()) {
                 // Traitement du résultat
                 e = new Etudiant();
@@ -98,29 +98,25 @@ public class CandidatureDAO {
     
     public static void modifierCandidature(Candidature c,String nomRectorat){
         try {
-            // Connexion à la base de données
             conn = new ConnexionRectorat(nomRectorat+".db");
             conn.connect();
             String sql = "update CANDIDATURES set UNIVERSITE='"+c.getUniversite()+"', ORDRE="+c.getOrdre()+
                     ", Etat="+c.getEtatCandidature()+", DecisionCandidat="+c.getDecisionCandidat()+", DecisionMaster="+c.getDecisionMaster()+
                     " where INE='"+c.getEtu().getIne()+"' AND IDMASTER='"+c.getMaster()+"';";
             System.out.println(sql);
-            // Création de la candidature
             conn.statement.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+        
     }
     
     public static void supprimerCandidature(Candidature c,String nomRectorat){
         try {
-            // Connexion à la base de données
             conn = new ConnexionRectorat(nomRectorat+".db");
             conn.connect();
             String sql = "delete from CANDIDATURES where INE='"+c.getEtu().getIne()+"' AND IDMASTER='"+c.getMaster()+"';";
             System.out.println(sql);
-            // Création de la candidature
             conn.statement.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);

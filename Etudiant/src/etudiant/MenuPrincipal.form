@@ -70,7 +70,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Menu principal Gestion Etudiant"/>
+        <Property name="text" type="java.lang.String" value="Saisie des voeux"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxCandidatures">

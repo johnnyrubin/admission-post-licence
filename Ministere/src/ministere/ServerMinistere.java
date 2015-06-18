@@ -1,4 +1,4 @@
-package Ministere;
+package ministere;
 
 import Util.GetObjectCorba;
 import org.omg.CORBA.ORBPackage.InvalidName;

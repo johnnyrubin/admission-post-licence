@@ -39,7 +39,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     HashMap<String, Accreditation> lesAccreditations = new HashMap<>();
     private int nombreDeVoeux=0;
     private final List<Integer> ordreDejaSaisies = new ArrayList<>();
-    private final String periodeEnCours;
+    //private final String periodeEnCours;
     
     /**
      * Creates new form MenuPrincipal
@@ -57,21 +57,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.r = r;
         this.moi = id;
         
-        // On récupère la période en cours afin de modifier l'IHM en conséquence
-        periodeEnCours = m.periodeEnCours().toString();
-        
-        switch(periodeEnCours){
-            case "periode1":
-            case "periode2":
-                initPeriode1et2();
-                break;
-            case "periode3":
-                ChoixVoeux choixVoeux = new ChoixVoeux(m,r,g,orb,id);
-                choixVoeux.setVisible(true);
-                this.setVisible(false);
-                break;
-        }
-        
+        initPeriode1et2();
 
     }
 
@@ -113,7 +99,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Menu principal Gestion Etudiant");
+        jLabel1.setText("Saisie des voeux");
 
         jLabel2.setText("Selectionner une candidature :");
 

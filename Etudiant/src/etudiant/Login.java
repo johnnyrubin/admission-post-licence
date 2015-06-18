@@ -224,10 +224,25 @@ public class Login extends javax.swing.JFrame {
                 if(i!=null){
                     //les identifiants sont ok
                     jLabelError.setText("");
-                    MenuPrincipal menu = new MenuPrincipal(m,lesRectorats.get(jComboBoxRectorats.getSelectedItem()),
+                     // On récupère la période en cours afin de modifier l'IHM en conséquence
+                    String periodeEnCours = m.periodeEnCours().toString();
+                    System.out.println(periodeEnCours);
+                    switch(periodeEnCours){
+                        case "periode1":
+                        case "periode2":
+                            MenuPrincipal menu = new MenuPrincipal(m,lesRectorats.get(jComboBoxRectorats.getSelectedItem()),
                             g,orb,i);
-                    menu.setVisible(true);
-                    this.setVisible(false);
+                            menu.setVisible(true);
+                            this.setVisible(false);
+                            break;
+                        case "periode3":
+                            ChoixVoeux choixVoeux = new ChoixVoeux(m,lesRectorats.get(jComboBoxRectorats.getSelectedItem()),
+                            g,orb,i);
+                            choixVoeux.setVisible(true);
+                            this.setVisible(false);
+                            break;
+                    }
+                    
                 }
                 else{
                     jLabelError.setText("Identifiants ou mot de passe incorrect");

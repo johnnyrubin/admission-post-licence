@@ -1,4 +1,4 @@
-package Rectorat.database;
+package rectorat.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

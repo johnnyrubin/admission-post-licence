@@ -1,6 +1,6 @@
-package Rectorat;
+package rectorat;
 
-import Rectorat.database.InitDbRectorat;
+import rectorat.database.InitDbRectorat;
 import Util.GetObjectCorba;
 import java.util.logging.Level;
 import java.util.logging.Logger;

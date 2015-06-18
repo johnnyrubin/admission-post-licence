@@ -1,4 +1,4 @@
-package Rectorat;
+package rectorat;
 
 import Mapper.CandidatureMapper;
 import AdmissionPostLicence.CandidatureInconnu;
@@ -11,7 +11,7 @@ import AdmissionPostLicence.RectoratPOA;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.etatCandidature;
 import AdmissionPostLicence.identite;
-import Rectorat.database.CandidatureDAO;
+import rectorat.database.CandidatureDAO;
 import Pojo.Candidature;
 import Util.GetObjectCorba;
 import java.util.ArrayList;

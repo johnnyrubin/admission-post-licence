@@ -34,9 +34,9 @@ public class ChoixVoeux extends javax.swing.JFrame {
     private final Rectorat r;
     private final identite moi;
     private final List<Candidature> mesCandidatures = new ArrayList<>();
-    private final List<JLabel> lesLabelsChoix = new ArrayList<>();
-    private final List<JLabel> lesLabelsDecision = new ArrayList<>();
-    private final List<JComboBox> lesComboBox = new ArrayList<>();
+    private JLabel[] lesLabelsChoix;
+    private JLabel[] lesLabelsDecision;
+    private JComboBox[] lesComboBox;
     private int voeuxRetenu=0;
     
     /**
@@ -48,17 +48,15 @@ public class ChoixVoeux extends javax.swing.JFrame {
      * @param id
      */
     public ChoixVoeux(Ministere m, Rectorat r,GestionEtudiant g,org.omg.CORBA.ORB orb,identite id) {
-        initComponents();
         this.g=g;
         this.orb=orb;
         this.m=m;
         this.r = r;
         this.moi = id;
         initComponents();
+        jLabelPasBesoinDeReponse.setVisible(false);
         initList();
         initCandidatures();
-        jLabelPasBesoinDeReponse.setVisible(false);
-        
     }
 
     /**
@@ -218,6 +216,7 @@ public class ChoixVoeux extends javax.swing.JFrame {
         Rectorat rTemp;
         List<Candidature> lesCandidaturesTemp;
         int ordre;
+        Candidature cTemp;
         
         for(String ior : iorRectorats) {
             rTemp = GetObjectCorba.getRectoratCorba(orb, ior);
@@ -237,15 +236,17 @@ public class ChoixVoeux extends javax.swing.JFrame {
         
         // On ordonne les candidatures pour les traités efficacement
         for(Candidature candidature : mesCandidatures){
+            System.out.println(candidature);
             ordre=candidature.getOrdre();
+            
             switch(ordre){
                 case 1:
                     //S'il est retenu, on annule toutes les autres
                     if(decisionMaster.from_int(candidature.getDecisionMaster()).toString().equals("admis")){
-                        voeuxRetenu=ordre;
-                        afficherVoeux(ordre,candidature);
-                        afficherListe(ordre, decisionMaster.from_int(candidature.getDecisionMaster()));
+                        voeuxRetenu=ordre; 
                     }
+                    afficherVoeux(ordre,candidature);
+                    afficherListe(ordre, decisionMaster.from_int(candidature.getDecisionMaster()));
                     break;
                 case 2:
                 case 3:
@@ -254,8 +255,16 @@ public class ChoixVoeux extends javax.swing.JFrame {
                     if(voeuxRetenu==0 && decisionMaster.from_int(candidature.getDecisionMaster()).toString().equals("admis")){
                        voeuxRetenu=ordre; 
                        afficherVoeux(ordre, candidature);
-                        afficherListe(ordre, decisionMaster.from_int(candidature.getDecisionMaster()));
+                       afficherListe(ordre, decisionMaster.from_int(candidature.getDecisionMaster()));
                     }
+                    else{
+                        cTemp = candidature;
+                        cTemp.setDecisionMaster(decisionMaster.refuser.value());
+                        afficherVoeux(ordre, cTemp);
+                        afficherListe(ordre, decisionMaster.refuser);
+                    }
+                    break;
+                default:
                     break;
             }
       
@@ -264,15 +273,23 @@ public class ChoixVoeux extends javax.swing.JFrame {
             jLabelPasBesoinDeReponse.setVisible(true);
             jButtonValider.setEnabled(false);
         }
+        if(mesCandidatures.size()<5){
+            for(int i=5;i>mesCandidatures.size();i--){
+                lesLabelsChoix[i-1].setVisible(false);
+                lesLabelsDecision[i-1].setVisible(false);
+                lesComboBox[i-1].setVisible(false);
+            }
+        }
     }
+
     
     private void afficherVoeux(int ordre,Candidature candidature){
         JLabel labelChoix,labelDecision;
         //Affichage du master séléctionné
-        labelChoix=lesLabelsChoix.get(ordre);
+        labelChoix=lesLabelsChoix[ordre-1];
         labelChoix.setText(candidature.getMaster() + " - " + candidature.getUniversite());
         //Affichage de la decision pour ce master
-        labelDecision=lesLabelsDecision.get(ordre);
+        labelDecision=lesLabelsDecision[ordre-1];
         labelDecision.setText(decisionMaster.from_int(candidature.getDecisionMaster()).toString());  
     }
     
@@ -280,42 +297,39 @@ public class ChoixVoeux extends javax.swing.JFrame {
         switch(ordre){
                 case 1:
                     if(decision.toString().equals("admis")){
-                        lesComboBox.get(ordre).addItem(decisionCandidat.ouiDefinitif.toString());
-                        lesComboBox.get(ordre).addItem(decisionCandidat.nonDefinitif.toString());
+                        lesComboBox[ordre-1].addItem(decisionCandidat.ouiDefinitif.toString());
+                        lesComboBox[ordre-1].addItem(decisionCandidat.nonDefinitif.toString());
                     }
                     else{
                        //Si le premier choix n'est pas séléctionné, on desactive la liste deroulante
-                       lesComboBox.get(ordre).setEnabled(false); 
+                       lesComboBox[ordre-1].setEnabled(false); 
                     }
+                    break;
                 case 2:
                 case 3:
                 case 4:
                 case 5:
                     //Si un choix précedent a été retenu, desactivation des listes deroulantes qui suivent
                     if(voeuxRetenu!=0 && voeuxRetenu!=ordre){
-                        lesComboBox.get(ordre).setEnabled(false);
+                        lesComboBox[ordre-1].setEnabled(false);
+                    }
+                    else if(decision.toString().equals("refuser")){
+                        lesComboBox[ordre-1].setEnabled(false);
                     }
                     else if(voeuxRetenu==ordre){
-                        lesComboBox.get(ordre).addItem(decisionCandidat.ouiDefinitif.toString());
-                        lesComboBox.get(ordre).addItem(decisionCandidat.ouiMais.toString());
-                        lesComboBox.get(ordre).addItem(decisionCandidat.nonMais.toString());
-                        lesComboBox.get(ordre).addItem(decisionCandidat.nonDefinitif.toString());
+                        lesComboBox[ordre-1].addItem(decisionCandidat.ouiDefinitif.toString());
+                        lesComboBox[ordre-1].addItem(decisionCandidat.ouiMais.toString());
+                        lesComboBox[ordre-1].addItem(decisionCandidat.nonMais.toString());
+                        lesComboBox[ordre-1].addItem(decisionCandidat.nonDefinitif.toString());
                     }
-                break;
+                    break;
         }
     }
     
     private void initList(){
-        lesLabelsChoix.add(jLabelVoeux1);
-        lesLabelsChoix.add(jLabelVoeux2);
-        lesLabelsChoix.add(jLabelVoeux3);
-        lesLabelsChoix.add(jLabelVoeux4);
-        lesLabelsChoix.add(jLabelVoeux5);
-        lesLabelsDecision.add(jLabelDecision1);
-        lesLabelsDecision.add(jLabelDecision2);
-        lesLabelsDecision.add(jLabelDecision3);
-        lesLabelsDecision.add(jLabelDecision4);
-        lesLabelsDecision.add(jLabelDecision5);
+        lesLabelsChoix = new JLabel[] { jLabelVoeux1, jLabelVoeux2, jLabelVoeux3, jLabelVoeux4, jLabelVoeux5 };
+        lesLabelsDecision = new JLabel[] {jLabelDecision1,jLabelDecision2,jLabelDecision3,jLabelDecision4,jLabelDecision5};
+        lesComboBox = new JComboBox[] {jComboBoxChoix1,jComboBoxChoix2,jComboBoxChoix3,jComboBoxChoix4,jComboBoxChoix5};
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

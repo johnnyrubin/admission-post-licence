@@ -1,4 +1,4 @@
-package Ministere.database;
+package ministere.database;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -48,13 +48,17 @@ public class InitDbMinistere {
 
         sql = "CREATE TABLE MINISTERE " +
                 "(IDMINISTERE TEXT PRIMARY KEY," +
-                "NOM TEXT NOT NULL)";
+                "NOM TEXT NOT NULL,"
+                + "PERIODE INT NOT NULL)";
 
         // Création de la table MINISTERE
         conn.statement.executeUpdate(sql);
         
         // Insertion des ministeres dans la table
         // TODO voir avec Vincent pour les données
+        sql = "Insert into ministere values ( 1, 'Ministere',3)";
+        conn.statement.executeUpdate(sql);
+        
     }
     
     /**
@@ -160,4 +164,6 @@ public class InitDbMinistere {
         sql = "Insert into ACCREDITATIONS values (1, 4)";
         conn.statement.executeUpdate(sql);
     }
+    
+    //TODO Stocker la periode en cours
 }

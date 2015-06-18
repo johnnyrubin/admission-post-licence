@@ -1,4 +1,4 @@
-package Ministere;
+package ministere;
 
 import Mapper.AccreditationMapper;
 import AdmissionPostLicence.CandidatureInconnu;
@@ -7,12 +7,13 @@ import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.accreditation;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.periode;
-import Ministere.database.AccreditationDAO;
+import ministere.database.AccreditationDAO;
 import Util.GetObjectCorba;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ministere.database.PeriodeDAO;
 
 /**
  *
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
 public class MinistereImpl extends MinisterePOA {
     
     //Liste qui permet de savoir à quel rectorat appartient une université, la clé est l'université
-    //et la valeur le rectorat
+    //et la valeur l'ior du rectorat
     private HashMap<String,String> liaisons;
     
     //Liste des rectorats
@@ -30,6 +31,12 @@ public class MinistereImpl extends MinisterePOA {
     // Période en cours
     private periode periodeEnCours;
 
+    public MinistereImpl() {
+        this.periodeEnCours = periode.from_int(PeriodeDAO.getPeriode()-1);
+    }
+
+    
+    
     /**
      * 
      * @param desLiaisons 

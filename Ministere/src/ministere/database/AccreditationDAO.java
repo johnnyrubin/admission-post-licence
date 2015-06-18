@@ -1,4 +1,4 @@
-package Ministere.database;
+package ministere.database;
 
 import Pojo.Accreditation;
 import java.sql.ResultSet;
@@ -27,24 +27,24 @@ public class AccreditationDAO {
             conn.connect();
             
             // Exécution de la requête
-                String sql = "SELECT UNIVERSITE, DIPLOME FROM DIPLOME D, UNIVERSITE U, ACCREDITATIONS A WHERE D.IDDIPLOME=A.IDDIPLOME AND "
-                        + "U.IDUNIVERSITE=A.IDUNIVERSITE ORDER BY UNIVERSITE;";
-                ResultSet rs = conn.statement.executeQuery(sql);
+            String sql = "SELECT UNIVERSITE, DIPLOME FROM DIPLOME D, UNIVERSITE U, ACCREDITATIONS A WHERE D.IDDIPLOME=A.IDDIPLOME AND "
+                    + "U.IDUNIVERSITE=A.IDUNIVERSITE ORDER BY UNIVERSITE;";
+            ResultSet rs = conn.statement.executeQuery(sql);
                     
-                while(rs.next()) {
-                    // Traitement du résultat
-                    System.out.println(rs.getString("UNIVERSITE") + " " + rs.getString("DIPLOME"));
-                    universite=rs.getString("UNIVERSITE");
-                    diplome = rs.getString("DIPLOME");
-                    if(a==null || !a.getUniversite().equals(universite)){
-                        a = new Accreditation(universite);
-                        a.addDiplome(diplome);
-                        lesAccreditation.add(a);
-                    }
-                    else if(a.getUniversite().equals(universite)){
-                        a.addDiplome(diplome);
-                    }
+            while(rs.next()) {
+                // Traitement du résultat
+                System.out.println(rs.getString("UNIVERSITE") + " " + rs.getString("DIPLOME"));
+                universite=rs.getString("UNIVERSITE");
+                diplome = rs.getString("DIPLOME");
+                if(a==null || !a.getUniversite().equals(universite)){
+                    a = new Accreditation(universite);
+                    a.addDiplome(diplome);
+                    lesAccreditation.add(a);
                 }
+                else if(a.getUniversite().equals(universite)){
+                    a.addDiplome(diplome);
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AccreditationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
