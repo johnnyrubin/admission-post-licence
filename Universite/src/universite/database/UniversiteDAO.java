@@ -1,7 +1,5 @@
 package universite.database;
 
-import Universite.database.ConnexionUniversite;
-
 /**
  *
  * 

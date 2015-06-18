@@ -1,4 +1,4 @@
-package Universite.database;
+package universite.database;
 
 import java.util.List;
 import Pojo.ResultatSemestre;
@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import universite.database.UniversiteDAO;
 
 /**
  * Classe d'accès aux données des résultats scolaires dans la BD

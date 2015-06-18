@@ -10,7 +10,6 @@ import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.RectoratHelper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -35,7 +34,6 @@ public class GetObjectCorba {
         Rectorat r = null;
         try {
             NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@" + ipServeur + ":2001/NameService"));
-            //NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
             org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
             
             // On récupère le rectorat

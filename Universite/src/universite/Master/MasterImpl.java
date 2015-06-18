@@ -1,11 +1,11 @@
-package Universite.Master;
+package universite.Master;
 
 import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.MasterPOA;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.candidature;
-import Universite.ServerUniversite;
+import universite.ServerUniversite;
 import universite.database.MasterDAO;
 import Pojo.Master;
 import Pojo.Licence;

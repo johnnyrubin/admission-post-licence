@@ -1,4 +1,4 @@
-package Universite.GestionEtudiant;
+package universite.GestionEtudiant;
 
 import Mapper.EtudiantMapper;
 import AdmissionPostLicence.CandidatureInconnu;
@@ -10,9 +10,9 @@ import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.decisionCandidat;
 import AdmissionPostLicence.identite;
 import AdmissionPostLicence.resultatsEtudiant;
-import Universite.ServerUniversite;
+import universite.ServerUniversite;
 import Pojo.Etudiant;
-import Universite.database.EtudiantDAO;
+import universite.database.EtudiantDAO;
 import Util.GetObjectCorba;
 import java.util.logging.Level;
 import java.util.logging.Logger;

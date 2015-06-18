@@ -1,10 +1,10 @@
-package Universite;
+package universite;
 
-import Universite.GestionEtudiant.GestionEtudiantImpl;
-import Universite.Master.MasterImpl;
+import universite.GestionEtudiant.GestionEtudiantImpl;
+import universite.Master.MasterImpl;
 import universite.database.MasterDAO;
 import Pojo.Master;
-import Universite.database.InitDbUniversite;
+import universite.database.InitDbUniversite;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
