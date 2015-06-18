@@ -5,6 +5,7 @@
  */
 package etudiant;
 
+import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Ministere;
@@ -120,6 +121,11 @@ public class ChoixVoeux extends javax.swing.JFrame {
         jLabelPasBesoinDeReponse.setText("Vous n'avez pas besoin de nous donner une réponse");
 
         jButtonValider.setText("Valider");
+        jButtonValider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonValiderActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,11 +208,62 @@ public class ChoixVoeux extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxChoix5ActionPerformed
 
+    private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
+        try {
+            Candidature c, cTemp;
+            String d = lesComboBox[voeuxRetenu-1].getSelectedItem().toString();
+            switch(d){
+                case "ouiDefinitif":
+                    c = mesCandidatures.get(voeuxRetenu-1);
+                    c.setDecisionCandidat(decisionCandidat.ouiDefinitif.value());
+                    r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
+                    //Si on accepte le voeux, cela annule tous les autres
+                    for(Candidature c1 : mesCandidatures){
+                        if(!c1.getEtu().getIne().equals(c.getEtu().getIne()) && 
+                                !c1.getMaster().equals(c.getMaster())){
+                            c1.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
+                            r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c1));
+                        }
+                    }
+                    break;
+                case "ouiMais":
+                    c = mesCandidatures.get(voeuxRetenu-1);
+                    c.setDecisionCandidat(decisionCandidat.ouiMais.value());
+                    //On va annuler celles qui suivent
+                    for(int i=voeuxRetenu+1; i<mesCandidatures.size();i++){
+                        cTemp = mesCandidatures.get(i);
+                        cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
+                        r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
+                    }
+                    break;
+                case "nonMais":
+                    c = mesCandidatures.get(voeuxRetenu-1);
+                    c.setDecisionCandidat(decisionCandidat.nonMais.value());
+                    //On va annuler celles qui suivent
+                    for(int i=voeuxRetenu+1; i<mesCandidatures.size();i++){
+                        cTemp = mesCandidatures.get(i);
+                        cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
+                        r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
+                    }
+                    break;
+                case "nonDefinitif":
+                    //Si on refuse le voeux, cela annule tous les autres
+                    for(Candidature c1 : mesCandidatures){
+                        c1.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
+                        r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c1));
+                    }
+                    break;
+            }
+        } catch (CandidatureInconnu ex) {
+            Logger.getLogger(ChoixVoeux.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonValiderActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
+        
     }
     
     private void initCandidatures(){
