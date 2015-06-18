@@ -65,7 +65,7 @@ public class MasterImpl extends MasterPOA {
         System.out.println("Appel de la méthode MasterImpl.verifierPrerequis");
         
         // On récupère les infos de notre master
-        MasterDAO dao = new MasterDAO(universite);
+        MasterDAO dao = new MasterDAO(universite, ServerUniversite.getConnexionDb());
         Master master = dao.getFromNom(nom());
         
         // On vérifie maintenant que la licence soit présente dans la liste des prérequis du master

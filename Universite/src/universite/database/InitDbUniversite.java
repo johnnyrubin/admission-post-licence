@@ -1,5 +1,6 @@
 package universite.database;
 
+import Database.Connexion;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,26 +9,21 @@ import java.util.logging.Logger;
  * Classe utilisée pour initialiser la base de données de l'université.
  * Cela comprend la création des tables et l'insertion des jeux de données initiaux
  * 
- * 
  */
 public class InitDbUniversite {
     
     /** Connexion à la base de données universitaire */
-    private static ConnexionUniversite conn;
+    private static Connexion conn;
     
     /**
      * 
-     * @param unNomUniversite
+     * @param uneConn
      */
-    public static void run(String unNomUniversite) {
+    public static void run(Connexion uneConn) {
         
-        if(unNomUniversite != null) {
-            // On enlève les espaces présents dans le nom de l'université
-            String nomUniversite =  unNomUniversite.replaceAll("\\s", "").toLowerCase();
-            
+        if(uneConn != null) {            
             // Connexion à la base de données
-            conn = new ConnexionUniversite(nomUniversite + ".db");
-            conn.connect();
+            conn = uneConn;
 
             try {
                 initTableEtudiant();
@@ -42,9 +38,6 @@ public class InitDbUniversite {
 
             } catch (SQLException ex) {
                 Logger.getLogger(InitDbUniversite.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                // Fermeture de la connexion
-                conn.close();
             }
         }
     }
@@ -139,14 +132,12 @@ public class InitDbUniversite {
     private static void initTableMaster() throws SQLException {
         // Suppression de la table MASTER
         String sql = "DROP TABLE IF EXISTS MASTER;";
-
         conn.statement.executeUpdate(sql);
 
         // Création de la table MASTER
         sql = "CREATE TABLE MASTER " +
                 "(ID INTEGER PRIMARY KEY," +
                 "NOM TEXT NOT NULL)";
-
         conn.statement.executeUpdate(sql);
         
         // Insertion des masters

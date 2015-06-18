@@ -20,7 +20,7 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  */
 public class GetObjectCorba {
     
-    private static final String ipServeur = "macbook-pro-de-johnny.home";
+    private static final String ipServeur = "192.168.0.12";
     
     /**
      * Permet de récupérer l'objet CORBA du rectorat de l'université de ce master

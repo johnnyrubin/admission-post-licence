@@ -1,5 +1,6 @@
 package universite.database;
 
+import Database.Connexion;
 import java.util.List;
 import Pojo.Licence;
 import Pojo.Master;
@@ -20,8 +21,8 @@ public class LicenceDAO extends UniversiteDAO {
      * 
      * @param unNomUniversite 
      */
-    public LicenceDAO(String unNomUniversite) {
-        super(unNomUniversite);
+    public LicenceDAO(String unNomUniversite, Connexion uneConn) {
+        super(unNomUniversite, uneConn);
     }
     
     /**
