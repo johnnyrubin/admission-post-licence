@@ -17,30 +17,35 @@ public class InitDbUniversite {
     
     /**
      * 
-     * @param args 
+     * @param unNomUniversite
      */
-    public static void main(String[] args) {
+    public static void run(String unNomUniversite) {
         
-        // Connexion à la base de données
-        conn = new ConnexionUniversite("default.db");
-        conn.connect();
+        if(unNomUniversite != null) {
+            // On enlève les espaces présents dans le nom de l'université
+            String nomUniversite =  unNomUniversite.replaceAll("\\s", "").toLowerCase();
             
-        try {
-            initTableEtudiant();
-            
-            initTableResultatSemestre();
-            
-            initTableMaster();
-            
-            initTableLicence();
-            
-            initTablePrerequis();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(InitDbUniversite.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            // Fermeture de la connexion
-            conn.close();
+            // Connexion à la base de données
+            conn = new ConnexionUniversite(nomUniversite + ".db");
+            conn.connect();
+
+            try {
+                initTableEtudiant();
+
+                initTableResultatSemestre();
+
+                initTableMaster();
+
+                initTableLicence();
+
+                initTablePrerequis();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(InitDbUniversite.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                // Fermeture de la connexion
+                conn.close();
+            }
         }
     }
     

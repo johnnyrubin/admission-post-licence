@@ -1,20 +1,26 @@
-package Universite.database;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package universite.database;
 
-import Pojo.Master;
 import Pojo.Licence;
+import Pojo.Master;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Universite.database.LicenceDAO;
 
-/**
- * Classe d'accès aux données des master dans la BD
- * 
- * 
- */
-public class MasterDAO {
+
+public class MasterDAO extends UniversiteDAO {
+
+    public MasterDAO(String unNomUniversite) {
+        super(unNomUniversite);
+    }
     
     /**
      * Récupère les données d'un master à partir de son nom
@@ -22,16 +28,11 @@ public class MasterDAO {
      * @param aNom
      * @return {@link Master}
      */
-    public static Master getFromNom(String aNom) {
+    public Master getFromNom(String aNom) {
         // Initialisation de la variable de retour
         Master master = null;
-        
-        // Connexion à la base de données
-        ConnexionUniversite conn = new ConnexionUniversite("default.db");
-        conn.connect();
             
         try {
-            System.out.println("MasterDAO.getFromNom aNom => "+aNom);
             // Exécution de la requête de récupération du master
             String sql = "SELECT * FROM MASTER WHERE NOM = '" + aNom + "';";
             ResultSet rs = conn.statement.executeQuery(sql);
@@ -43,41 +44,31 @@ public class MasterDAO {
                 master.setNom(rs.getString("NOM"));
                 
                 // Récupération de la liste des licence prérequise
-                List<Licence> licences = LicenceDAO.getPrerequisFromMaster(master);
+                LicenceDAO dao = new LicenceDAO(nomUniversite);
+                List<Licence> licences = dao.getPrerequisFromMaster(master);
                 
                 master.setPrerequis(licences);
             }
         } catch (SQLException ex) {
             Logger.getLogger(MasterDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            // Fermeture de la connexion
-            conn.close();
         }
         
         return master;
     }
     
     /**
-     * Retourne la liste des masters d'une université
+     * Retourne la liste des masters de l'universite
      * 
-     * @param uneUniversite
      * @return List<{@link Master}>
      */
-    public static List<Master> getFromUniversite(String aUniversite) {
-        
-        System.out.println("MasterDAO.getFromUniversite aUniversite => " + aUniversite);
-        
+    public List<Master> getAll() {        
         // Initialisation de la variable de retour
         List<Master> masters = new ArrayList<>();
-        
-        // Connexion à la base de données
-        ConnexionUniversite conn = new ConnexionUniversite("default.db");
-        conn.connect();
         
         try {
             // Exécution de la requête de récupération du master
             String sql = "SELECT * FROM MASTER;";
-            ResultSet rs = conn.statement.executeQuery(sql);
+            ResultSet rs = this.conn.statement.executeQuery(sql);
             
             while(rs.next()) {
                 // Traitement du résultat
@@ -86,19 +77,16 @@ public class MasterDAO {
                 m.setNom(rs.getString("NOM"));
                 
                 // Récupération de la liste des licence prérequise
-                List<Licence> licences = LicenceDAO.getPrerequisFromMaster(m);
+                LicenceDAO dao = new LicenceDAO(nomUniversite);
+                List<Licence> licences = dao.getPrerequisFromMaster(m);
                 m.setPrerequis(licences);
                 
                 masters.add(m);
             }
         } catch (SQLException ex) {
             Logger.getLogger(MasterDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            // Fermeture de la connexion
-            conn.close();
         }
         
         return masters;
     }
-    
 }

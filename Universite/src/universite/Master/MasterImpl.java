@@ -6,7 +6,7 @@ import AdmissionPostLicence.MasterPOA;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.candidature;
 import Universite.ServerUniversite;
-import Universite.database.MasterDAO;
+import universite.database.MasterDAO;
 import Pojo.Master;
 import Pojo.Licence;
 import Util.GetObjectCorba;
@@ -65,7 +65,8 @@ public class MasterImpl extends MasterPOA {
         System.out.println("Appel de la méthode MasterImpl.verifierPrerequis");
         
         // On récupère les infos de notre master
-        Master master = MasterDAO.getFromNom(nom());
+        MasterDAO dao = new MasterDAO(universite);
+        Master master = dao.getFromNom(nom());
         
         // On vérifie maintenant que la licence soit présente dans la liste des prérequis du master
         boolean isPrerequisOk = false;

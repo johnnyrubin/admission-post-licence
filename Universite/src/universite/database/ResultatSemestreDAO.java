@@ -8,13 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import universite.database.UniversiteDAO;
 
 /**
  * Classe d'accès aux données des résultats scolaires dans la BD
  * 
  * 
  */
-public class ResultatSemestreDAO {
+public class ResultatSemestreDAO extends UniversiteDAO {
+    
+    /**
+     * 
+     * @param unNomUniversite 
+     */
+    public ResultatSemestreDAO(String unNomUniversite) {
+        super(unNomUniversite);
+    }
     
     /**
      * Récupère les résultats de l'étudiant fourni
@@ -22,13 +31,9 @@ public class ResultatSemestreDAO {
      * @param etudiant
      * @return {@link List}<{@link ResultatSemestre}>
      */
-    public static List<ResultatSemestre> getFromEtudiant(Etudiant etudiant) {
+    public List<ResultatSemestre> getFromEtudiant(Etudiant etudiant) {
         // Initialisation de la variable de retour
         List<ResultatSemestre> resultats = new ArrayList<>();
-        
-        // Connexion à la base de données
-        ConnexionUniversite conn = new ConnexionUniversite("default.db");
-        conn.connect();
             
         try {
             // Récupération des résultats scolaire de l'étudiant
@@ -48,9 +53,6 @@ public class ResultatSemestreDAO {
             
         } catch (SQLException ex) {
             Logger.getLogger(ResultatSemestreDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            // Fermeture de la connexion
-            conn.close();
         }
         
         return resultats;

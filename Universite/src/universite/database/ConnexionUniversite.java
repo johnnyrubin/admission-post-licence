@@ -32,11 +32,8 @@ public class ConnexionUniversite {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
             statement = connection.createStatement();
             System.out.println("Connexion a " + DBPath + " avec succès");
-        } catch (ClassNotFoundException notFoundException) {
-            notFoundException.printStackTrace();
-            System.out.println("Erreur de connexion");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Erreur de connexion");
         }
     }

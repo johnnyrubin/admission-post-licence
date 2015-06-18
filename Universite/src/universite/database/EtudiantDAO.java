@@ -7,13 +7,22 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import universite.database.UniversiteDAO;
 
 /**
  * Classe d'accès aux données des étdiants enregistrés en base
  * 
  * 
  */
-public class EtudiantDAO {
+public class EtudiantDAO extends UniversiteDAO {
+    
+    /**
+     * 
+     * @param unNomUniversite 
+     */
+    public EtudiantDAO(String unNomUniversite) {
+        super(unNomUniversite);
+    }
     
     /**
      * Permet de récupérer les informations d'un étudiant à partir de son numéro INE
@@ -21,14 +30,9 @@ public class EtudiantDAO {
      * @param aIne
      * @return {@link Etudiant}
      */
-    public static Etudiant getFromIne(String aIne) {
-        System.out.println("EtudiantDAO.getFromINE Début");
+    public Etudiant getFromIne(String aIne) {
         // Initialisation de la variable de retour
         Etudiant etudiant = null;
-        
-        // Connexion à la base de données
-        ConnexionUniversite conn = new ConnexionUniversite("default.db");
-        conn.connect();
         
         try {
             if(aIne != null) {
@@ -47,18 +51,16 @@ public class EtudiantDAO {
                     etudiant.setUniversite(rs.getString("UNIVERSITE"));
                     
                     // Récupération des résultats scolaires de l'étudiant
-                    List<ResultatSemestre> resultats = ResultatSemestreDAO.getFromEtudiant(etudiant);
+                    ResultatSemestreDAO dao = new ResultatSemestreDAO(nomUniversite);
+                    List<ResultatSemestre> resultats = dao.getFromEtudiant(etudiant);
                     
                     etudiant.setResultats(resultats);
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(EtudiantDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            // Fermeture de la connexion
-            conn.close();
         }
-        System.out.println("EtudiantDAO.getFromINE Etudiant => "+etudiant);
+        
         return etudiant;
     }
     

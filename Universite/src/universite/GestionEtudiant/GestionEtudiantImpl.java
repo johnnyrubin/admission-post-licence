@@ -30,9 +30,13 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     /** Le rectorat auquel appartient l'université de ce master */
     private final Rectorat rectorat;
     
+    private final EtudiantDAO etudiantDao;
+    
     public GestionEtudiantImpl(String aNom, String aRectoratName) {
         nom = aNom;
         rectorat = GetObjectCorba.getRectoratCorba(aRectoratName, ServerUniversite.getOrb());
+        
+        etudiantDao = new EtudiantDAO(nom);
         
         // Enregistrement auprès du rectorat
         enregistrerSurRectorat();
@@ -58,7 +62,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         resultatsEtudiant resultats = null;        
 
         // Récupération de l'étudiant dans la base de données de l'université
-        Etudiant e = EtudiantDAO.getFromIne(etudiant.ine);        
+        Etudiant e = etudiantDao.getFromIne(etudiant.ine);        
         
         if(e != null) {
             // On convertit les données obtenues en bd en objets utilisés par corba
@@ -97,7 +101,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         identite id = null;
         
         // Récupération de l'étudiant dans la base de données de l'université
-        Etudiant e = EtudiantDAO.getFromIne(ine);
+        Etudiant e = etudiantDao.getFromIne(ine);
         
         if(e != null) {
             // On compare les mots de passe
@@ -123,7 +127,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         candidature[] resultats = null;
         
         // Récupération de l'étudiant dans la base de données de l'université
-        Etudiant e = EtudiantDAO.getFromIne(etudiant.ine);
+        Etudiant e = etudiantDao.getFromIne(etudiant.ine);
         
         if(e != null) {            
             if(rectorat != null) {
