@@ -206,7 +206,7 @@ public class ChoixVoeux extends javax.swing.JFrame {
         Candidature c, cTemp;
         String d = lesComboBox[voeuxRetenu-1].getSelectedItem().toString();
         switch(d){
-            case "ouiDefinitif":
+            case "Oui Definitif":
                 c = mesCandidatures.get(voeuxRetenu-1);
                 c.setDecisionCandidat(decisionCandidat.ouiDefinitif.value());
                 g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(c));
@@ -219,7 +219,7 @@ public class ChoixVoeux extends javax.swing.JFrame {
                     }
                 }
                 break;
-            case "ouiMais":
+            case "Oui Mais":
                 c = mesCandidatures.get(voeuxRetenu-1);
                 c.setDecisionCandidat(decisionCandidat.ouiMais.value());
                 c.setEtatCandidature(etatCandidature.valide.value());
@@ -231,7 +231,7 @@ public class ChoixVoeux extends javax.swing.JFrame {
                     g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
                 }
                 break;
-            case "nonMais":
+            case "Non Mais":
                 c = mesCandidatures.get(voeuxRetenu-1);
                 c.setDecisionCandidat(decisionCandidat.nonMais.value());
                 //On va annuler l'actuel et celles qui suivent
@@ -242,7 +242,7 @@ public class ChoixVoeux extends javax.swing.JFrame {
                     g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
                 }
                 break;
-            case "nonDefinitif":
+            case "Non Definitif":
                 //Si on refuse le voeux, cela annule tous les autres
                 for(Candidature c1 : mesCandidatures){
                     c1.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
@@ -346,8 +346,8 @@ public class ChoixVoeux extends javax.swing.JFrame {
         switch(ordre){
                 case 1:
                     if(decision.toString().equals("admis")){
-                        lesComboBox[ordre-1].addItem(decisionCandidat.ouiDefinitif.toString());
-                        lesComboBox[ordre-1].addItem(decisionCandidat.nonDefinitif.toString());
+                        lesComboBox[ordre-1].addItem("Oui Definitif");
+                        lesComboBox[ordre-1].addItem("Non Definitif");
                     }
                     else{
                        //Si le premier choix n'est pas séléctionné, on desactive la liste deroulante
@@ -366,10 +366,10 @@ public class ChoixVoeux extends javax.swing.JFrame {
                         lesComboBox[ordre-1].setEnabled(false);
                     }
                     else if(voeuxRetenu==ordre){
-                        lesComboBox[ordre-1].addItem(decisionCandidat.ouiDefinitif.toString());
-                        lesComboBox[ordre-1].addItem(decisionCandidat.ouiMais.toString());
-                        lesComboBox[ordre-1].addItem(decisionCandidat.nonMais.toString());
-                        lesComboBox[ordre-1].addItem(decisionCandidat.nonDefinitif.toString());
+                        lesComboBox[ordre-1].addItem("Oui Definitif");
+                        lesComboBox[ordre-1].addItem("Oui Mais");
+                        lesComboBox[ordre-1].addItem("Non Mais");
+                        lesComboBox[ordre-1].addItem("Non Definitif");
                     }
                     break;
         }
