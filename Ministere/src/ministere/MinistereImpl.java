@@ -34,8 +34,6 @@ public class MinistereImpl extends MinisterePOA {
     public MinistereImpl() {
         this.periodeEnCours = periode.from_int(PeriodeDAO.getPeriode()-1);
     }
-
-    
     
     /**
      * 
@@ -145,6 +143,9 @@ public class MinistereImpl extends MinisterePOA {
     @Override
     public void periodeEnCours(periode value) {
         periodeEnCours = value;
+        
+        // Persistance
+        PeriodeDAO.setPeriode(periodeEnCours);
     }
     
 }
