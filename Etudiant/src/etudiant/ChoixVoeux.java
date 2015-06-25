@@ -64,27 +64,33 @@ public class ChoixVoeux extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelDecision5 = new javax.swing.JLabel();
+        jComboBoxChoix1 = new javax.swing.JComboBox();
         jLabelVoeux1 = new javax.swing.JLabel();
+        jComboBoxChoix2 = new javax.swing.JComboBox();
         jLabelVoeux3 = new javax.swing.JLabel();
+        jComboBoxChoix3 = new javax.swing.JComboBox();
         jLabelVoeux4 = new javax.swing.JLabel();
+        jComboBoxChoix4 = new javax.swing.JComboBox();
         jLabelVoeux5 = new javax.swing.JLabel();
+        jComboBoxChoix5 = new javax.swing.JComboBox();
         jLabelVoeux2 = new javax.swing.JLabel();
         jLabelDecision1 = new javax.swing.JLabel();
         jLabelDecision2 = new javax.swing.JLabel();
         jLabelDecision3 = new javax.swing.JLabel();
         jLabelDecision4 = new javax.swing.JLabel();
-        jLabelDecision5 = new javax.swing.JLabel();
-        jComboBoxChoix1 = new javax.swing.JComboBox();
-        jComboBoxChoix2 = new javax.swing.JComboBox();
-        jComboBoxChoix3 = new javax.swing.JComboBox();
-        jComboBoxChoix4 = new javax.swing.JComboBox();
-        jComboBoxChoix5 = new javax.swing.JComboBox();
-        jLabelPasBesoinDeReponse = new javax.swing.JLabel();
         jButtonValider = new javax.swing.JButton();
+        jLabelPasBesoinDeReponse = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("Choix de vos voeux");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabelDecision5.setText("Decision");
 
         jLabelVoeux1.setText("Voeux 1");
 
@@ -93,6 +99,12 @@ public class ChoixVoeux extends javax.swing.JFrame {
         jLabelVoeux4.setText("Voeux 4");
 
         jLabelVoeux5.setText("Voeux 5");
+
+        jComboBoxChoix5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxChoix5ActionPerformed(evt);
+            }
+        });
 
         jLabelVoeux2.setText("Voeux 2");
 
@@ -104,16 +116,6 @@ public class ChoixVoeux extends javax.swing.JFrame {
 
         jLabelDecision4.setText("Decision");
 
-        jLabelDecision5.setText("Decision");
-
-        jComboBoxChoix5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxChoix5ActionPerformed(evt);
-            }
-        });
-
-        jLabelPasBesoinDeReponse.setText("Vous n'avez pas besoin de nous donner une réponse");
-
         jButtonValider.setText("Valider");
         jButtonValider.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,41 +123,95 @@ public class ChoixVoeux extends javax.swing.JFrame {
             }
         });
 
+        jLabelPasBesoinDeReponse.setText("Vous n'avez pas besoin de nous donner une réponse");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(154, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelPasBesoinDeReponse)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(jButtonValider)))
+                .addGap(118, 118, 118))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(43, 43, 43)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabelVoeux2)
+                        .addComponent(jLabelVoeux1)
+                        .addComponent(jLabelVoeux3)
+                        .addComponent(jLabelVoeux4)
+                        .addComponent(jLabelVoeux5))
+                    .addGap(179, 179, 179)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabelDecision4)
+                        .addComponent(jLabelDecision3)
+                        .addComponent(jLabelDecision2)
+                        .addComponent(jLabelDecision1)
+                        .addComponent(jLabelDecision5))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jComboBoxChoix5, 0, 108, Short.MAX_VALUE)
+                        .addComponent(jComboBoxChoix3, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBoxChoix2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBoxChoix1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBoxChoix4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(44, 44, 44)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(287, Short.MAX_VALUE)
+                .addComponent(jLabelPasBesoinDeReponse)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonValider)
+                .addGap(16, 16, 16))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(25, 25, 25)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelVoeux1)
+                        .addComponent(jLabelDecision1)
+                        .addComponent(jComboBoxChoix1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(25, 25, 25)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelVoeux2)
+                        .addComponent(jLabelDecision2)
+                        .addComponent(jComboBoxChoix2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(20, 20, 20)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelVoeux3)
+                        .addComponent(jLabelDecision3)
+                        .addComponent(jComboBoxChoix3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(27, 27, 27)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelVoeux4)
+                        .addComponent(jLabelDecision4)
+                        .addComponent(jComboBoxChoix4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(25, 25, 25)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelVoeux5)
+                        .addComponent(jLabelDecision5)
+                        .addComponent(jComboBoxChoix5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(109, Short.MAX_VALUE)))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelVoeux2)
-                    .addComponent(jLabelVoeux1)
-                    .addComponent(jLabelVoeux3)
-                    .addComponent(jLabelVoeux4)
-                    .addComponent(jLabelVoeux5))
-                .addGap(179, 179, 179)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabelDecision4)
-                    .addComponent(jLabelDecision3)
-                    .addComponent(jLabelDecision2)
-                    .addComponent(jLabelDecision1)
-                    .addComponent(jLabelDecision5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBoxChoix5, 0, 108, Short.MAX_VALUE)
-                    .addComponent(jComboBoxChoix3, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxChoix2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxChoix1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxChoix4, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(100, 100, 100))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelPasBesoinDeReponse)
-                .addGap(142, 142, 142))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(259, 259, 259)
-                .addComponent(jButtonValider)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,36 +219,9 @@ public class ChoixVoeux extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelVoeux1)
-                    .addComponent(jLabelDecision1)
-                    .addComponent(jComboBoxChoix1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelVoeux2)
-                    .addComponent(jLabelDecision2)
-                    .addComponent(jComboBoxChoix2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelVoeux3)
-                    .addComponent(jLabelDecision3)
-                    .addComponent(jComboBoxChoix3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelVoeux4)
-                    .addComponent(jLabelDecision4)
-                    .addComponent(jComboBoxChoix4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelVoeux5)
-                    .addComponent(jLabelDecision5)
-                    .addComponent(jComboBoxChoix5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(jLabelPasBesoinDeReponse)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonValider)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -417,5 +446,6 @@ public class ChoixVoeux extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelVoeux3;
     private javax.swing.JLabel jLabelVoeux4;
     private javax.swing.JLabel jLabelVoeux5;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

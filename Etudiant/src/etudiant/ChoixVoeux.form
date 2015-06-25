@@ -23,42 +23,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelVoeux2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelVoeux1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelVoeux3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelVoeux4" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelVoeux5" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="214" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision4" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision5" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="45" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jComboBoxChoix5" pref="108" max="32767" attributes="0"/>
-                  <Component id="jComboBoxChoix3" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jComboBoxChoix2" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jComboBoxChoix1" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jComboBoxChoix4" alignment="1" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabelPasBesoinDeReponse" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
-              <Component id="jButtonValider" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -68,41 +43,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelVoeux1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxChoix1" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelVoeux2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxChoix2" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelVoeux3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxChoix3" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelVoeux4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxChoix4" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelVoeux5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelDecision5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxChoix5" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="jLabelPasBesoinDeReponse" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButtonValider" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -110,109 +53,216 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Lucida Grande" size="18" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Choix de vos voeux"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabelVoeux1">
+    <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Voeux 1"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelVoeux3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Voeux 3"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelVoeux4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Voeux 4"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelVoeux5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Voeux 5"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelVoeux2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Voeux 2"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelDecision1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Decision"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelDecision2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Decision"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelDecision3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Decision"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelDecision4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Decision"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelDecision5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Decision"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxChoix1">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
         </Property>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxChoix2">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxChoix3">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxChoix4">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxChoix5">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxChoix5ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelPasBesoinDeReponse">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Vous n&apos;avez pas besoin de nous donner une r&#xe9;ponse"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButtonValider">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Valider"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonValiderActionPerformed"/>
-      </Events>
-    </Component>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="154" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabelPasBesoinDeReponse" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                          <Component id="jButtonValider" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelVoeux2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelVoeux1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelVoeux3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelVoeux4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelVoeux5" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelDecision4" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision5" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jComboBoxChoix5" pref="108" max="32767" attributes="0"/>
+                          <Component id="jComboBoxChoix3" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jComboBoxChoix2" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jComboBoxChoix1" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jComboBoxChoix4" alignment="1" min="-2" pref="108" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="287" max="32767" attributes="0"/>
+                  <Component id="jLabelPasBesoinDeReponse" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jButtonValider" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelVoeux1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxChoix1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelVoeux2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxChoix2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelVoeux3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxChoix3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelVoeux4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxChoix4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelVoeux5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDecision5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxChoix5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="109" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabelDecision5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Decision"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBoxChoix1">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelVoeux1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Voeux 1"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBoxChoix2">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelVoeux3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Voeux 3"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBoxChoix3">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelVoeux4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Voeux 4"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBoxChoix4">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelVoeux5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Voeux 5"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBoxChoix5">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxChoix5ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelVoeux2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Voeux 2"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelDecision1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Decision"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelDecision2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Decision"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelDecision3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Decision"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelDecision4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Decision"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonValider">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Valider"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonValiderActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPasBesoinDeReponse">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Vous n&apos;avez pas besoin de nous donner une r&#xe9;ponse"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>
