@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package etudiant;
 
-import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Ministere;
@@ -26,7 +20,6 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author johnny
  */
 public class ChoixVoeux extends javax.swing.JFrame {
 
@@ -210,72 +203,68 @@ public class ChoixVoeux extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxChoix5ActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        try {
-            Candidature c, cTemp;
-            String d = lesComboBox[voeuxRetenu-1].getSelectedItem().toString();
-            switch(d){
-                case "ouiDefinitif":
-                    c = mesCandidatures.get(voeuxRetenu-1);
-                    c.setDecisionCandidat(decisionCandidat.ouiDefinitif.value());
-                    r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
-                    //Si on accepte le voeux, cela annule tous les autres
-                    for(Candidature c1 : mesCandidatures){
-                        //Si la candidature en cours de traitement n'est pas celle retenu
-                        if(!c1.getMaster().equals(c.getMaster())){
-                            c1.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
-                            r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c1));
-                        }
-                    }
-                    break;
-                case "ouiMais":
-                    c = mesCandidatures.get(voeuxRetenu-1);
-                    c.setDecisionCandidat(decisionCandidat.ouiMais.value());
-                    c.setEtatCandidature(etatCandidature.valide.value());
-                    r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
-                    //On va annuler celles qui suivent
-                    for(int i=voeuxRetenu; i<mesCandidatures.size();i++){
-                        cTemp = mesCandidatures.get(i);
-                        cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
-                        r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
-                    }
-                    // On réouvre les candidatures précédentes en attente
-                    for(int i=(voeuxRetenu-2); i>=0; i--) {
-                        cTemp = mesCandidatures.get(i);
-                        if(cTemp.getDecisionMaster() == decisionMaster.listeAttente.value()) {
-                            cTemp.setEtatCandidature(etatCandidature.valide.value());
-                            r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
-                        }
-                    } 
-                    break;
-                case "nonMais":
-                    c = mesCandidatures.get(voeuxRetenu-1);
-                    c.setDecisionCandidat(decisionCandidat.nonMais.value());
-                    //On va annuler l'actuel et celles qui suivent
-                    r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
-                    for(int i=voeuxRetenu; i<mesCandidatures.size();i++){
-                        cTemp = mesCandidatures.get(i);
-                        cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
-                        r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
-                    }
-                    // On réouvre les candidatures précédentes en attente
-                    for(int i=(voeuxRetenu-2); i>=0; i--) {
-                        cTemp = mesCandidatures.get(i);
-                        if(cTemp.getDecisionMaster() == decisionMaster.listeAttente.value()) {
-                            cTemp.setEtatCandidature(etatCandidature.valide.value());
-                            r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
-                        }
-                    } 
-                    break;
-                case "nonDefinitif":
-                    //Si on refuse le voeux, cela annule tous les autres
-                    for(Candidature c1 : mesCandidatures){
+        Candidature c, cTemp;
+        String d = lesComboBox[voeuxRetenu-1].getSelectedItem().toString();
+        switch(d){
+            case "ouiDefinitif":
+                c = mesCandidatures.get(voeuxRetenu-1);
+                c.setDecisionCandidat(decisionCandidat.ouiDefinitif.value());
+                g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(c));
+                //Si on accepte le voeux, cela annule tous les autres
+                for(Candidature c1 : mesCandidatures){
+                    //Si la candidature en cours de traitement n'est pas celle retenu
+                    if(!c1.getMaster().equals(c.getMaster())){
                         c1.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
-                        r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c1));
+                        g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(c1));
                     }
-                    break;
-            }
-        } catch (CandidatureInconnu ex) {
-            Logger.getLogger(ChoixVoeux.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "ouiMais":
+                c = mesCandidatures.get(voeuxRetenu-1);
+                c.setDecisionCandidat(decisionCandidat.ouiMais.value());
+                c.setEtatCandidature(etatCandidature.valide.value());
+                g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(c));
+                //On va annuler celles qui suivent
+                for(int i=voeuxRetenu; i<mesCandidatures.size();i++){
+                    cTemp = mesCandidatures.get(i);
+                    cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
+                    g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
+                }
+                // On réouvre les candidatures précédentes en attente
+                for(int i=(voeuxRetenu-2); i>=0; i--) {
+                    cTemp = mesCandidatures.get(i);
+                    if(cTemp.getDecisionMaster() == decisionMaster.listeAttente.value()) {
+                        cTemp.setEtatCandidature(etatCandidature.valide.value());
+                        g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
+                    }
+                }
+                break;
+            case "nonMais":
+                c = mesCandidatures.get(voeuxRetenu-1);
+                c.setDecisionCandidat(decisionCandidat.nonMais.value());
+                //On va annuler l'actuel et celles qui suivent
+                g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(c));
+                for(int i=voeuxRetenu; i<mesCandidatures.size();i++){
+                    cTemp = mesCandidatures.get(i);
+                    cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
+                    g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
+                }
+                // On réouvre les candidatures précédentes en attente
+                for(int i=(voeuxRetenu-2); i>=0; i--) {
+                    cTemp = mesCandidatures.get(i);
+                    if(cTemp.getDecisionMaster() == decisionMaster.listeAttente.value()) {
+                        cTemp.setEtatCandidature(etatCandidature.valide.value());
+                        g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
+                    }
+                }
+                break;
+            case "nonDefinitif":
+                //Si on refuse le voeux, cela annule tous les autres
+                for(Candidature c1 : mesCandidatures){
+                    c1.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
+                    g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(c1));
+                }
+                break;
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 

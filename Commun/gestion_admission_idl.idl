@@ -79,7 +79,7 @@ module AdmissionPostLicence
         candidatures consulterEtatVoeux(in identite etudiant) raises (EtudiantInconnu);
 
         // Permet à l’étudiant d’accepter ou refuser une proposition
-        void modifierDecision(in candidature c, in decisionCandidat dc);
+        void modifierDecision(in candidature c);
 
         //Permet à l’étudiant de se connecter 
         identite seConnecter(in string ine, in string mdp) raises (EtudiantInconnu);

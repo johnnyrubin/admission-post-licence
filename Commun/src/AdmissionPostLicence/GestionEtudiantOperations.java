@@ -34,12 +34,18 @@ public interface GestionEtudiantOperations
     /**
      * Operation modifierDecision
      */
-    public void modifierDecision(AdmissionPostLicence.candidature c, AdmissionPostLicence.decisionCandidat dc);
+    public void modifierDecision(AdmissionPostLicence.candidature c);
 
     /**
      * Operation seConnecter
      */
     public AdmissionPostLicence.identite seConnecter(String ine, String mdp)
         throws AdmissionPostLicence.EtudiantInconnu;
+
+    /**
+     * Operation supprimerCandidature
+     */
+    public void supprimerCandidature(AdmissionPostLicence.candidature c)
+        throws AdmissionPostLicence.CandidatureInconnu;
 
 }

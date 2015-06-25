@@ -233,7 +233,7 @@ public class _GestionEtudiantStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation modifierDecision
      */
-    public void modifierDecision(AdmissionPostLicence.candidature c, AdmissionPostLicence.decisionCandidat dc)
+    public void modifierDecision(AdmissionPostLicence.candidature c)
     {
         while(true)
         {
@@ -244,7 +244,6 @@ public class _GestionEtudiantStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("modifierDecision",true);
                     AdmissionPostLicence.candidatureHelper.write(_output,c);
-                    AdmissionPostLicence.decisionCandidatHelper.write(_output,dc);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -270,7 +269,7 @@ public class _GestionEtudiantStub extends org.omg.CORBA.portable.ObjectImpl
                 AdmissionPostLicence.GestionEtudiantOperations _self = (AdmissionPostLicence.GestionEtudiantOperations) _so.servant;
                 try
                 {
-                    _self.modifierDecision( c,  dc);
+                    _self.modifierDecision( c);
                     return;
                 }
                 finally
@@ -329,6 +328,62 @@ public class _GestionEtudiantStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     return _self.seConnecter( ine,  mdp);
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation supprimerCandidature
+     */
+    public void supprimerCandidature(AdmissionPostLicence.candidature c)
+        throws AdmissionPostLicence.CandidatureInconnu
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("supprimerCandidature",true);
+                    AdmissionPostLicence.candidatureHelper.write(_output,c);
+                    _input = this._invoke(_output);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(AdmissionPostLicence.CandidatureInconnuHelper.id()))
+                    {
+                        throw AdmissionPostLicence.CandidatureInconnuHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("supprimerCandidature",_opsClass);
+                if (_so == null)
+                   continue;
+                AdmissionPostLicence.GestionEtudiantOperations _self = (AdmissionPostLicence.GestionEtudiantOperations) _so.servant;
+                try
+                {
+                    _self.supprimerCandidature( c);
+                    return;
                 }
                 finally
                 {

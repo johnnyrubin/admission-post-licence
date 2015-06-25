@@ -354,7 +354,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             try {
                 String master = jComboBoxCandidatures.getSelectedItem().toString().replaceAll("\\-.*","");
                 Candidature c = getCandidature(master);
-                r.supprimerCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
+                g.supprimerCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
                 initialiserMenu();
             } catch (CandidatureInconnu ex) {
                 Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);

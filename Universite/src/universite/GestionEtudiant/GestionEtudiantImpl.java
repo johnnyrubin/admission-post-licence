@@ -74,17 +74,14 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     }
 
     @Override
-    public void modifierDecision(candidature c, decisionCandidat dc) {
+    public void modifierDecision(candidature c) {
         
         System.out.println("Appel de la méthode GestionEtudiantImpl.modifierDecision");
         
-        if(rectorat != null) {
-            // Création de l'obet resultatCandidature
-            candidature res = new candidature(c.etudiant, c.master, c.universite, c.ordre, c.etat, dc, c.decisionM);
-            
+        if(rectorat != null) {            
             try {
                 // On transmet la décision de l'étudiant au rectorat
-                rectorat.modifierCandidature(res);
+                rectorat.modifierCandidature(c);
             } catch (CandidatureInconnu ex) {
                 Logger.getLogger(GestionEtudiantImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -151,6 +148,15 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
     private void enregistrerSurRectorat() {
         if(rectorat != null) {
             rectorat.enregistrerGE(ServerUniversite.getIorFromObject(this), nom);
+        }
+    }
+
+    @Override
+    public void supprimerCandidature(candidature c) throws CandidatureInconnu {
+        System.out.println("Appel de la méthode GestionEtudiantImpl.supprimerCandidature");
+        
+        if(rectorat != null) {
+            rectorat.supprimerCandidature(c);
         }
     }
     

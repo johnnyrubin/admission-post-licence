@@ -100,9 +100,9 @@ public class GestionEtudiantPOATie extends GestionEtudiantPOA
     /**
      * Operation modifierDecision
      */
-    public void modifierDecision(AdmissionPostLicence.candidature c, AdmissionPostLicence.decisionCandidat dc)
+    public void modifierDecision(AdmissionPostLicence.candidature c)
     {
-        _tie.modifierDecision( c,  dc);
+        _tie.modifierDecision( c);
     }
 
     /**
@@ -112,6 +112,15 @@ public class GestionEtudiantPOATie extends GestionEtudiantPOA
         throws AdmissionPostLicence.EtudiantInconnu
     {
         return _tie.seConnecter( ine,  mdp);
+    }
+
+    /**
+     * Operation supprimerCandidature
+     */
+    public void supprimerCandidature(AdmissionPostLicence.candidature c)
+        throws AdmissionPostLicence.CandidatureInconnu
+    {
+        _tie.supprimerCandidature( c);
     }
 
 }

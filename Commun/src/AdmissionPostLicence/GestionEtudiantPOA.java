@@ -45,6 +45,8 @@ public abstract class GestionEtudiantPOA extends org.omg.PortableServer.Servant
                 return _invoke_seConnecter(_is, handler);
         } else if (opName.equals("soumettreCandidature")) {
                 return _invoke_soumettreCandidature(_is, handler);
+        } else if (opName.equals("supprimerCandidature")) {
+                return _invoke_supprimerCandidature(_is, handler);
         } else {
             throw new org.omg.CORBA.BAD_OPERATION(opName);
         }
@@ -131,9 +133,8 @@ public abstract class GestionEtudiantPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         AdmissionPostLicence.candidature arg0_in = AdmissionPostLicence.candidatureHelper.read(_is);
-        AdmissionPostLicence.decisionCandidat arg1_in = AdmissionPostLicence.decisionCandidatHelper.read(_is);
 
-        modifierDecision(arg0_in, arg1_in);
+        modifierDecision(arg0_in);
 
         _output = handler.createReply();
 
@@ -159,6 +160,27 @@ public abstract class GestionEtudiantPOA extends org.omg.PortableServer.Servant
         {
             _output = handler.createExceptionReply();
             AdmissionPostLicence.EtudiantInconnuHelper.write(_output,_exception);
+        }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_supprimerCandidature(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        AdmissionPostLicence.candidature arg0_in = AdmissionPostLicence.candidatureHelper.read(_is);
+
+        try
+        {
+            supprimerCandidature(arg0_in);
+
+            _output = handler.createReply();
+
+        }
+        catch (AdmissionPostLicence.CandidatureInconnu _exception)
+        {
+            _output = handler.createExceptionReply();
+            AdmissionPostLicence.CandidatureInconnuHelper.write(_output,_exception);
         }
         return _output;
     }
