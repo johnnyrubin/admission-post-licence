@@ -1,5 +1,6 @@
 package universite.database;
 
+import Database.Connexion;
 import java.util.List;
 import Pojo.ResultatSemestre;
 import Pojo.Etudiant;
@@ -19,9 +20,10 @@ public class ResultatSemestreDAO extends UniversiteDAO {
     /**
      * 
      * @param unNomUniversite 
+     * @param uneConn 
      */
-    public ResultatSemestreDAO(String unNomUniversite) {
-        super(unNomUniversite);
+    public ResultatSemestreDAO(String unNomUniversite, Connexion uneConn) {
+        super(unNomUniversite, uneConn);
     }
     
     /**

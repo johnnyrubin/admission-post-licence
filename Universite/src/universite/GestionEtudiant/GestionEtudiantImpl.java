@@ -36,7 +36,7 @@ public class GestionEtudiantImpl extends GestionEtudiantPOA {
         nom = aNom;
         rectorat = GetObjectCorba.getRectoratCorba(aRectoratName, ServerUniversite.getOrb());
         
-        etudiantDao = new EtudiantDAO(nom);
+        etudiantDao = new EtudiantDAO(nom, ServerUniversite.getConnexionDb());
         
         // Enregistrement auprès du rectorat
         enregistrerSurRectorat();

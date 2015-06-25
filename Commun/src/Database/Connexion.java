@@ -1,31 +1,26 @@
-package universite.database;
+package Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * 
  */
-public class ConnexionUniversite {
+public class Connexion {
     
     private final String DBPath;
     private Connection connection = null;
     public Statement statement = null;
- 
-    /**
-     * 
-     * @param dBPath 
-     */
-    public ConnexionUniversite(String dBPath) {
-        DBPath = "universite-"+dBPath;
+
+    public Connexion(String dBPath) {
+        DBPath = dBPath;
     }
- 
-    /**
-     * Lance la connexion à la base de données SQLite
-     */
+    
     public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -37,7 +32,7 @@ public class ConnexionUniversite {
             System.out.println("Erreur de connexion");
         }
     }
- 
+    
     /**
      * Ferme la connexion à la base de données SQLite
      */
@@ -49,4 +44,5 @@ public class ConnexionUniversite {
             e.printStackTrace();
         }
     }
+    
 }

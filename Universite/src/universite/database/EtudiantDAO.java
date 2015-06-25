@@ -1,5 +1,6 @@
 package universite.database;
 
+import Database.Connexion;
 import Pojo.Etudiant;
 import Pojo.ResultatSemestre;
 import java.sql.ResultSet;
@@ -18,9 +19,10 @@ public class EtudiantDAO extends UniversiteDAO {
     /**
      * 
      * @param unNomUniversite 
+     * @param uneConn 
      */
-    public EtudiantDAO(String unNomUniversite) {
-        super(unNomUniversite);
+    public EtudiantDAO(String unNomUniversite, Connexion uneConn) {
+        super(unNomUniversite, uneConn);
     }
     
     /**
@@ -50,7 +52,7 @@ public class EtudiantDAO extends UniversiteDAO {
                     etudiant.setUniversite(rs.getString("UNIVERSITE"));
                     
                     // Récupération des résultats scolaires de l'étudiant
-                    ResultatSemestreDAO dao = new ResultatSemestreDAO(nomUniversite);
+                    ResultatSemestreDAO dao = new ResultatSemestreDAO(nomUniversite, conn);
                     List<ResultatSemestre> resultats = dao.getFromEtudiant(etudiant);
                     
                     etudiant.setResultats(resultats);

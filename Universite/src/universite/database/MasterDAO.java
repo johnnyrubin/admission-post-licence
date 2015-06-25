@@ -1,5 +1,6 @@
 package universite.database;
 
+import Database.Connexion;
 import Pojo.Licence;
 import Pojo.Master;
 import java.sql.ResultSet;
@@ -12,8 +13,13 @@ import java.util.logging.Logger;
 
 public class MasterDAO extends UniversiteDAO {
 
-    public MasterDAO(String unNomUniversite) {
-        super(unNomUniversite);
+    /**
+     * 
+     * @param unNomUniversite
+     * @param uneConn 
+     */
+    public MasterDAO(String unNomUniversite, Connexion uneConn) {
+        super(unNomUniversite, uneConn);
     }
     
     /**
@@ -38,7 +44,7 @@ public class MasterDAO extends UniversiteDAO {
                 master.setNom(rs.getString("NOM"));
                 
                 // Récupération de la liste des licence prérequise
-                LicenceDAO dao = new LicenceDAO(nomUniversite);
+                LicenceDAO dao = new LicenceDAO(nomUniversite, conn);
                 List<Licence> licences = dao.getPrerequisFromMaster(master);
                 
                 master.setPrerequis(licences);
@@ -62,7 +68,7 @@ public class MasterDAO extends UniversiteDAO {
         try {
             // Exécution de la requête de récupération du master
             String sql = "SELECT * FROM MASTER;";
-            ResultSet rs = this.conn.statement.executeQuery(sql);
+            ResultSet rs = conn.statement.executeQuery(sql);
             
             while(rs.next()) {
                 // Traitement du résultat
@@ -71,7 +77,7 @@ public class MasterDAO extends UniversiteDAO {
                 m.setNom(rs.getString("NOM"));
                 
                 // Récupération de la liste des licence prérequise
-                LicenceDAO dao = new LicenceDAO(nomUniversite);
+                LicenceDAO dao = new LicenceDAO(nomUniversite, conn);
                 List<Licence> licences = dao.getPrerequisFromMaster(m);
                 m.setPrerequis(licences);
                 
