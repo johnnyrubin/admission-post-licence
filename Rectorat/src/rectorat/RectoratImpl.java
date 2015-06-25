@@ -48,7 +48,7 @@ public class RectoratImpl extends RectoratPOA {
         this.nom = aNom;
         
         // Récupération du ministère
-        ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.orb);
+        ministere = GetObjectCorba.getMinistereCorba(ServerRectorat.getOrb());
         
         enregistrerSurMinistere();
     }
@@ -69,7 +69,7 @@ public class RectoratImpl extends RectoratPOA {
                 Master m = null;
                 
                 for(int i = 0; i < masters.size() && trouve == false; i++) {
-                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.orb);
+                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.getOrb());
                     
                     if( m != null) {
                         if(m.nom().equals(c.master)) {
@@ -79,15 +79,17 @@ public class RectoratImpl extends RectoratPOA {
                 }
                 try {
                     if(m != null && trouve) {
+                        CandidatureDAO dao = new CandidatureDAO(ServerRectorat.getConnexionDb());
+                        
                         //Vérification des pré requis
                         if(m.verifierPrerequis(candidature.getEtu().getLicence())) {
                             //Enregistrer candidature
                             candidature.setEtatCandidature(etatCandidature.valide.value());
-                            CandidatureDAO.ajoutCandidature(candidature, this.nom);
+                            dao.ajoutCandidature(candidature);
                         } else {
                             // 0 correspond à une candidature non valide
                             candidature.setEtatCandidature(etatCandidature.nonValide.value());
-                            CandidatureDAO.ajoutCandidature(candidature, this.nom);
+                            dao.ajoutCandidature(candidature);
                         }
                     }
                 } catch (MasterInconnu ex) {
@@ -105,15 +107,15 @@ public class RectoratImpl extends RectoratPOA {
     @Override
     public candidature[] recupererCandidaturesMaster(String universite, String master) throws MasterInconnu {
         System.out.println("Appel méthode RectoratImpl.recupererCandidaturesMaster");
-        
-        return CandidatureMapper.candidaturesCorbaToListCandidature(CandidatureDAO.getCandidaturesMaster(universite, master, nom));
+        CandidatureDAO dao = new CandidatureDAO(ServerRectorat.getConnexionDb());
+        return CandidatureMapper.candidaturesCorbaToListCandidature(dao.getCandidaturesMaster(universite, master));
     }
 
     @Override
     public candidature[] recupererCandidaturesEtudiant(identite etudiant) throws EtudiantInconnu {
         System.out.println("Appel méthode RectoratImpl.recupererCandidaturesEtudiant");
-        
-        return CandidatureMapper.candidaturesCorbaToListCandidature(CandidatureDAO.getCandidaturesEtudiant(etudiant.ine, nom));
+        CandidatureDAO dao = new CandidatureDAO(ServerRectorat.getConnexionDb());
+        return CandidatureMapper.candidaturesCorbaToListCandidature(dao.getCandidaturesEtudiant(etudiant.ine));
     }
 
     @Override
@@ -131,7 +133,7 @@ public class RectoratImpl extends RectoratPOA {
                 Master m = null;
                 
                 for(int i = 0; i < masters.size() && trouve == false; i++) {
-                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.orb);
+                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.getOrb());
                     
                     if( m != null) {
                         if(m.nom().equals(c.master)) {
@@ -140,7 +142,8 @@ public class RectoratImpl extends RectoratPOA {
                     }
                 }
                 if(m != null) {
-                    CandidatureDAO.modifierCandidature(candidature, this.nom);
+                    CandidatureDAO dao = new CandidatureDAO(ServerRectorat.getConnexionDb());
+                    dao.modifierCandidature(candidature);
                 }
             }
         }
@@ -200,7 +203,7 @@ public class RectoratImpl extends RectoratPOA {
         List<String> mastersUniversite = new ArrayList<>();
         
         for (String ior : masters) {
-            Master master = GetObjectCorba.getMasterCorba(ior, ServerRectorat.orb);
+            Master master = GetObjectCorba.getMasterCorba(ior, ServerRectorat.getOrb());
             
             if(master.universite().equals(u)) {
                 mastersUniversite.add(ior);
@@ -250,7 +253,7 @@ public class RectoratImpl extends RectoratPOA {
         String gestEtu = null;
         
         for (String ior : gestionsEtudiant) {
-            GestionEtudiant g = GetObjectCorba.getGestionEtudiantCorba(ServerRectorat.orb, ior);
+            GestionEtudiant g = GetObjectCorba.getGestionEtudiantCorba(ServerRectorat.getOrb(), ior);
             
             if(g.nom().equals(universite)) {
                 gestEtu = ior;
@@ -275,7 +278,7 @@ public class RectoratImpl extends RectoratPOA {
                 Master m = null;
                 
                 for(int i = 0; i < masters.size() && trouve == false; i++) {
-                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.orb);
+                    m = GetObjectCorba.getMasterCorba(masters.get(i), ServerRectorat.getOrb());
                     
                     if( m != null) {
                         if(m.nom().equals(c.master)){
@@ -285,7 +288,8 @@ public class RectoratImpl extends RectoratPOA {
                 }
                 
                 if(m != null) {
-                    CandidatureDAO.supprimerCandidature(candidature, this.nom);
+                    CandidatureDAO dao = new CandidatureDAO(ServerRectorat.getConnexionDb());
+                    dao.supprimerCandidature(candidature);
                 }
             }
         }

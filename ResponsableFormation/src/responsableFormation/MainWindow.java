@@ -2,8 +2,12 @@ package responsableFormation;
 
 import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Master;
+import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.candidature;
+import AdmissionPostLicence.decisionCandidat;
+import AdmissionPostLicence.decisionMaster;
+import AdmissionPostLicence.periode;
 import Util.GetObjectCorba;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -21,6 +25,8 @@ public class MainWindow extends javax.swing.JFrame {
     private final Rectorat rectorat;
     private final String universite;
     
+    private final Ministere ministere;
+    
     private final HashMap<String, Master> masters = new HashMap<>();
     
     private final GestionEtudiant gestionEtudiant;
@@ -30,14 +36,16 @@ public class MainWindow extends javax.swing.JFrame {
      * @param unOrb
      * @param unRectorat
      * @param uneUniversite
+     * @param unMinistere
      */
-    public MainWindow(org.omg.CORBA.ORB unOrb, Rectorat unRectorat, String uneUniversite) {
+    public MainWindow(org.omg.CORBA.ORB unOrb, Rectorat unRectorat, String uneUniversite, Ministere unMinistere) {
         initComponents();
         
         orb = unOrb;
         
         rectorat = unRectorat;
         universite = uneUniversite;
+        ministere = unMinistere;
         
         // Récupération de la gestion etudiant de l'université
         String iorGe = rectorat.getGestEtu(universite);
@@ -142,6 +150,9 @@ public class MainWindow extends javax.swing.JFrame {
     private void afficherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afficherButtonActionPerformed
         // Récupération de la formation choisie
         String masterSel = (String) masterComboBox.getSelectedItem();
+        
+        // Récupération de la période d'admission
+        periode periodeEnCours = ministere.periodeEnCours();
 
         // On vide la grille contenant les candidatures
         candidaturesPanel.removeAll();
@@ -156,17 +167,42 @@ public class MainWindow extends javax.swing.JFrame {
             Master m = masters.get(masterSel);
 
             if(m != null) {
-                candidature[] candidatures = m.consulterEtatCandidatures();
-                if(candidatures.length == 0) {
-                    // Affichage d'une pop-up
-                    JOptionPane.showMessageDialog(this, "Aucune candidature pour le master " + masterSel, "Gestion des candidatures", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    // Affichage des candidatures
-                    for(candidature c : candidatures) {
-                        candidaturesPanel.add(new CandidaturePanel(c, m, gestionEtudiant));
+                if(periode.periode4.equals(periodeEnCours)) {
+                    // Traitement des candidatures en attente
+                    candidature[] candidatures = m.consulterEtatCandidatures();
+                    if(candidatures.length == 0) {
+                        // Affichage d'une pop-up
+                        JOptionPane.showMessageDialog(this, "Aucune candidature en attente à traiter pour le master " + masterSel, "Gestion des candidatures", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        // Affichage des candidatures en attente et non traité
+                        int i = 0;
+                        for(candidature c : candidatures) {
+                            if(decisionMaster.listeAttente.equals(c.decisionM) && decisionCandidat.nonTraite.equals(c.decisionC)) {
+                                candidaturesPanel.add(new CandidaturePanelPhase4(c, m, gestionEtudiant, orb));
+                                i++;
+                            }
+                        }
+                        candidaturesPanel.revalidate();
+                        candidaturesPanel.repaint();
+                        // Affichage d'une pop-up
+                        if(i == 0) {
+                            JOptionPane.showMessageDialog(this, "Aucune candidature en attente à traiter pour le master " + masterSel, "Gestion des candidatures", JOptionPane.INFORMATION_MESSAGE);
+                        }
                     }
-                    candidaturesPanel.revalidate();
-                    candidaturesPanel.repaint();
+                } else {
+                    // Traitement normal
+                    candidature[] candidatures = m.consulterEtatCandidatures();
+                    if(candidatures.length == 0) {
+                        // Affichage d'une pop-up
+                        JOptionPane.showMessageDialog(this, "Aucune candidature pour le master " + masterSel, "Gestion des candidatures", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        // Affichage des candidatures
+                        for(candidature c : candidatures) {
+                            candidaturesPanel.add(new CandidaturePanel(c, m, gestionEtudiant, orb));
+                        }
+                        candidaturesPanel.revalidate();
+                        candidaturesPanel.repaint();
+                    }
                 }
             }
         }

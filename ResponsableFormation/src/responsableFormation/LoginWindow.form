@@ -41,9 +41,9 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="mdpTextField" alignment="0" pref="142" max="32767" attributes="0"/>
                                   <Component id="loginTextField" max="32767" attributes="0"/>
-                                  <Component id="rectoratComboBox" max="32767" attributes="0"/>
+                                  <Component id="rectoratComboBox" pref="142" max="32767" attributes="0"/>
+                                  <Component id="mdpTextField" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -136,8 +136,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="loginTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="mdpTextField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="admin"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="universiteComboBox">
       <Properties>
@@ -173,6 +174,11 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="mdpTextField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="admin"/>
       </Properties>
     </Component>
   </SubComponents>

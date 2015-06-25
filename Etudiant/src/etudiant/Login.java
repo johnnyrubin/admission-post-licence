@@ -54,6 +54,7 @@ public class Login extends javax.swing.JFrame {
                     Rectorat r = lesRectorats.get(jComboBoxRectorats.getSelectedItem());
                     GestionEtudiant g;
                     String[] gestEtus = r.getListeGestEtu();
+                    jComboBoxUniversite.removeAllItems();
                     for(String ior : gestEtus) {
                         g = GetObjectCorba.getGestionEtudiantCorba(orb, ior);
                         if( g != null) {
@@ -242,6 +243,13 @@ public class Login extends javax.swing.JFrame {
                             choixVoeux.setVisible(true);
                             this.setVisible(false);
                             break;
+                        case "periode4":
+                            ChoixVoeuxPhase4 choixVoeuxPhase4 = new ChoixVoeuxPhase4(m,lesRectorats.get(jComboBoxRectorats.getSelectedItem()),
+                            g,orb,i);
+                            choixVoeuxPhase4.setVisible(true);
+                            this.setVisible(false);
+                            break;
+                            
                     }
                     
                 }

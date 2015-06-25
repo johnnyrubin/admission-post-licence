@@ -1,5 +1,6 @@
 package rectorat.database;
 
+import Database.Connexion;
 import Pojo.Candidature;
 import Pojo.Etudiant;
 import java.sql.ResultSet;
@@ -10,36 +11,45 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Classe d'accès aux données des candidatures enregistrées en base
  * 
  */
 public class CandidatureDAO {
     
     /** Connexion à la base de données Rectorat */
-    private static ConnexionRectorat conn;
+    private final Connexion conn;
+
+    /**
+     * 
+     * @param uneConn 
+     */
+    public CandidatureDAO(Connexion uneConn) {
+        // Connexion à la base de données
+        conn = uneConn;
+    }
     
     /**
      * Ajout d'une candidature dans la base de donnée pour la persistance des données
+     * 
      * @param c
-     * @param nomRectorat
-     * @return 
+     * @return boolean
      */
-    public static boolean ajoutCandidature(Candidature c,String nomRectorat){
+    public boolean ajoutCandidature(Candidature c) {
         int lineAffected=0;
+        
         try {
-            // Connexion à la base de données
-            conn = new ConnexionRectorat(nomRectorat+".db");
-            conn.connect();
             String sql = "Insert into CANDIDATURES values" +
                     "('"+c.getEtu().getIne()+"','"+c.getMaster()+"','"+c.getUniversite()+"',"+c.getOrdre()+
                     ","+c.getEtatCandidature()+","+c.getDecisionCandidat()+","+c.getDecisionMaster()+")";
             System.out.println(sql);
+            
             // Création de la candidature
             lineAffected=conn.statement.executeUpdate(sql);
             sql = "select count(*) as tot from ETUDIANT where INE='" + c.getEtu().getIne() + "';";
             ResultSet rs = conn.statement.executeQuery(sql);
-
-            if(!rs.next()) {
+            rs.next();
+            
+            if(rs.getInt("tot") == 0) {
                 sql = "Insert into ETUDIANT values" +
                         "('"+c.getEtu().getIne()+"','"+c.getEtu().getNom()+"','"+c.getEtu().getPrenom()+"','"+c.getEtu().getUniversite()+
                         "','"+c.getEtu().getLicence()+"')";
@@ -51,28 +61,30 @@ public class CandidatureDAO {
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        finally{
-            // Fermeture de la connexion
-            conn.close();  
-        }
+        
         return (lineAffected!=0);
     }
     
-    public static List<Candidature> getCandidaturesEtudiant(String ine,String nomRectorat){
+    /**
+     * Récupère les candidatures de l'étudiant dont le numéro INE est fourni en paramètre
+     * 
+     * @param ine
+     * @return List<{@link Candidature}>
+     */
+    public List<Candidature> getCandidaturesEtudiant(String ine) {
+        
         List<Candidature> lesCandidatures = new ArrayList<>();
         Candidature c;
         Etudiant e;
+        
         try {
-            // Connexion à la base de données
-            conn = new ConnexionRectorat(nomRectorat+".db");
-            conn.connect();
-            
             // Exécution de la requête
             String sql = "SELECT E.INE as INE, NOM, PRENOM, LICENCE,E.UNIVERSITE as UNIVERSITEETU, "
                     + "IDMASTER, C.UNIVERSITE as UNIVERSITE, ORDRE, ETAT, DECISIONCANDIDAT,"
                     + "DECISIONMASTER FROM CANDIDATURES C, ETUDIANT E WHERE C.INE=E.INE AND C.INE = '" + ine + "' ORDER BY ORDRE;";
             ResultSet rs = conn.statement.executeQuery(sql);
             System.out.println(sql);
+            
             while(rs.next()) {
                 // Traitement du résultat
                 e = new Etudiant();
@@ -89,17 +101,17 @@ public class CandidatureDAO {
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        finally{
-            // Fermeture de la connexion
-            conn.close();  
-        }
+        
         return lesCandidatures;
     }
     
-    public static void modifierCandidature(Candidature c,String nomRectorat){
+    /**
+     * Modifie la candidature en base
+     * 
+     * @param c 
+     */
+    public void modifierCandidature(Candidature c) {
         try {
-            conn = new ConnexionRectorat(nomRectorat+".db");
-            conn.connect();
             String sql = "update CANDIDATURES set UNIVERSITE='"+c.getUniversite()+"', ORDRE="+c.getOrdre()+
                     ", Etat="+c.getEtatCandidature()+", DecisionCandidat="+c.getDecisionCandidat()+", DecisionMaster="+c.getDecisionMaster()+
                     " where INE='"+c.getEtu().getIne()+"' AND IDMASTER='"+c.getMaster()+"';";
@@ -108,13 +120,15 @@ public class CandidatureDAO {
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
-    public static void supprimerCandidature(Candidature c,String nomRectorat){
+    /**
+     * Supprime la candidature de la BD
+     * 
+     * @param c 
+     */
+    public void supprimerCandidature(Candidature c) {
         try {
-            conn = new ConnexionRectorat(nomRectorat+".db");
-            conn.connect();
             String sql = "delete from CANDIDATURES where INE='"+c.getEtu().getIne()+"' AND IDMASTER='"+c.getMaster()+"';";
             System.out.println(sql);
             conn.statement.executeUpdate(sql);
@@ -124,16 +138,19 @@ public class CandidatureDAO {
             
     }
     
-    public static List<Candidature> getCandidaturesMaster(String universite, String master, String nomRectorat) {
+    /**
+     * Récupère les candidatures faites au master fourni en paramètre
+     * 
+     * @param universite
+     * @param master
+     * @return List<{@link Candidature}>
+     */
+    public List<Candidature> getCandidaturesMaster(String universite, String master) {
         List<Candidature> lesCandidatures = new ArrayList<>();
         Candidature c;
         Etudiant e;
         
-        try {
-            // Connexion à la base de données
-            conn = new ConnexionRectorat(nomRectorat+".db");
-            conn.connect();
-            
+        try {            
             // Exécution de la requête
             String sql = "SELECT E.INE as INE, NOM, PRENOM, LICENCE,E.UNIVERSITE as UNIVERSITEETU, "
                     + "IDMASTER, C.UNIVERSITE as UNIVERSITE, ORDRE, ETAT, DECISIONCANDIDAT,"
@@ -160,9 +177,6 @@ public class CandidatureDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(CandidatureDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            // Fermeture de la connexion
-            conn.close();  
         }
         
         return lesCandidatures;

@@ -75,10 +75,10 @@ public class InitDbUniversite {
         HashMap<String, String[]> jeuxDonnees = new HashMap<>();
         
         String[] jeuxDonneesToulouse = {
-            "INSERT INTO ETUDIANT values ('123456E','dupond','jean','toto','Paul sabatier','INFO');",
-            "INSERT INTO ETUDIANT values ('E001','RUBIN','Johnny','batman','Paul sabatier','MIAGE');",
-            "INSERT INTO ETUDIANT values ('E002','VIGNEAUX','Vincent','bcp','Paul sabatier','MUSICOLOGIE');",
-            "INSERT INTO ETUDIANT values ('E004','TACSIN','Teddy','corba','Paul sabatier','MIAGE');"
+            "INSERT INTO ETUDIANT values ('123456E','dupond','jean','toto','Paul Sabatier','INFO');",
+            "INSERT INTO ETUDIANT values ('E001','RUBIN','Johnny','batman','Paul Sabatier','MIAGE');",
+            "INSERT INTO ETUDIANT values ('E002','VIGNEAUX','Vincent','bcp','Paul Sabatier','MUSICOLOGIE');",
+            "INSERT INTO ETUDIANT values ('E004','TACSIN','Teddy','corba','Paul Sabatier','MIAGE');"
         };
         
         String[] jeuxDonneesBordeaux = {

@@ -353,7 +353,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         if(!jTextFieldMaster.getText().isEmpty() && !jTextFieldOrdre.getText().isEmpty() && !jTextFieldUniversite.getText().isEmpty()){
             try {
                 String master = jComboBoxCandidatures.getSelectedItem().toString().replaceAll("\\-.*","");
-                Candidature c = getCandidature(master);
+                String universite = jComboBoxCandidatures.getSelectedItem().toString().substring(jComboBoxCandidatures.getSelectedItem().toString().lastIndexOf("-") + 1);
+                Candidature c = getCandidature(master,universite);
                 g.supprimerCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
                 initialiserMenu();
             } catch (CandidatureInconnu ex) {
@@ -418,11 +419,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Rectorat rTemp;
         List<Candidature> lesCandidaturesTemp;
         jComboBoxCandidatures.removeAllItems();
+        
         for(String ior : iorRectorats) {
             rTemp = GetObjectCorba.getRectoratCorba(orb, ior);
+            
             if( rTemp != null) {
                 try {
                      lesCandidaturesTemp = CandidatureMapper.candidaturesCorbaToListCandidature(rTemp.recupererCandidaturesEtudiant(moi));
+                     
                      if(!lesCandidaturesTemp.isEmpty()){
                          for (Candidature lesCandidaturesTemp1 : lesCandidaturesTemp) {
                              nombreDeVoeux++;
@@ -452,7 +456,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {    
                 if(jComboBoxCandidatures.getSelectedIndex()!=-1){
                     String master = jComboBoxCandidatures.getSelectedItem().toString().replaceAll("\\-.*","");
-                    Candidature c = getCandidature(master);
+                    String universite = jComboBoxCandidatures.getSelectedItem().toString().substring(jComboBoxCandidatures.getSelectedItem().toString().lastIndexOf("-") + 1);
+                    Candidature c = getCandidature(master,universite);
+                    System.out.println(universite);
                     jTextFieldMaster.setText(c.getMaster());
                     jTextFieldUniversite.setText(c.getUniversite());
                     jTextFieldOrdre.setText(Integer.toString(c.getOrdre()));
@@ -473,11 +479,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     /**
      * Renvoi la Candidature visé par ce master
      * @param master
+     * @param universite
      * @return 
      */
-    public Candidature getCandidature(String master){
+    public Candidature getCandidature(String master, String universite){
         for (Candidature mesCandidatures1 : mesCandidatures) {
-            if(mesCandidatures1.getEtu().getIne().equals(moi.ine) && mesCandidatures1.getMaster().equals(master)){
+            if(mesCandidatures1.getEtu().getIne().equals(moi.ine) && mesCandidatures1.getMaster().equals(master) && mesCandidatures1.getUniversite().equals(universite)){
                 return mesCandidatures1;
             }
         }

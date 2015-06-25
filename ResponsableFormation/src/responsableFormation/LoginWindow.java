@@ -70,6 +70,7 @@ public class LoginWindow extends javax.swing.JFrame {
                     
                     // Récupération de la liste des universités                    
                     List<String> universites = new ArrayList<>(Arrays.asList(rectoratSel.getListeUniversite()));
+                    universiteComboBox.removeAllItems();
                     
                     // Remplissage de la liste déroulante
                     for(String universite : universites) {
@@ -95,11 +96,11 @@ public class LoginWindow extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         loginTextField = new javax.swing.JTextField();
-        mdpTextField = new javax.swing.JTextField();
         universiteComboBox = new javax.swing.JComboBox();
         rectoratComboBox = new javax.swing.JComboBox();
         loginButton = new javax.swing.JButton();
         errorLabel = new javax.swing.JLabel();
+        mdpTextField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formation - Gestion des admissions");
@@ -115,6 +116,8 @@ public class LoginWindow extends javax.swing.JFrame {
 
         jLabel6.setText("Rectorat :");
 
+        loginTextField.setText("admin");
+
         universiteComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez un rectorat" }));
 
         rectoratComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sélectionnez" }));
@@ -128,6 +131,8 @@ public class LoginWindow extends javax.swing.JFrame {
 
         errorLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+        mdpTextField.setText("admin");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,9 +153,9 @@ public class LoginWindow extends javax.swing.JFrame {
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(mdpTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                                     .addComponent(loginTextField)
-                                    .addComponent(rectoratComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(rectoratComboBox, 0, 142, Short.MAX_VALUE)
+                                    .addComponent(mdpTextField)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
                                 .addComponent(jLabel5)
@@ -201,7 +206,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // Récupération des valeurs du formulaire de connexion
         String login = loginTextField.getText();
-        String mdp = mdpTextField.getText();
+        String mdp = new String(mdpTextField.getPassword());
         String rectorat = (String) rectoratComboBox.getSelectedItem();
         String universite = (String) universiteComboBox.getSelectedItem();
         
@@ -216,7 +221,7 @@ public class LoginWindow extends javax.swing.JFrame {
             
             // Vérification du couple login/mdp
             if(loginAdmin.equals(login) && mdpAdmin.equals(mdp)) {
-                    m = new MainWindow(orb, rectoratSel, universite);
+                    m = new MainWindow(orb, rectoratSel, universite, ministere);
                     m.setVisible(true);
                     // Et on masque la fenêtre de connexion
                     this.setVisible(false);
@@ -275,7 +280,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JButton loginButton;
     private javax.swing.JTextField loginTextField;
-    private javax.swing.JTextField mdpTextField;
+    private javax.swing.JPasswordField mdpTextField;
     private javax.swing.JComboBox rectoratComboBox;
     private javax.swing.JComboBox universiteComboBox;
     // End of variables declaration//GEN-END:variables

@@ -1,35 +1,41 @@
 package rectorat.database;
 
-import AdmissionPostLicence.decisionMaster;
-import AdmissionPostLicence.etatCandidature;
+import Database.Connexion;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
- *
+ * Classe utilisée pour initialiser la base de données du rectorat.
+ * Cela comprend la création des tables et l'insertion des jeux de données initiaux
+ * 
  */
 public class InitDbRectorat {
+    
     /** Connexion à la base de données Rectorat */
-    private static ConnexionRectorat conn;
+    private static Connexion conn;
+    
+    private static String rectorat;
     
     /**
      * 
-     * @param args 
+     * @param uneConn 
+     * @param unRectorat 
      */
-    public static void main(String[] args) {
+    public static void run(Connexion uneConn, String unRectorat) {
         
-        // Connexion à la base de données
-        conn = new ConnexionRectorat("RectoratToulouse.db");
-        conn.connect();
-        try {
-            initTableRectorat();
-            initTableCandidatures();
-            initTableEtudiant();
-        } catch (SQLException ex) {
-            System.out.println("Erreur lors de l'insertion des données");
-        }
-        finally{
-            // Fermeture de la connexion
-            conn.close();  
+        if(uneConn != null && unRectorat != null) {
+            rectorat = unRectorat;
+            
+            // Connexion à la base de données
+            conn = uneConn;
+
+            try {
+                initTableRectorat();
+                initTableCandidatures();
+                initTableEtudiant();
+            } catch (SQLException ex) {
+                System.out.println("Erreur lors de l'initialisation de la base de données");
+            }
         }
     }
     
@@ -53,7 +59,7 @@ public class InitDbRectorat {
         
         // Insertion des rectorats dans la table
         // TODO voir avec Vincent pour les données
-        sql = "INSERT INTO RECTORAT VALUES (1, 'RectoratToulouse')";
+        sql = "INSERT INTO RECTORAT VALUES (1, '" + rectorat + "')";
         conn.statement.executeUpdate(sql);
     }
     
@@ -80,20 +86,6 @@ public class InitDbRectorat {
         
         // Création de la table CANDIDATURES
         conn.statement.executeUpdate(sql);
-        
-        // Insertion des candidatures dans la table
-        String[] jeuxDonnees = {
-            "Insert into CANDIDATURES VALUES ('123456E', 'MIAGE', 'Paul Sabatier', 1, "+etatCandidature.valide.value() +" , 0, "
-                + decisionMaster.listeAttente.value() +")",
-            "Insert into CANDIDATURES VALUES ('123456E', 'INFO', 'Paul Sabatier', 2, "+etatCandidature.valide.value() +" , 0, "
-                + decisionMaster.admis.value() +")",
-            "Insert into CANDIDATURES VALUES ('123456E', 'BIO', 'Paul Sabatier', 3, "+etatCandidature.nonValide.value() +" , 0, "
-                + decisionMaster.refuser.value() +")"
-        };
-        
-        for(String req : jeuxDonnees) {
-            conn.statement.executeUpdate(req);
-        }
     }
     
     /**
@@ -117,16 +109,25 @@ public class InitDbRectorat {
         // Création de la table ETUDIANT
         conn.statement.executeUpdate(sql);
         
-        String[] jeuxDonnees = {
-            "INSERT INTO ETUDIANT VALUES ('123456E', 'dupond', 'jean', 'Paul sabatier', 'INFO');",
-            "INSERT INTO ETUDIANT VALUES ('E001', 'RUBIN', 'Johnny', 'Paul sabatier', 'MIAGE');",
-            "INSERT INTO ETUDIANT VALUES ('E002', 'VIGNEAUX', 'Vincent', 'Paul sabatier', 'MUSICOLOGIE');",
-            "INSERT INTO ETUDIANT VALUES ('E004', 'TACSIN', 'Teddy', 'Paul sabatier', 'MIAGE');",
+        // Création jeux de données
+        HashMap<String, String[]> jeuxDonnees = new HashMap<>();
+        
+        String[] jeuxDonneesToulouse = {
+            "INSERT INTO ETUDIANT VALUES ('123456E', 'dupond', 'jean', 'Paul Sabatier', 'INFO');",
+            "INSERT INTO ETUDIANT VALUES ('E001', 'RUBIN', 'Johnny', 'Paul Sabatier', 'MIAGE');",
+            "INSERT INTO ETUDIANT VALUES ('E002', 'VIGNEAUX', 'Vincent', 'Paul Sabatier', 'MUSICOLOGIE');",
+            "INSERT INTO ETUDIANT VALUES ('E004', 'TACSIN', 'Teddy', 'Paul Sabatier', 'MIAGE');",
+        };
+        
+        String[] jeuxDonneesBordeaux = {
             "INSERT INTO ETUDIANT VALUES ('E003', 'DESPRATS', 'Thierry', 'Bordeaux 1', 'INFO');"
         };
         
+        jeuxDonnees.put("RectoratToulouse", jeuxDonneesToulouse);
+        jeuxDonnees.put("RectoratBordeaux", jeuxDonneesBordeaux);
+        
         // Insertion des étudiants
-        for(String req : jeuxDonnees) {
+        for(String req : jeuxDonnees.get(rectorat)) {
             conn.statement.executeUpdate(req);
         }
     }

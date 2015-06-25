@@ -6,6 +6,7 @@ import universite.Master.MasterImpl;
 import universite.database.MasterDAO;
 import Server.Server;
 import Pojo.Master;
+import java.io.File;
 import universite.database.InitDbUniversite;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,13 +46,25 @@ public class ServerUniversite extends Server {
                 nomRectorat = serverConfig.getProperty("nomRectorat");
             }
             
-            // Connexion à la base de données
+            // On enleve les espaces dans le nom de l'université pour nommer le fichier db
             String nomUniversiteDb =  nomUniversite.replaceAll("\\s", "").toLowerCase();
-            conn = new Connexion("universite-" + nomUniversiteDb + ".db");
+            String nomDbFile = "universite-" + nomUniversiteDb + ".db";
+            
+            // Vérifie si la BD du serveur existe déjà
+            File dbFile = new File(nomDbFile);
+            boolean dbFileExists = false;
+            if(dbFile.exists() && !dbFile.isDirectory()) {
+                dbFileExists = true;
+            }
+            
+            // Connexion à la base de données
+            conn = new Connexion(nomDbFile);
             conn.connect();
             
             // Initialisation de la base de données si nécessaire
-            InitDbUniversite.run(conn, nomUniversite);
+            if(!dbFileExists) {
+                InitDbUniversite.run(conn, nomUniversite);
+            }
 
             // Intialisation de l'ORB
             orb = org.omg.CORBA.ORB.init(args, null);
@@ -114,7 +127,7 @@ public class ServerUniversite extends Server {
     }
     
     /**
-     * Surcharge de la méthode shutdown afin de fermer la connexion
+     * Surcharge de la méthode shutdown afin de fermer la connexion à la BD
      */
     protected static void shutdown() {
         Server.shutdown();

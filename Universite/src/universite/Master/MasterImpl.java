@@ -5,11 +5,14 @@ import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.MasterPOA;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.candidature;
+import AdmissionPostLicence.etatCandidature;
 import universite.ServerUniversite;
 import universite.database.MasterDAO;
 import Pojo.Master;
 import Pojo.Licence;
 import Util.GetObjectCorba;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -92,7 +95,24 @@ public class MasterImpl extends MasterPOA {
         try {
             if(rectorat != null) {
                 // Récupération des candidatures
-                resultats = rectorat.recupererCandidaturesMaster(universite, nom);
+                candidature[] resultatTemp = rectorat.recupererCandidaturesMaster(universite, nom);
+                
+                // On enlève les candidatures non valides
+                List<candidature> resultatsValides = new ArrayList<>();
+                for(int i = 0; i < resultatTemp.length; i++) {
+                    if(!etatCandidature.nonValide.equals(resultatTemp[i].etat)) {
+                        resultatsValides.add(resultatTemp[i]);
+                    }
+                }
+                
+                // On transforme les candidatures valides en tableau
+                resultats = new candidature[resultatsValides.size()];
+                int j = 0;
+                
+                for(candidature cTemp : resultatsValides) {
+                    resultats[j] = cTemp;
+                    j++;
+                }
             }
         } catch (MasterInconnu ex) {
             Logger.getLogger(MasterImpl.class.getName()).log(Level.SEVERE, null, ex);

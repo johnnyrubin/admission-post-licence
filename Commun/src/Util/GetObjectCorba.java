@@ -106,6 +106,32 @@ public class GetObjectCorba {
     }
     
     /**
+     * Permet de récupérer l'objet CORBA de gestion étudiant de l'université de ce master
+     * 
+     * @param name
+     * @param orb
+     * @return {@link GestionEtudiant}
+     */
+    public static GestionEtudiant getGestionEtudiantCorba(String name, org.omg.CORBA.ORB orb) {
+        // Initialisation de la variable de retour
+        GestionEtudiant g = null;
+        System.out.println("GetObjectCorba.getGestionEtudiantCorba : " + name);
+        try {
+            NamingContext root = org.omg.CosNaming.NamingContextHelper.narrow(orb.string_to_object("corbaloc:iiop:1.2@" + ipServeur + ":2001/NameService"));
+            org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
+            
+            // On récupère le rectorat
+            nameToFind[0] = new org.omg.CosNaming.NameComponent(name, "");
+            org.omg.CORBA.Object remoteRef = root.resolve(nameToFind);
+            g = GestionEtudiantHelper.narrow(remoteRef);
+        } catch (NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+            Logger.getLogger(GetObjectCorba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return g;
+    }
+    
+    /**
      * 
      * @return ipServeur
      */

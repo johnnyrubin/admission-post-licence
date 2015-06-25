@@ -10,8 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Classe d'accès aux données des étdiants enregistrés en base
- * 
+ * Classe d'accès aux données des étudiants enregistrés en base
  * 
  */
 public class EtudiantDAO extends UniversiteDAO {

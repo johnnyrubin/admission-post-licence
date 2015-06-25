@@ -17,6 +17,7 @@ public class UniversiteDAO {
     /**
      * 
      * @param unNomUniversite 
+     * @param uneConn 
      */
     public UniversiteDAO(String unNomUniversite, Connexion uneConn) {
         // On enlève les espaces présents dans le nom de l'université

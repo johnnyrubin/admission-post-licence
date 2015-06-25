@@ -230,14 +230,6 @@ public class ChoixVoeux extends javax.swing.JFrame {
                     cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
                     g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
                 }
-                // On réouvre les candidatures précédentes en attente
-                for(int i=(voeuxRetenu-2); i>=0; i--) {
-                    cTemp = mesCandidatures.get(i);
-                    if(cTemp.getDecisionMaster() == decisionMaster.listeAttente.value()) {
-                        cTemp.setEtatCandidature(etatCandidature.valide.value());
-                        g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
-                    }
-                }
                 break;
             case "nonMais":
                 c = mesCandidatures.get(voeuxRetenu-1);
@@ -248,14 +240,6 @@ public class ChoixVoeux extends javax.swing.JFrame {
                     cTemp = mesCandidatures.get(i);
                     cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
                     g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
-                }
-                // On réouvre les candidatures précédentes en attente
-                for(int i=(voeuxRetenu-2); i>=0; i--) {
-                    cTemp = mesCandidatures.get(i);
-                    if(cTemp.getDecisionMaster() == decisionMaster.listeAttente.value()) {
-                        cTemp.setEtatCandidature(etatCandidature.valide.value());
-                        g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
-                    }
                 }
                 break;
             case "nonDefinitif":
@@ -333,7 +317,6 @@ public class ChoixVoeux extends javax.swing.JFrame {
                 default:
                     break;
             }
-      
         } 
         if(voeuxRetenu==0){
             jLabelPasBesoinDeReponse.setVisible(true);
@@ -356,7 +339,7 @@ public class ChoixVoeux extends javax.swing.JFrame {
         labelChoix.setText(candidature.getMaster() + " - " + candidature.getUniversite());
         //Affichage de la decision pour ce master
         labelDecision=lesLabelsDecision[ordre-1];
-        labelDecision.setText(decisionMaster.from_int(candidature.getDecisionMaster()).toString());  
+        labelDecision.setText(decisionToString(CandidatureMapper.candidatureToCandidatureCorba(candidature).decisionM));  
     }
     
     private void afficherListe(int ordre,decisionMaster decision){
@@ -396,6 +379,23 @@ public class ChoixVoeux extends javax.swing.JFrame {
         lesLabelsChoix = new JLabel[] { jLabelVoeux1, jLabelVoeux2, jLabelVoeux3, jLabelVoeux4, jLabelVoeux5 };
         lesLabelsDecision = new JLabel[] {jLabelDecision1,jLabelDecision2,jLabelDecision3,jLabelDecision4,jLabelDecision5};
         lesComboBox = new JComboBox[] {jComboBoxChoix1,jComboBoxChoix2,jComboBoxChoix3,jComboBoxChoix4,jComboBoxChoix5};
+    }
+    
+    private String decisionToString(decisionMaster d){
+        String val = "";
+        switch(d.toString()){
+            case "admis":
+                val="Admis";
+                break;
+            case "listeAttente":
+                val="Liste d'attente";
+                break;
+            case "refuser":
+                val="Refusé";
+                break;
+            
+        }
+        return val;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
