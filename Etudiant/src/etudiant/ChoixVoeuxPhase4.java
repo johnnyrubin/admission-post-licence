@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -135,6 +136,8 @@ public class ChoixVoeuxPhase4 extends javax.swing.JFrame {
                 g.modifierDecision(CandidatureMapper.candidatureToCandidatureCorba(candidatureSelectionne));
                 break;
         }
+        // Affichage d'une pop-up
+        JOptionPane.showMessageDialog(this, "Choix définitif pris en compte", "Admission post licence", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     /**
@@ -180,6 +183,8 @@ public class ChoixVoeuxPhase4 extends javax.swing.JFrame {
         if(!candidatureTrouve){
             jLabelPasBesoinDeReponse.setVisible(true);
             jButtonValider.setEnabled(false);
+            jComboBoxChoix1.setEnabled(false);
+            jLabelVoeux1.setEnabled(false);
         }
             
     }

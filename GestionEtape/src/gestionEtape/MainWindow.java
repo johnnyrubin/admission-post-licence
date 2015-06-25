@@ -5,6 +5,7 @@ import AdmissionPostLicence.periode;
 import Util.GetObjectCorba;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -155,6 +156,9 @@ public class MainWindow extends javax.swing.JFrame {
                     break;
             }
             majEtapeEnCours();
+            
+            // Affichage d'une pop-up
+            JOptionPane.showMessageDialog(this, "Changement période effectué", "Admission post licence", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_validerChoixEtapeButtonActionPerformed
 

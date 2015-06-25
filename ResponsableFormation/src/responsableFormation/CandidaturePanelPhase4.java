@@ -268,6 +268,8 @@ public class CandidaturePanelPhase4 extends javax.swing.JPanel {
             try {
                 // On transmet la décision à l'université
                 master.modifierDecision(candidature);
+                // Affichage d'une pop-up
+                JOptionPane.showMessageDialog(this, "Décision enregistrée", "Admission post licence", JOptionPane.INFORMATION_MESSAGE);
             } catch (CandidatureInconnu ex) {
                 // Affichage d'une pop-up
                 JOptionPane.showMessageDialog(this, "Une erreur est survenue lors de l'enregistrement de la décision",

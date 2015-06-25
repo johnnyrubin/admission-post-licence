@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -279,6 +280,8 @@ public class ChoixVoeux extends javax.swing.JFrame {
                 }
                 break;
         }
+        // Affichage d'une pop-up
+        JOptionPane.showMessageDialog(this, "Choix pris en compte", "Admission post licence", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     /**

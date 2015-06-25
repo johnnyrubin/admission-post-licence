@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -353,6 +354,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
                     try {
                         g.soumettreCandidature(c);
                         initialiserMenu();
+                        // Affichage d'une pop-up
+                        JOptionPane.showMessageDialog(this, "Candidature enregistrée", "Admission post licence", JOptionPane.INFORMATION_MESSAGE);
                     } catch (MasterInconnu ex) {
                         Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -392,6 +395,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 Candidature c = getCandidature(master,universite);
                 g.supprimerCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
                 initialiserMenu();
+                // Affichage d'une pop-up
+                JOptionPane.showMessageDialog(this, "Candidature supprimée", "Admission post licence", JOptionPane.INFORMATION_MESSAGE);
             } catch (CandidatureInconnu ex) {
                 Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -477,6 +482,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
             if(nombreDeVoeux==5){
                 jButtonCandidater.setEnabled(false);
+            } else {
+                jButtonCandidater.setEnabled(true);
             }
         }
         if(jComboBoxCandidatures.getItemCount()==0){

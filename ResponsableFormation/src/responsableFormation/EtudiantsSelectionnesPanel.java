@@ -31,13 +31,10 @@ public class EtudiantsSelectionnesPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        nomMasterLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         infoEtudiantsTable = new javax.swing.JTable();
 
         jLabel1.setText("Liste des étudiants sélectionnés au master");
-
-        nomMasterLabel.setText("jLabel2");
 
         infoEtudiantsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -64,10 +61,7 @@ public class EtudiantsSelectionnesPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nomMasterLabel))
+                    .addComponent(jLabel1)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -75,9 +69,7 @@ public class EtudiantsSelectionnesPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nomMasterLabel))
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -89,6 +81,5 @@ public class EtudiantsSelectionnesPanel extends javax.swing.JPanel {
     private javax.swing.JTable infoEtudiantsTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel nomMasterLabel;
     // End of variables declaration//GEN-END:variables
 }
