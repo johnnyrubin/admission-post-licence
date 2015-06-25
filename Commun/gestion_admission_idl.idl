@@ -83,6 +83,9 @@ module AdmissionPostLicence
 
         //Permet à l’étudiant de se connecter 
         identite seConnecter(in string ine, in string mdp) raises (EtudiantInconnu);
+        
+        // Supprime une candidature
+        void supprimerCandidature(in candidature c) raises (CandidatureInconnu);
     };
 	
 	// Liste des IOR des gestion étudiants enregistrés auprès du rectorat
