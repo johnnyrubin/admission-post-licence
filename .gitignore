@@ -27,3 +27,4 @@ Admission post licence/nbproject/private/private.properties
 /Etudiant/dist/
 /GestionEtape/nbproject/private/
 /GestionEtape/build/
+*.db

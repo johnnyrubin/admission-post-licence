@@ -219,8 +219,8 @@ public class ChoixVoeux extends javax.swing.JFrame {
                     r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
                     //Si on accepte le voeux, cela annule tous les autres
                     for(Candidature c1 : mesCandidatures){
-                        if(!c1.getEtu().getIne().equals(c.getEtu().getIne()) && 
-                                !c1.getMaster().equals(c.getMaster())){
+                        //Si la candidature en cours de traitement n'est pas celle retenu
+                        if(!c1.getMaster().equals(c.getMaster())){
                             c1.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
                             r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c1));
                         }
@@ -229,8 +229,9 @@ public class ChoixVoeux extends javax.swing.JFrame {
                 case "ouiMais":
                     c = mesCandidatures.get(voeuxRetenu-1);
                     c.setDecisionCandidat(decisionCandidat.ouiMais.value());
+                    r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
                     //On va annuler celles qui suivent
-                    for(int i=voeuxRetenu+1; i<mesCandidatures.size();i++){
+                    for(int i=voeuxRetenu; i<mesCandidatures.size();i++){
                         cTemp = mesCandidatures.get(i);
                         cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
                         r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
@@ -239,8 +240,9 @@ public class ChoixVoeux extends javax.swing.JFrame {
                 case "nonMais":
                     c = mesCandidatures.get(voeuxRetenu-1);
                     c.setDecisionCandidat(decisionCandidat.nonMais.value());
-                    //On va annuler celles qui suivent
-                    for(int i=voeuxRetenu+1; i<mesCandidatures.size();i++){
+                    //On va annuler l'actuel et celles qui suivent
+                    r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
+                    for(int i=voeuxRetenu; i<mesCandidatures.size();i++){
                         cTemp = mesCandidatures.get(i);
                         cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
                         r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
