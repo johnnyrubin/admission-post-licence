@@ -2,14 +2,10 @@ package rectorat.database;
 
 import AdmissionPostLicence.decisionMaster;
 import AdmissionPostLicence.etatCandidature;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * 
  */
 public class InitDbRectorat {
     /** Connexion à la base de données Rectorat */
@@ -28,9 +24,8 @@ public class InitDbRectorat {
             initTableRectorat();
             initTableCandidatures();
             initTableEtudiant();
-            displayInfo();
         } catch (SQLException ex) {
-            Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Erreur lors de l'insertion des données");
         }
         finally{
             // Fermeture de la connexion
@@ -58,7 +53,7 @@ public class InitDbRectorat {
         
         // Insertion des rectorats dans la table
         // TODO voir avec Vincent pour les données
-        sql = "Insert into RECTORAT values ( 1, 'Rectorat' )";
+        sql = "INSERT INTO RECTORAT VALUES (1, 'RectoratToulouse')";
         conn.statement.executeUpdate(sql);
     }
     
@@ -81,23 +76,24 @@ public class InitDbRectorat {
                 "ETAT NUMBER NOT NULL,"+
                 "DECISIONCANDIDAT NUMBER NOT NULL,"+
                 "DECISIONMASTER NUMBER NOT NULL,"+
-                "PRIMARY KEY(INE,IDMASTER)"
-                + ")";
+                "PRIMARY KEY(INE,IDMASTER,UNIVERSITE))";
         
         // Création de la table CANDIDATURES
         conn.statement.executeUpdate(sql);
         
         // Insertion des candidatures dans la table
-        // TODO voir avec Vincent pour les données
-        sql = "Insert into CANDIDATURES values ( '123456E', 'MIAGE', 'Paul Sabatier', 1, "+etatCandidature.valide.value() +" , 0 , "
-                + decisionMaster.listeAttente.value() +" )";
-        conn.statement.executeUpdate(sql);
-        sql = "Insert into CANDIDATURES values ( '123456E', 'Fonda', 'Paul Sabatier', 2, "+etatCandidature.valide.value() +" , 0 , "
-                + decisionMaster.admis.value() +" )";
-        conn.statement.executeUpdate(sql);
-        sql = "Insert into CANDIDATURES values ( '123456E', 'Bio', 'Paul Sabatier', 3, "+etatCandidature.nonValide.value() +" , 0 , "
-                + decisionMaster.refuser.value() +" )";
-        conn.statement.executeUpdate(sql);
+        String[] jeuxDonnees = {
+            "Insert into CANDIDATURES VALUES ('123456E', 'MIAGE', 'Paul Sabatier', 1, "+etatCandidature.valide.value() +" , 0, "
+                + decisionMaster.listeAttente.value() +")",
+            "Insert into CANDIDATURES VALUES ('123456E', 'INFO', 'Paul Sabatier', 2, "+etatCandidature.valide.value() +" , 0, "
+                + decisionMaster.admis.value() +")",
+            "Insert into CANDIDATURES VALUES ('123456E', 'BIO', 'Paul Sabatier', 3, "+etatCandidature.nonValide.value() +" , 0, "
+                + decisionMaster.refuser.value() +")"
+        };
+        
+        for(String req : jeuxDonnees) {
+            conn.statement.executeUpdate(req);
+        }
     }
     
     /**
@@ -121,44 +117,18 @@ public class InitDbRectorat {
         // Création de la table ETUDIANT
         conn.statement.executeUpdate(sql);
         
-        // Insertion des étudiants dans la table
-        // TODO voir avec Vincent pour les données
+        String[] jeuxDonnees = {
+            "INSERT INTO ETUDIANT VALUES ('123456E', 'dupond', 'jean', 'Paul sabatier', 'INFO');",
+            "INSERT INTO ETUDIANT VALUES ('E001', 'RUBIN', 'Johnny', 'Paul sabatier', 'MIAGE');",
+            "INSERT INTO ETUDIANT VALUES ('E002', 'VIGNEAUX', 'Vincent', 'Paul sabatier', 'MUSICOLOGIE');",
+            "INSERT INTO ETUDIANT VALUES ('E004', 'TACSIN', 'Teddy', 'Paul sabatier', 'MIAGE');",
+            "INSERT INTO ETUDIANT VALUES ('E003', 'DESPRATS', 'Thierry', 'Bordeaux 1', 'INFO');"
+        };
         
-        sql = "INSERT INTO ETUDIANT VALUES ('123456E', 'dupond', 'jean','Paul sabatier','info');";
-        conn.statement.executeUpdate(sql);
-    }
-    
-    private static void displayInfo(){
-        String sql = "select * from candidatures";
-        try {
-            ResultSet rs = conn.statement.executeQuery(sql);
-            while(rs.next()){
-                String INE = rs.getString("INE");
-                String IDMASTER = rs.getString("IDMASTER");
-                String UNIVERSITE = rs.getString("UNIVERSITE");
-                int ordre = rs.getInt("ORDRE");
-                System.out.println("Candidatures : " + INE + " " + IDMASTER + " " +  UNIVERSITE +  " " + ordre);
-            }
-            sql = "select * from etudiant";
-            rs = conn.statement.executeQuery(sql);
-            while(rs.next()){
-                String ID = rs.getString("INE");
-                String NOM = rs.getString("NOM");
-                String PRENOM = rs.getString("PRENOM");
-                System.out.println("Etudiant : " + ID + " " + NOM + " " + PRENOM);
-            }
-            sql = "select * from rectorat";
-            rs = conn.statement.executeQuery(sql);
-            while(rs.next()){
-                String ID = rs.getString("ID");
-                String NOM = rs.getString("NOM");
-                System.out.println("Rectorat : " + ID + " " + NOM);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(InitDbRectorat.class.getName()).log(Level.SEVERE, null, ex);
+        // Insertion des étudiants
+        for(String req : jeuxDonnees) {
+            conn.statement.executeUpdate(req);
         }
     }
-    
-    
     
 }

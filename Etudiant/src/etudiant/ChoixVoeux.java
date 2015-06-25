@@ -12,6 +12,7 @@ import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.decisionCandidat;
 import AdmissionPostLicence.decisionMaster;
+import AdmissionPostLicence.etatCandidature;
 import AdmissionPostLicence.identite;
 import Mapper.CandidatureMapper;
 import Pojo.Candidature;
@@ -229,6 +230,7 @@ public class ChoixVoeux extends javax.swing.JFrame {
                 case "ouiMais":
                     c = mesCandidatures.get(voeuxRetenu-1);
                     c.setDecisionCandidat(decisionCandidat.ouiMais.value());
+                    c.setEtatCandidature(etatCandidature.valide.value());
                     r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(c));
                     //On va annuler celles qui suivent
                     for(int i=voeuxRetenu; i<mesCandidatures.size();i++){
@@ -236,6 +238,14 @@ public class ChoixVoeux extends javax.swing.JFrame {
                         cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
                         r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
                     }
+                    // On réouvre les candidatures précédentes en attente
+                    for(int i=(voeuxRetenu-2); i>=0; i--) {
+                        cTemp = mesCandidatures.get(i);
+                        if(cTemp.getDecisionMaster() == decisionMaster.listeAttente.value()) {
+                            cTemp.setEtatCandidature(etatCandidature.valide.value());
+                            r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
+                        }
+                    } 
                     break;
                 case "nonMais":
                     c = mesCandidatures.get(voeuxRetenu-1);
@@ -247,6 +257,14 @@ public class ChoixVoeux extends javax.swing.JFrame {
                         cTemp.setDecisionCandidat(decisionCandidat.nonDefinitif.value());
                         r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
                     }
+                    // On réouvre les candidatures précédentes en attente
+                    for(int i=(voeuxRetenu-2); i>=0; i--) {
+                        cTemp = mesCandidatures.get(i);
+                        if(cTemp.getDecisionMaster() == decisionMaster.listeAttente.value()) {
+                            cTemp.setEtatCandidature(etatCandidature.valide.value());
+                            r.modifierCandidature(CandidatureMapper.candidatureToCandidatureCorba(cTemp));
+                        }
+                    } 
                     break;
                 case "nonDefinitif":
                     //Si on refuse le voeux, cela annule tous les autres

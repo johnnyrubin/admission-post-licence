@@ -6,6 +6,7 @@ import AdmissionPostLicence.GestionEtudiant;
 import AdmissionPostLicence.Master;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.decisionMaster;
+import AdmissionPostLicence.etatCandidature;
 import AdmissionPostLicence.resultatsEtudiant;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -254,6 +255,7 @@ public class CandidaturePanel extends javax.swing.JPanel {
         
         if(decision != null) {
             candidature.decisionM = decision;
+            candidature.etat = etatCandidature.cloture;
             try {
                 // On transmet la décision à l'université
                 master.modifierDecision(candidature);

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -248,7 +249,8 @@ public class Login extends javax.swing.JFrame {
                     jLabelError.setText("Identifiants ou mot de passe incorrect");
                 }
             } catch (EtudiantInconnu ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                // Affichage d'un message d'erreur
+                JOptionPane.showMessageDialog(this, "Veuillez sélectionner votre université d'appartenance", "Gestion des candidatures", JOptionPane.WARNING_MESSAGE);
             }
             
         }

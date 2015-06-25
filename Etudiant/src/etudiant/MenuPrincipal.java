@@ -3,6 +3,7 @@ package etudiant;
 import AdmissionPostLicence.CandidatureInconnu;
 import AdmissionPostLicence.EtudiantInconnu;
 import AdmissionPostLicence.GestionEtudiant;
+import AdmissionPostLicence.MasterInconnu;
 import AdmissionPostLicence.Ministere;
 import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.accreditation;
@@ -314,8 +315,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
                         jComboBoxUniversiteNouvelleCandidature.getSelectedItem().toString(), Short.parseShort(jTextFieldOrdreNouvelleCandidature.getText()), 
                         etatCandidature.nonValide, decisionCandidat.nonTraite, decisionMaster.nonTraite);
                 if(!existCandidature(CandidatureMapper.candidatureCorbaToCandidature(c))){
-                    r.creerCandidature(c);
-                    initialiserMenu();
+                    try {
+                        g.soumettreCandidature(c);
+                        initialiserMenu();
+                    } catch (MasterInconnu ex) {
+                        Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 else{
                    jLabelErrorNewCandidature.setText("Vous avez déjà saisie cette demande"); 

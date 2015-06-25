@@ -56,7 +56,7 @@ public class InitDbMinistere {
         
         // Insertion des ministeres dans la table
         // TODO voir avec Vincent pour les données
-        sql = "Insert into ministere values ( 1, 'Ministere',3)";
+        sql = "Insert into ministere values (1, 'Ministere', 1)";
         conn.statement.executeUpdate(sql);
         
     }
@@ -81,7 +81,10 @@ public class InitDbMinistere {
         conn.statement.executeUpdate(sql);
         
         // Insertion des liaisons dans la table
-        // TODO voir avec Vincent pour les données
+        sql = "Insert into LIAISON values (1, 'Paul Sabatier', 'RectoratToulouse')";
+        conn.statement.executeUpdate(sql);
+        sql = "Insert into LIAISON values (2, 'Bordeaux 1', 'RectoratToulouse')";
+        conn.statement.executeUpdate(sql);
     }
     
     
@@ -103,13 +106,13 @@ public class InitDbMinistere {
         // Création de la table DIPLOME
         conn.statement.executeUpdate(sql);
         // TODO voir avec Vincent pour les données
-        sql = "Insert into DIPLOME values ( 1, 'MIAGE')";
+        sql = "Insert into DIPLOME values (1, 'MIAGE')";
         conn.statement.executeUpdate(sql);
-        sql = "Insert into DIPLOME values ( 2, 'Fonda')";
+        sql = "Insert into DIPLOME values (2, 'INFO')";
         conn.statement.executeUpdate(sql);
-        sql = "Insert into DIPLOME values ( 3, 'Droits')";
+        sql = "Insert into DIPLOME values (3, 'DROIT')";
         conn.statement.executeUpdate(sql);
-        sql = "Insert into DIPLOME values ( 4, 'Bio')";
+        sql = "Insert into DIPLOME values (4, 'BIO')";
         conn.statement.executeUpdate(sql);
     }
     
@@ -130,9 +133,9 @@ public class InitDbMinistere {
         // Création de la table UNIVERSITE
         conn.statement.executeUpdate(sql);
         // TODO voir avec Vincent pour les données
-        sql = "Insert into UNIVERSITE values ( 1, 'Paul Sabatier')";
+        sql = "Insert into UNIVERSITE values (1, 'Paul Sabatier')";
         conn.statement.executeUpdate(sql);
-        sql = "Insert into UNIVERSITE values ( 2, 'UT1')";
+        sql = "Insert into UNIVERSITE values (2, 'Bordeaux 1')";
         conn.statement.executeUpdate(sql);
     }
     
@@ -157,13 +160,13 @@ public class InitDbMinistere {
         // TODO voir avec Vincent pour les données
         sql = "Insert into ACCREDITATIONS values (1, 1)";
         conn.statement.executeUpdate(sql);
-        sql = "Insert into ACCREDITATIONS values (2, 3)";
-        conn.statement.executeUpdate(sql);
         sql = "Insert into ACCREDITATIONS values (1, 2)";
         conn.statement.executeUpdate(sql);
         sql = "Insert into ACCREDITATIONS values (1, 4)";
         conn.statement.executeUpdate(sql);
+        sql = "Insert into ACCREDITATIONS values (2, 1)";
+        conn.statement.executeUpdate(sql);
+        sql = "Insert into ACCREDITATIONS values (2, 3)";
+        conn.statement.executeUpdate(sql);
     }
-    
-    //TODO Stocker la periode en cours
 }

@@ -37,15 +37,15 @@ public class LicenceDAO extends UniversiteDAO {
         
         try {
             // Récupération de la liste des licence prérequise
-            String sql = "SELECT L.* FROM LICENCE L, PREREQUIS P WHERE L.ID = P.ID_LICENCE AND P.ID_MASTER = " + master.getId() + ";";
+            String sql = "SELECT * FROM PREREQUIS WHERE ID_MASTER = " + master.getId() + ";";
             ResultSet rs = conn.statement.executeQuery(sql);
 
             Licence licence;
             
             while(rs.next()) {
                 licence = new Licence();
-                licence.setId(rs.getInt("ID"));
-                licence.setNom(rs.getString("NOM"));
+                licence.setId(0);
+                licence.setNom(rs.getString("ID_LICENCE"));
                 
                 licences.add(licence);
             }

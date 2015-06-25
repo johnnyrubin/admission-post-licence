@@ -45,13 +45,10 @@ public class MasterImpl extends MasterPOA {
         
         System.out.println("Appel de la méthode MasterImpl.modifierDecision");
         
-        if(rectorat != null) {
-            // Création de l'obet resultatCandidature
-            candidature res = new candidature(c.etudiant, c.master, c.universite, c.ordre, c.etat, c.decisionC, c.decisionM);
-            
+        if(rectorat != null) {            
             try {
                 // On transmet la décision du responsable au rectorat
-                rectorat.modifierCandidature(res);
+                rectorat.modifierCandidature(c);
                 
             } catch (CandidatureInconnu ex) {
                 Logger.getLogger(MasterImpl.class.getName()).log(Level.SEVERE, null, ex);

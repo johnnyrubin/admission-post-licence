@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 /**
  * Classe d'implémentation permettant de gérer les étudiants d'une université
  * 
- * 
  */
 public class GestionEtudiantImpl extends GestionEtudiantPOA {
     

@@ -69,18 +69,13 @@ public class MasterDAO extends UniversiteDAO {
             // Exécution de la requête de récupération du master
             String sql = "SELECT * FROM MASTER;";
             ResultSet rs = conn.statement.executeQuery(sql);
+            Master m;
             
             while(rs.next()) {
                 // Traitement du résultat
-                Master m = new Master();
+                m = new Master();
                 m.setId(rs.getInt("ID"));
                 m.setNom(rs.getString("NOM"));
-                
-                // Récupération de la liste des licence prérequise
-                LicenceDAO dao = new LicenceDAO(nomUniversite, conn);
-                List<Licence> licences = dao.getPrerequisFromMaster(m);
-                m.setPrerequis(licences);
-                
                 masters.add(m);
             }
         } catch (SQLException ex) {

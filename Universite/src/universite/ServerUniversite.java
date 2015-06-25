@@ -51,7 +51,7 @@ public class ServerUniversite extends Server {
             conn.connect();
             
             // Initialisation de la base de données si nécessaire
-            InitDbUniversite.run(conn);
+            InitDbUniversite.run(conn, nomUniversite);
 
             // Intialisation de l'ORB
             orb = org.omg.CORBA.ORB.init(args, null);
@@ -95,6 +95,7 @@ public class ServerUniversite extends Server {
 
                 nameRoot.rebind(nameToRegister, rootPOA.servant_to_reference(m));
                 System.out.println("==> Master \"" + m.nom() + "\" est enregistré dans l'espace de noms");
+                System.out.println(master.toString());
 
                 IORServant = orb.object_to_string(rootPOA.servant_to_reference(m));
                 System.out.println("L'objet possède la référence suivante : ");
