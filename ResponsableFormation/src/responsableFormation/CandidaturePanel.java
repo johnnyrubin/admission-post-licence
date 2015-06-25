@@ -35,7 +35,7 @@ public class CandidaturePanel extends javax.swing.JPanel {
         
         ineLabel.setText(candidature.etudiant.ine);
         nomLabel.setText(candidature.etudiant.nom);
-        prenomLabel.setText(candidature.etudiant.nom);
+        prenomLabel.setText(candidature.etudiant.prenom);
         universiteLabel.setText(candidature.etudiant.universite);
         licenceLabel.setText(candidature.etudiant.licence);
         
