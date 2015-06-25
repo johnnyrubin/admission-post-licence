@@ -7,9 +7,13 @@ import AdmissionPostLicence.Rectorat;
 import AdmissionPostLicence.candidature;
 import AdmissionPostLicence.decisionCandidat;
 import AdmissionPostLicence.decisionMaster;
+import AdmissionPostLicence.identite;
 import AdmissionPostLicence.periode;
 import Util.GetObjectCorba;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -63,6 +67,9 @@ public class MainWindow extends javax.swing.JFrame {
                 masterComboBox.addItem(m.nom());
             }
         }
+        
+        // Désactive le bouton d'affichage des sélectionnés
+        showSelectedButton.setEnabled(false);
     }
 
     /**
@@ -80,6 +87,8 @@ public class MainWindow extends javax.swing.JFrame {
         afficherButton = new javax.swing.JButton();
         centerScrollPane = new javax.swing.JScrollPane();
         candidaturesPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        showSelectedButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,6 +132,15 @@ public class MainWindow extends javax.swing.JFrame {
         candidaturesPanel.setLayout(new java.awt.GridLayout(0, 1));
         centerScrollPane.setViewportView(candidaturesPanel);
 
+        jLabel2.setText("Liste des candidatures");
+
+        showSelectedButton.setText("Voir liste des sélectionnés");
+        showSelectedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showSelectedButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,8 +148,12 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(centerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
-                    .addComponent(topPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(centerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                    .addComponent(topPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(showSelectedButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -139,8 +161,15 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(centerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(showSelectedButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(centerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -168,22 +197,29 @@ public class MainWindow extends javax.swing.JFrame {
 
             if(m != null) {
                 if(periode.periode4.equals(periodeEnCours)) {
+                    // Active le bouton permettant d'afficher les étudiants déjà sélectionnés
+                    showSelectedButton.setEnabled(true);
+                    
                     // Traitement des candidatures en attente
                     candidature[] candidatures = m.consulterEtatCandidatures();
+                    
                     if(candidatures.length == 0) {
                         // Affichage d'une pop-up
                         JOptionPane.showMessageDialog(this, "Aucune candidature en attente à traiter pour le master " + masterSel, "Gestion des candidatures", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         // Affichage des candidatures en attente et non traité
                         int i = 0;
+                        
                         for(candidature c : candidatures) {
                             if(decisionMaster.listeAttente.equals(c.decisionM) && decisionCandidat.nonTraite.equals(c.decisionC)) {
                                 candidaturesPanel.add(new CandidaturePanelPhase4(c, m, gestionEtudiant, orb));
                                 i++;
                             }
                         }
+                        
                         candidaturesPanel.revalidate();
                         candidaturesPanel.repaint();
+                        
                         // Affichage d'une pop-up
                         if(i == 0) {
                             JOptionPane.showMessageDialog(this, "Aucune candidature en attente à traiter pour le master " + masterSel, "Gestion des candidatures", JOptionPane.INFORMATION_MESSAGE);
@@ -207,6 +243,40 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_afficherButtonActionPerformed
+
+    private void showSelectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showSelectedButtonActionPerformed
+        // Récupération de la formation choisie
+        String masterSel = (String) masterComboBox.getSelectedItem();
+        
+        // Récupération de l'objet corba du master sélectionné
+        Master m = masters.get(masterSel);
+        
+        if(m != null) {
+            // Récupère la liste des étudiants sélectionnés
+            List<identite> etudiants = new ArrayList<>();
+            candidature[] candidatures = m.consulterEtatCandidatures();
+            
+            for(candidature c : candidatures) {
+                if(decisionCandidat.ouiMais.equals(c.decisionC) || decisionCandidat.ouiDefinitif.equals(c.decisionC)) {
+                    etudiants.add(c.etudiant);
+                }
+            }
+            
+            if(etudiants.size() == 0) {
+                // Affichage d'une pop-up
+                JOptionPane.showMessageDialog(this, "Aucun étudiant sélectionné pour le master " + masterSel, "Gestion des candidatures", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Affichage des étudiants sélectionnés au master
+                JFrame fenetreNotes = new JFrame("Liste des étudiants sélectionnés");
+                fenetreNotes.setContentPane(new EtudiantsSelectionnesPanel(etudiants));
+                fenetreNotes.pack();
+                fenetreNotes.setVisible(true);
+            }
+        } else {
+            // Affichage d'une pop-up
+            JOptionPane.showMessageDialog(this, "Erreur lors de la récupératio des infos du master " + masterSel, "Gestion des candidatures", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_showSelectedButtonActionPerformed
    
     /**
      * @param args the command line arguments
@@ -220,7 +290,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel candidaturesPanel;
     private javax.swing.JScrollPane centerScrollPane;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JComboBox masterComboBox;
+    private javax.swing.JButton showSelectedButton;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
