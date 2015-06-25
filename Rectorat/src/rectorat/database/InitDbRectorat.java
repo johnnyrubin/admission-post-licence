@@ -93,15 +93,9 @@ public class InitDbRectorat {
                 + decisionMaster.listeAttente.value() +" )";
         conn.statement.executeUpdate(sql);
         sql = "Insert into CANDIDATURES values ( '123456E', 'Fonda', 'Paul Sabatier', 2, "+etatCandidature.valide.value() +" , 0 , "
-                + decisionMaster.refuser.value() +" )";
-        conn.statement.executeUpdate(sql);
-        sql = "Insert into CANDIDATURES values ( '123456E', 'Bio', 'Paul Sabatier', 3, "+etatCandidature.nonValide.value() +" , 0 , "
-                + decisionMaster.refuser.value() +" )";
-        conn.statement.executeUpdate(sql);
-        sql = "Insert into CANDIDATURES values ( '123456E', 'Test', 'Paul Sabatier', 4, "+etatCandidature.valide.value() +" , 0 , "
                 + decisionMaster.admis.value() +" )";
         conn.statement.executeUpdate(sql);
-        sql = "Insert into CANDIDATURES values ( '123456E', 'Titi', 'Paul Sabatier', 5, "+etatCandidature.valide.value() +" , 0 , "
+        sql = "Insert into CANDIDATURES values ( '123456E', 'Bio', 'Paul Sabatier', 3, "+etatCandidature.nonValide.value() +" , 0 , "
                 + decisionMaster.refuser.value() +" )";
         conn.statement.executeUpdate(sql);
     }
